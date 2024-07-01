@@ -1,0 +1,47 @@
+version: !!str 3.8
+
+services:
+ # hahicorp vault      
+  vault:
+    image:  hashicorp/vault:1.13.3
+    container_name: vault
+    ports:
+      - "8200:8200"
+      - "8201:8201"
+    restart: always
+    volumes:
+      - ../vault/logs:/vault/logs
+      - /srv/vault/data:/vault/data
+      - ../vault/config:/vault/config
+      - ../vault/policy:/vault/policy
+      - "/etc/letsencrypt/live/${VAULT_DOMAIN}/:/etc/vault/tls"
+    cap_add:
+      - IPC_LOCK
+    #disabling coredump
+    ulimits:
+      core: 0
+    entrypoint: vault server -config=/vault/config/vault.hcl
+    healthcheck:
+      test: ["CMD", "wget", "-O-", "http://vault:8200"]
+      interval: 3s
+      timeout: 5s
+      retries: 5
+    networks:
+      - hashicorp
+# initial configuration
+  vault-init:
+    image:  hashicorp/vault:1.13.3
+    container_name: vault-init
+    volumes:
+      - ../scripts/init.sh:/tmp/init.sh
+      - ../secrets:/home/
+    entrypoint: sh /tmp/init.sh
+    depends_on:
+      vault:
+        condition: service_healthy
+    networks:
+      - hashicorp
+
+networks:
+  hashicorp:
+   external: true
