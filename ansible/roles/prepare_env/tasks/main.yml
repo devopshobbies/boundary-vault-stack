@@ -1,0 +1,24 @@
+- name: copy all files and directories
+  become: true 
+  synchronize:
+    src: "{{ home_dir }}"
+    dest: "{{ dest_dir }}"
+    rsync_opts:
+      # - "--exclude=.git/"
+      - "--exclude=.gitignore"
+      - "--exclude=README.md"
+      - "--exclude=ansible/"
+      - "--exclude=venv/"
+
+- name: create main directory structure 
+  ansible.builtin.file:
+    path: "{{ dest_dir }}"
+    state: directory
+    mode: '0755'
+    
+- name: Add binaries to .bashrc
+  ansible.builtin.lineinfile:
+    path: ~/.bashrc
+    line: 'export PATH=$PATH:{{ stack_dir }}/boundary/bin/'
+    state: present
+    create: yes

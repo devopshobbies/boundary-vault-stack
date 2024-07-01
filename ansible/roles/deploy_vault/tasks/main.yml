@@ -1,0 +1,16 @@
+- name : create hcp external
+  become: true
+  docker_network:
+    name: "hashicorp"
+
+# - name: deploy the docker compose files
+#   become: true
+#   community.docker.docker_compose:
+#     project_src: "{{ compose_file }}"
+#     build: false
+#   register: output
+
+- name: deploy vault compose file
+  become: true
+  shell: docker rm -f vault && rm -rf /srv/vault && docker compose -f "{{ compose_file }}/vault.yml" up -d
+  register: output
