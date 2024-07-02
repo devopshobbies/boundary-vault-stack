@@ -14,7 +14,7 @@ services:
       - /srv/vault/data:/vault/data
       - ../vault/config:/vault/config
       - ../vault/policy:/vault/policy
-      - "/etc/letsencrypt/live/${VAULT_DOMAIN}/:/etc/vault/tls"
+      # - "/etc/letsencrypt/live/${VAULT_DOMAIN}/:/etc/vault/tls"
     cap_add:
       - IPC_LOCK
     #disabling coredump
