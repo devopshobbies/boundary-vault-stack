@@ -1,0 +1,24 @@
+- name: fetch the secret file to control node
+  become: true
+  fetch:
+    src: "{{stack_dir}}/secrets/secrets.txt"
+    dest: "{{home_dir}}/secrets/secrets.txt"
+    flat: yes
+
+### uncomment if you have boundary ssh-injection on.
+# - name : configure ssh public_key from vault
+#   become: true
+#   shell: cp {{stack_dir}}/secrets/ca-key.pub /etc/ssh/ca-key.pub && chown 1000:1000 /etc/ssh/ca-key.pub && chmod 644 /etc/ssh/ca-key.pub && echo "TrustedUserCAKeys /etc/ssh/ca-key.pub" >> /etc/ssh/sshd_config
+#   notify: restart_ssh
+
+# - name : add ssh cred store token to variables
+#   shell: bash "{{home_dir}}/scripts/ansible.sh" ssh
+#   delegate_to: localhost
+
+- name : add transit token to boundary tfvars file
+  shell: bash "{{home_dir}}/scripts/ansible.sh"
+  delegate_to: localhost
+
+- name : run vault terraform configuration  
+  shell: bash "{{home_dir}}/scripts/init.sh" vault
+  delegate_to: localhost

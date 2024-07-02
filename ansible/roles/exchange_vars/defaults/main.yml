@@ -1,0 +1,5 @@
+home_dir: "{{ playbook_dir | dirname }}"
+stack_dir: /home/ubuntu/boundary-vault-stack
+compose_file: "{{ stack_dir }}/deploy"
+vault_addr: "127.0.0.1:8200"
+boundary_addr: "127.0.0.1:9200"
