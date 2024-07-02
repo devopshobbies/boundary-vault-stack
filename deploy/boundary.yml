@@ -1,0 +1,83 @@
+version: !!str 3.8
+
+services:   
+  postgres_db:
+    image:  bitnami/postgresql:16
+    container_name: boundary_db
+    restart: always
+    environment:
+      - POSTGRES_DB=boundary
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=RP5YgRtK7WQEIdR
+    volumes:
+      - /srv/boundary/data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 3s
+      timeout: 5s
+      retries: 5
+    networks:
+      - hashicorp
+      
+  # initial boundary setup
+  db-init:
+    image:  hashicorp/boundary:0.14
+    command: ["database", "init", "-config", "/boundary/boundary.hcl"]
+    volumes:
+      - "../boundary/config/:/boundary"
+      - "/etc/letsencrypt/live/${BOUNDARY_DOMAIN}/:/etc/boundary.d/tls"
+    environment:
+      - BOUNDARY_PG_URL=postgresql://postgres:RP5YgRtK7WQEIdR@boundary_db/boundary?sslmode=disable
+      - WHOST=127.0.0.1
+      - SKIP_SETCAP=true
+      - BOUNDARY_LOG_LEVEL=debug
+      - VAULT_TOKEN=${VAULT_TOKEN}
+    cap_add:
+      - IPC_LOCK
+    depends_on:
+      postgres_db:
+        condition: service_healthy
+    networks:
+      - hashicorp
+
+  boundary:
+    image:  hashicorp/boundary:0.14
+    command: ["server", "-config", "/boundary/boundary.hcl"]
+    container_name: boundary
+    restart: always
+    volumes:
+      - "../boundary/config/:/boundary/"
+    ports:
+      - "9200:9200"
+    #   - "9201:9201"
+    #   - "9202:9202"
+    environment:
+      - BOUNDARY_PG_URL=postgresql://postgres:RP5YgRtK7WQEIdR@boundary_db/boundary?sslmode=disable
+      - HOSTNAME=boundary
+      - WHOST=127.0.0.1
+      - BOUNDARY_LOG_LEVEL=debug
+      - VAULT_TOKEN=${VAULT_TOKEN}
+    depends_on:
+      db-init:
+        condition: service_completed_successfully
+    cap_add:
+      - IPC_LOCK
+    healthcheck:
+      test: ["CMD", "wget", "-O-", "http://boundary:9200"]
+      interval: 3s
+      timeout: 5s
+      retries: 5
+    networks:
+      - hashicorp
+# Boundary controller is the last service to start and may not be fully up
+# by the time the docker compose command returns, so we force a wait by
+# depending a placeholder on the controller healthcheck
+  wait:
+    image: busybox:latest
+    command: ["sleep", "1"]
+    depends_on:
+      boundary:
+        condition: service_healthy
+networks:
+  hashicorp:
+   external: true
