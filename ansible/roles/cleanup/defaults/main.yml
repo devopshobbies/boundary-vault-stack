@@ -1,0 +1,3 @@
+stack_dir: /home/ubuntu/boundary-vault-stack
+secret_file : {{stack_dir}}/secrets/secrets.txt
+home_dir: "{{ playbook_dir | dirname }}"
