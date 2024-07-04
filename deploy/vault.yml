@@ -35,7 +35,7 @@ services:
     volumes:
       - ../scripts/init.sh:/tmp/init.sh
       - ../secrets:/home/
-    entrypoint: sh /tmp/init.sh
+    entrypoint: sh /tmp/init.sh vault-init
     depends_on:
       vault:
         condition: service_healthy
