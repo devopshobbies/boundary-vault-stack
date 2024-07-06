@@ -1,6 +1,6 @@
 - name: deploy boundary compose file
   become: true
-  shell: docker rm -f boundary_db boundary && rm -rf /srv/boundary && VAULT_TOKEN={{ transit_token }} VAULT_ADDR={{ vault_addr }} docker compose -f "{{ compose_file }}/boundary.yml" up -d
+  shell: docker rm -f boundary_db boundary && rm -rf /srv/boundary && VAULT_ADDR={{ vault_addr }} docker compose -f "{{ compose_file }}/boundary.yml" up -d
   register: output
   ignore_errors: true
 
