@@ -11,6 +11,7 @@ Deploy a sample of self-hosted HCP Vault and Boundary using End-To-End automatio
 - [] Add terraform remote backend.
 - [] Use `case` instead of if for argument handling in `init.sh`.
 - [] Create a CI/CD (github actions) pipeline for the project.
-- [] Add proper traefik/nginx configurations to serve the stack as a reverse proxy.
+- [] Add proper configurations to serve the stack as a reverse proxy (the tool is optional).
 - [] Make `display secrets` optional in `cleanup` role.
 - [] Add a sample of tfvars file for boundary and vault with dummy values.
+- [] Create a well-organized template for vault and boundary configurations.
