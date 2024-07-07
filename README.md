@@ -12,11 +12,14 @@ By developing IaC & Configuration Management code and creating vital artifacts s
 - [ ] Install and configure Docker on target (managed) nodes.
 - [ ] Install and configure Terraform on the control node.
 - [ ] Add a sample of tfvars file for boundary and vault with dummy values.
-- [ ] Add Terraform Remote Backend.
+- [ ] Add Terraform Remote Backend. 
+- [ ] Create a well-organized template for vault and boundary configurations.
 - [ ] Create a CI/CD (GitHub actions) pipeline for the project.
 - [ ] Add proper configurations to serve the stack as a reverse proxy in `serve` dir (the tool is optional).
 - [ ] Make `display secrets` optional in the `cleanup` role.
-- [ ] Create a well-organized template for vault and boundary configurations.
 - [ ] Add other Vault auth methods using Terraform.
 - [ ] Use `case` instead of if for argument handling in `init.sh`.
 - [ ] Add a custom logger and use it through all shell scripts for better error handling.
+
+## Bear In Mind
+- if you have issues with DockerHub make sure you change the image registry.
