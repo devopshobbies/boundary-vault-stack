@@ -1,4 +1,4 @@
-#!/bin/env sh
+#!/bin/env bash
 
 set -e
 
@@ -35,9 +35,12 @@ if [[ $# -eq 0 ]]; then
   exit 0
 fi
 
+# source into linter script
+source "${HOME_DIR}/scritps/linter.sh"
 
 STACK_DIR="${2:-/home/ubuntu/boundary-vault-stack}"
 
+# this function is for dev env
 function init_compose(){
   cd compose/
   if ! which docker-compose; then
@@ -47,39 +50,33 @@ function init_compose(){
 }
 
 function init_boundary_iac(){ 
-  HOME_DIR="${HOME_DIR}"
-  cd "${HOME_DIR}/boundary/terraform/"
+  export HOME_DIR="${HOME_DIR}"
+
+  cd "${HOME_DIR}/boundary/terraform/" 
+  lint_terraform
 
   secret_file="${HOME_DIR}/secrets/secrets.txt"
   token=$(cat $secret_file | grep "transit-token" | awk '{print $2}')
   export VAULT_TOKEN="$token"
   export BOUNDARY_ADDR="$BOUNDARY_ADDR"
   
-  if ! which terraform; then
-    echo "Terraform is not installed!"
-    exit 1
-  elif ! terraform validate; then
-    echo "Boundary Terraform configuration is not valid!"
-    exit 2
-  fi
-    terraform apply --auto-approve &> "${HOME_DIR}/logs/boundary-logs.txt"
-  exit 0
+  terraform apply --auto-approve &> "${HOME_DIR}/logs/boundary-logs.txt"
+  return 0
 }
 
 function init_vault_iac(){
-  HOME_DIR="${HOME_DIR}"
-  cd ${HOME_DIR}/vault/terraform
+  export HOME_DIR="${HOME_DIR}"
 
-  if ! terraform validate;then
-    echo "VAULT Terraform configuration is not valid!"
-    exit 2
-  fi
-   
-   secret_file="${HOME_DIR}/secrets/secrets.txt"
-   root_token="$(cat $secret_file | head -n1 | awk '{print $8}')"
-    export VAULT_TOKEN="$root_token"
-    terraform apply --auto-approve &> "${HOME_DIR}/logs/vault-logs.txt"
-    echo -e "\n this is root token $root_token" >> ${HOME_DIR}/logs.txt
+  cd "${HOME_DIR}/vault/terraform"
+  lint_terraform
+  
+  secret_file="${HOME_DIR}/secrets/secrets.txt"
+  root_token="$(cat $secret_file | head -n1 | awk '{print $8}')"
+  export VAULT_TOKEN="$root_token"
+  
+  terraform apply --auto-approve &> "${HOME_DIR}/logs/vault-logs.txt";
+  
+  echo -e "\n this is root token $root_token" >> ${HOME_DIR}/logs.txt
 }
 
 ## vault init container to setup vault and get killed right after.
