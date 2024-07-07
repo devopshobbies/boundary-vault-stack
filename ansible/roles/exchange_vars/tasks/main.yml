@@ -12,11 +12,11 @@
 #   notify: restart_ssh
 
 # - name : add ssh cred store token to variables
-#   shell: bash "{{home_dir}}/scripts/ansible.sh" ssh
+#   shell: bash "{{home_dir}}/scripts/cleanup.sh" ssh
 #   delegate_to: localhost
 
 - name : add transit token to boundary tfvars file
-  shell: bash "{{home_dir}}/scripts/ansible.sh"
+  shell: bash "{{home_dir}}/scripts/cleanup.sh"
   delegate_to: localhost
 
 - name : run vault terraform configuration  

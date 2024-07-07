@@ -1,5 +1,5 @@
 - name : Remove transit token from boundary tfvars file
-  shell : bash "{{home_dir}}/scripts/ansible.sh" -d
+  shell : bash "{{home_dir}}/scripts/cleanup.sh" -d
   delegate_to: localhost
 
 - name: Slurp secret file content
