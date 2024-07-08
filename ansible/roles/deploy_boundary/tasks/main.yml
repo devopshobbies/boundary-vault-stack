@@ -1,8 +1,8 @@
-- name: deploy boundary compose file
+- name: deploy boundary using deploy script
   become: true
-  shell: docker rm -f boundary_db boundary && rm -rf /srv/boundary && VAULT_ADDR={{ vault_addr }} docker compose -f "{{ compose_file }}/boundary.yml" up -d
+  shell: VAULT_ADDR={{ vault_addr }} VAULT_TOKEN={{ transit_token }} STACK_DIR={{ stack_dir }} bash {{ deploy_script }} boundary
   register: output
-  ignore_errors: true
+  # ignore_errors: true
 
 - name : run terraform configuration
   shell: HOME_DIR={{ home_dir }} BOUNDARY_ADDR={{ boundary_addr }} bash "{{home_dir}}/scripts/init.sh" boundary
