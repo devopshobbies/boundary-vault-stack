@@ -1,4 +1,0 @@
-home_dir: "{{ playbook_dir | dirname }}"
-dest_dir: /home/ubuntu/
-
-stack_dir: /home/ubuntu/boundary-vault-stack
