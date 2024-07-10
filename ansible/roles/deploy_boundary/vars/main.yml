@@ -1,0 +1,1 @@
+deploy_script: "{{ stack_dir }}/scripts/deploy.sh"

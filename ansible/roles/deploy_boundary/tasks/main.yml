@@ -1,9 +1,30 @@
-- name: deploy boundary using deploy script
+# - name : debugger
+#   debug: 
+#     msg : "{{  docker_containers.container  }}"
+#   when : docker_containers.container.State.Restarting == true
+
+- name: Get a list of Docker containers
+  community.docker.docker_container_info:
+    name : "{{ item }}"
+  loop : 
+    - "{{ containers }}"
+  register: containers_info
+
+- name: Remove boundary containers if exists.
+  community.docker.docker_container: 
+    name : "{{  item.container.Id  }}"
+    state: absent
+    force_kill: yes     
+  loop :
+    - "{{ docker_containers.results }}"
+  when : item.exists 
+
+- name: Deploy boundary using deploy script
   become: true
-  shell: VAULT_ADDR={{ vault_addr }} VAULT_TOKEN={{ transit_token }} STACK_DIR={{ stack_dir }} bash {{ deploy_script }} boundary
+  shell: VAULT_ADDR={{ vault_addr }} VAULT_TOKEN={{ transit_token }} STACK_DIR={{ stack_dir }}  bash {{ deploy_script }} boundary
   register: output
   # ignore_errors: true
 
-- name : run terraform configuration
+- name : Run terraform configuration
   shell: HOME_DIR={{ home_dir }} BOUNDARY_ADDR={{ boundary_addr }} bash "{{home_dir}}/scripts/init.sh" boundary
   delegate_to: localhost

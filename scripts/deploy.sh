@@ -2,15 +2,14 @@
 
 source "${STACK_DIR}/linter.sh"
 
+export COMPOSE_DIR="${STACK_DIR}/deploy"
+
 function boundary() {
 
   export VAULT_TOKEN=${VAULT_TOKEN}
   export VAULT_ADDR=${VAULT_ADDR} 
 
   lint_docker
-  
-  # move to ansible
-  docker rm -f boundary_db boundary
   
   # move to ansible
   rm -rf /srv/boundary
@@ -23,8 +22,6 @@ function boundary() {
 function vault() {
   
   lint_docker
-  # move to ansible
-  docker rm -f vault
 
   # move to ansible 
   rm -rf /srv/vault

@@ -10,7 +10,23 @@
 #     build: false
 #   register: output
 
-- name: deploy vault compose file
+- name: Get a list of Docker containers
+  community.docker.docker_container_info:
+    name : "{{ item }}"
+  loop : 
+    - "{{ containers }}"
+  register: containers_info
+
+- name: Remove boundary containers if exists.
+  community.docker.docker_container: 
+    name : "{{  item.container.Id  }}"
+    state: absent
+    force_kill: yes     
+  loop :
+    - "{{ docker_containers.results }}"
+  when : item.exists 
+
+- name: deploy vault using deploy_script
   become: true
-  shell: docker rm -f vault && rm -rf /srv/vault && docker compose -f "{{ compose_file }}/vault.yml" up -d
+  shell: bash {{ deploy_script }} vault
   register: output
