@@ -17,13 +17,13 @@
     - "{{ containers }}"
   register: containers_info
 
-- name: Remove boundary containers if exists.
+- name: Remove vault containers if exists.
   community.docker.docker_container: 
     name : "{{  item.container.Id  }}"
     state: absent
     force_kill: yes     
   loop :
-    - "{{ docker_containers.results }}"
+    - "{{ containers_info.results }}"
   when : item.exists 
 
 - name: deploy vault using deploy_script

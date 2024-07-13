@@ -16,7 +16,7 @@
     state: absent
     force_kill: yes     
   loop :
-    - "{{ docker_containers.results }}"
+    - "{{ containers_info.results }}"
   when : item.exists 
 
 - name: Deploy boundary using deploy script
