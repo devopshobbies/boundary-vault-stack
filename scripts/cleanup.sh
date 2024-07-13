@@ -4,7 +4,7 @@ set -e -o pipefail
 
 HOME_DIR="$HOME_DIR"
 
-secret_file="$HOME_DIR/secrets/secrets.txt"
+secret_file="${HOME_DIR}/secrets/secrets.txt"
 
 var_file="${HOME_DIR}/ansible/roles/deploy_boundary/defaults/main.yml"
 
@@ -18,12 +18,12 @@ function inject_ssh_cred(){
     echo -e "\nvault_cred_store_token = $ssh_token" >> $tfvars_file
 }
 
-function delete_key(){
+function delete_token(){
     sed -i '/^transit_token/d' $var_file
 }
 
 if [[ $1 == "-d" ]]; then
-    delete_key
+    delete_token
     exit 0
 elif [[ $1 == "ssh" ]];then
     inject_ssh_cred
