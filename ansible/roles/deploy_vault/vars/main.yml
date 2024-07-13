@@ -1,3 +1,5 @@
 deploy_script: "{{ stack_dir }}/scripts/deploy.sh" 
 containers:
   - "vault"
+  
+vol_path: "/srv/vault"

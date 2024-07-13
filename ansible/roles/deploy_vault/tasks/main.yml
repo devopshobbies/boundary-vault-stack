@@ -3,12 +3,13 @@
   docker_network:
     name: "hashicorp"
 
-# - name: deploy the docker compose files
-#   become: true
-#   community.docker.docker_compose:
-#     project_src: "{{ compose_file }}"
-#     build: false
-#   register: output
+- name: Remove vault volume if not in 'production' env
+  become: true
+  file:
+    path: "{{ vol_path }}"
+    state: absent
+  when: STACK_ENV != 'production'
+  register: vol_absent_result
 
 - name: Get a list of Docker containers
   community.docker.docker_container_info:

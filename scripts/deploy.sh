@@ -11,9 +11,6 @@ function boundary() {
 
   lint_docker
   
-  # move to ansible
-  rm -rf /srv/boundary
-  
   docker compose -f "${COMPOSE_DIR}/boundary.yml" up -d
 
   return 0
@@ -22,9 +19,6 @@ function boundary() {
 function vault() {
   
   lint_docker
-
-  # move to ansible 
-  rm -rf /srv/vault
   
   docker compose -f "${COMPOSE_DIR}/vault.yml" up -d
   
