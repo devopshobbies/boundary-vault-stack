@@ -7,7 +7,7 @@ export COMPOSE_DIR="${STACK_DIR}/deploy"
 function boundary() {
 
   export VAULT_TOKEN=${VAULT_TOKEN}
-  export VAULT_ADDR=${VAULT_ADDR} 
+  export VAULT_ADDR=${VAULT_ADDR}
 
   lint_docker
   
@@ -37,5 +37,6 @@ if [[ "$1" == "boundary" ]]; then
 elif [[ "$1" == "vault" ]]; then
   vault
 else
-  echo "ERROR : Pleasae provide the service name you want to deploy" >&2  
+  echo "ERROR : Pleasae provide the service name you want to deploy" >&2
+  exit 4
 fi

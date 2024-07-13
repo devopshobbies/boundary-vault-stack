@@ -28,7 +28,7 @@ function lint_docker () {
   if ! command -v docker &> /dev/null; then
     echo -e "ERROR: Docker is not installed!" >&2
     echo -e "Please install Docker from https://docs.docker.com/get-docker/" >&2
-    return 4
+    return 1
   fi
 
   if ! docker compose version &> /dev/null; then
@@ -38,7 +38,7 @@ function lint_docker () {
   if ! docker-compose --version &> /dev/null; then
     echo "ERROR: Docker Compose is not installed!" >&2
     echo "Please install Docker Compose from https://docs.docker.com/compose/install/" >&2
-    return 5
+    return 1
   fi
 
   return 0
