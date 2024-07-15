@@ -1,3 +1,51 @@
+#!/bin/bash
+
+set -e
+
+function usage(){
+
+ cat <<EOF
+
+Usage: $(basename "$0") [options] <argument>
+
+Description:
+ This script initiates boundary vault stack in your desired environment.
+
+Options:
+    -h, --help       Display this help message and exit
+    -e               Define which environment to run the stack in (development/staging/production).
+
+Example:
+
+    - run in dev:
+        $(basename "$0") -e development
+
+EOF
+}
+
+if [[ $1 == "--help" ]]; then
+  usage
+  exit 0
+fi
+
+# get the STACK_ENV var from user.
+while getopts "e:" opt; do
+  case $opt in
+    e)
+      export STACK_ENV="${OPTARG}"
+      ;;
+    \?)
+      echo "Invalid option: -${OPTARG}" >&2
+      exit 5
+      ;;
+  esac
+done
+
+if [ $# -ne 2 ]; then
+  usage
+  exit 5
+fi
+
 ## create ignored dirs in git for confidential data
 mkdir -p logs/ secrets/
 
