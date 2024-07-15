@@ -12,7 +12,7 @@ Description:
  This script initiates boundary vault stack in your desired environment.
 
 Options:
-    -h, --help       Display this help message and exit
+    --help       Display this help message and exit
     -e               Define which environment to run the stack in (development/staging/production).
 
 Example:
