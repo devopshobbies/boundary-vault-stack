@@ -87,4 +87,4 @@ scripts/init.sh vault
 # Exit code: 4
 ```
 
-For further assistance, please open an issue on the [GitHub Issues page](#).
+For further assistance, please open an issue on the [GitHub Issues page](https://github.com/Shayan-Ghani/boundary-vault-stack/issues).
