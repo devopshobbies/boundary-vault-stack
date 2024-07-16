@@ -19,7 +19,7 @@
     - "{{ containers_info.results }}"
   when : item.exists 
 
-- name: Remove boundary volume if not in 'production' env
+- name: Remove boundary db volume if not in 'production' env
   become: true
   file:
     path: "{{ vol_path }}"
@@ -29,7 +29,7 @@
 
 - name: Deploy boundary using deploy script
   become: true
-  shell: VAULT_ADDR={{ vault_addr }} VAULT_TOKEN={{ transit_token }} STACK_DIR={{ stack_dir }}  bash {{ deploy_script }} boundary
+  shell: VAULT_ADDR={{ vault_addr }} VAULT_TOKEN={{ transit_token }} STACK_DIR={{ stack_dir }} bash {{ deploy_script }} boundary
   register: output
   # ignore_errors: true
 
