@@ -23,7 +23,7 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
 
 - [ ] Create a well-organized Ansible template for Vault and boundary configurations.
 - [ ] Update environment variable declaration through Ansible roles to use `environment` attribute instead of inline definition in `shell` module.
-- [ ] Make `display secrets` optional in the `cleanup` role.
+- [ ] Make `display secrets` optional in the ``cleanup`` role.
 - [ ] Add proper configurations to serve the stack as a reverse proxy in the `serve` directory(the tool is optional).
 - [ ] Update `boundary.yml` to use ENV variables instead of hardcoding then handle the export of the env variables with Ansible.
 - [ ] Using ansible `community.docker.docker_container` collection, convert docker-compose files to the corresponding Ansible module as an optional deployment method.
@@ -35,6 +35,7 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
 - [ ] Use `case` instead of if for argument handling in `init.sh`.
 - [ ] Make `start.sh` ask for the ansible-vault password once and use it for all.
 - [ ] Update the sleep commands in the `start.sh` to use Ansible wait_for modules instead.
+- [ ] remove vault root token in `cleanup`.
 
 ## Bear In Mind
 - if you have issues with DockerHub make sure you change the image registry.
