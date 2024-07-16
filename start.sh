@@ -36,14 +36,14 @@ while getopts "e:" opt; do
       ;;
     \?)
       echo "Invalid option: -${OPTARG}" >&2
-      exit 5
+      exit 4
       ;;
   esac
 done
 
 if [ $# -ne 2 ]; then
   usage
-  exit 5
+  exit 4
 fi
 
 ## create ignored dirs in git for confidential data
