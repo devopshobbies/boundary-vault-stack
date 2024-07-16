@@ -10,11 +10,12 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
  #run in dev:
         ./start.sh -e <env>
  ```
+ If you need further assistance on the exit/return code, check out [ wiki ](./artifacts/wiki.md).
 
 ## TO-DO
 - [ ] Add Vagrant or vSphere/AWS/Azure Terraform providers to provision a VM for deploying the stack (`provision` directory).
-- [ ] Install and configure Docker on target (managed) nodes.
-- [ ] Install and configure Terraform on the control node.
+- [ ] Install and configure `Docker` on **target (managed) node(s)** (`prepare_env` role).
+- [ ] Install and configure `Terraform` on the **control node** (`prepare_env` role).
 - [ ] Add a sample of the `tfvars` file for boundary and Vault with dummy values.
 - [ ] Add Terraform Remote Backend option for Boundary and Vault. 
 - [ ] Add other Vault auth methods using Terraform.
