@@ -26,6 +26,7 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
 - [ ] Add proper configurations to serve the stack as a reverse proxy in the `serve` directory(the tool is optional).
 - [ ] Update `boundary.yml` to use ENV variables instead of hardcoding then handle the export of the env variables with Ansible.
 - [ ] Using ansible `community.docker.docker_container` collection, convert docker-compose files to the corresponding Ansible module as an optional deployment method.
+- [ ] Output Boundary and Vault `address` at the end of the play.
 
 - [ ] Implement automated testing using GitHub actions for pull requests.
 
