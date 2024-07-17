@@ -43,9 +43,9 @@ STACK_DIR="${2:-/home/ubuntu/boundary-vault-stack}"
 # this function is for dev env
 function init_compose(){
   cd compose/
-  if ! which docker-compose; then
-    echo "docker-compose is not installed!"
-  fi
+  
+  lint_docker
+
   docker-compose -f docker-compose.yml up -d 
 }
 
@@ -76,7 +76,7 @@ function init_vault_iac(){
   
   terraform apply --auto-approve &> "${HOME_DIR}/logs/vault-logs.txt";
   
-  echo -e "\n this is root token $root_token" >> ${HOME_DIR}/logs.txt
+  echo -e "\n this is the root token $root_token" >> ${HOME_DIR}/logs.txt
 }
 
 ## vault init container to setup vault and get killed right after.

@@ -18,7 +18,7 @@
     - "{{ containers }}"
   register: containers_info
 
-- name: Remove vault containers if exists.
+- name: Remove vault containers if exists
   community.docker.docker_container: 
     name : "{{  item.container.Id  }}"
     state: absent
@@ -30,4 +30,10 @@
 - name: deploy vault using deploy_script
   become: true
   shell: bash {{ deploy_script }} vault
-  register: output
+  ignore_errors: true
+  register: vault_deployment
+
+- name: handle errors if occurred  
+  include_tasks: "{{handlers}}/fail_task.yml"
+  vars:
+    output: "{{ vault_deployment }}"

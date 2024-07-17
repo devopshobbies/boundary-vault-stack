@@ -1,0 +1,4 @@
+- name: Fail if a task failed
+  fail:
+    msg: "{{ output.stderr | default(output.stdout, true) }}"
+  when: output.rc != 0
