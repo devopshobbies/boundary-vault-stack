@@ -1,0 +1,1 @@
+secret_file : "{{stack_dir}}/secrets/secrets.txt"

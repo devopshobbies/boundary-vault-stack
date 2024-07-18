@@ -1,18 +1,5 @@
-- name : Remove transit token from boundary tfvars file
-  shell : bash "{{home_dir}}/scripts/cleanup.sh" -d
-  delegate_to: localhost
+- include_tasks: "tokens.yml"
 
-- name: Slurp secret file content
-  slurp:
-    src: "{{ secret_file }}"
-  register: secrets
-
-- name: Display secrets
-  debug:
-    msg: "{{ secrets.content | b64decode }}"
-
-- name: Remove the secrets.txt file form the target node(s)
-  ansible.builtin.file:
-    path: "{{ secret_file }}"
-    state: absent
+- name: secrets.txt related clean up ops
+  include_tasks: "secrets_file.yml"
 
