@@ -1,0 +1,36 @@
+---
+
+  - hosts: localhost
+    become: yes
+    vars:
+      ansible_python_interpreter: "{{home_dir}}/venv/bin/python3"
+      containers:
+        - nginx-2
+        - nginx
+    tasks:
+
+    ## check if container exists then remove it, or check if restarting too.
+      - name: Get a list of Docker containers
+        community.docker.docker_container_info:
+          name : "{{ item }}"
+        loop : "{{ containers }}"
+        register: docker_containers
+
+      # - name: Get a list of all Docker containers
+      #   community.docker.docker_container_info:
+      #     name : mysql
+      #   register: docker_containers
+
+      - name : debugger
+        community.docker.docker_container: 
+          name : "{{  item.container.Id  }}"
+          state: absent
+          force_kill: yes     
+        loop : "{{ docker_containers.results }}"
+        when : item.exists 
+        # when : item.container.State.Restarting == false
+
+      # - name : debugger
+      #   debug: 
+      #     msg : "{{  docker_containers.container.Id  }}"
+      #   when : docker_containers.container.State.Restarting == false
