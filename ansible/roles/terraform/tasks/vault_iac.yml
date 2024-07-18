@@ -1,0 +1,10 @@
+- name : run vault terraform configuration  
+  shell: bash "{{home_dir}}/scripts/init.sh" vault
+  delegate_to: localhost
+  ignore_errors : true
+  register: vault_terraform
+
+- name: handle errors if occurred  
+  include_tasks: "{{handlers}}/fail_task.yml"
+  vars:
+    output: "{{ vault_terraform }}"

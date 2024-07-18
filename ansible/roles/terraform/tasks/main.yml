@@ -1,39 +1,7 @@
-- name: fetch the secret file to control node
-  become: true
-  fetch:
-    src: "{{stack_dir}}/secrets/secrets.txt"
-    dest: "{{home_dir}}/secrets/secrets.txt"
-    flat: yes
+- include_tasks: "secrets.yml"
 
-- name : configure ssh public_key from vault
-  become: true
-  shell: cp {{stack_dir}}/secrets/ca-key.pub /etc/ssh/ca-key.pub && chown 1000:1000 /etc/ssh/ca-key.pub && chmod 644 /etc/ssh/ca-key.pub && echo "TrustedUserCAKeys /etc/ssh/ca-key.pub" >> /etc/ssh/sshd_config
-  notify: restart_ssh
-  when: ssh_injection == True
+- include_tasks: "cred_store_ssh.yml"
 
-- name : add ssh cred store token to variables
-  shell: bash "{{home_dir}}/scripts/cleanup.sh" ssh
-  delegate_to: localhost
-  when: ssh_injection == True  
+- include_tasks: "tfvars_token.yml"
 
-- name : add transit token to boundary tfvars file
-  shell: bash "{{home_dir}}/scripts/cleanup.sh"
-  delegate_to: localhost
-  ignore_errors: true
-  register: tfvars_token_injection
-
-- name: handle errors if occurred  
-  include_tasks: "{{handlers}}/fail_task.yml"
-  vars:
-    output: "{{ tfvars_token_injection }}"
-
-- name : run vault terraform configuration  
-  shell: bash "{{home_dir}}/scripts/init.sh" vault
-  delegate_to: localhost
-  ignore_errors : true
-  register: vault_terraform
-
-- name: handle errors if occurred  
-  include_tasks: "{{handlers}}/fail_task.yml"
-  vars:
-    output: "{{ vault_terraform }}"
+- include_tasks: "vault_iac.yml"
