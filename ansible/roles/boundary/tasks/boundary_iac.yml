@@ -1,0 +1,10 @@
+- name : Run terraform configuration
+  shell: HOME_DIR={{ home_dir }} BOUNDARY_ADDR={{ boundary_addr }} bash "{{home_dir}}/scripts/init.sh" boundary
+  delegate_to: localhost
+  ignore_erros: true
+  register: terraform_boundary
+
+- name: handle errors if occurred  
+  include_tasks: "{{handlers}}/fail_task.yml"
+  vars:
+    output: "{{ terraform_boundary }}"
