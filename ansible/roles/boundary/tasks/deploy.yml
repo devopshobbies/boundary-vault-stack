@@ -1,16 +1,3 @@
-- name : create hcp external
-  become: true
-  docker_network:
-    name: "hashicorp"
-
-- name: Remove vault volume if not in 'production' env
-  become: true
-  file:
-    path: "{{ vol_path }}"
-    state: absent
-  when: STACK_ENV != 'production'
-  register: vol_absent_result
-
 - name: Get a list of Docker containers
   community.docker.docker_container_info:
     name : "{{ item }}"
@@ -18,7 +5,7 @@
     - "{{ containers }}"
   register: containers_info
 
-- name: Remove vault containers if exists
+- name: Remove boundary containers if exists.
   community.docker.docker_container: 
     name : "{{  item.container.Id  }}"
     state: absent
@@ -27,13 +14,21 @@
     - "{{ containers_info.results }}"
   when : item.exists 
 
-- name: deploy vault using deploy_script
+- name: Remove boundary db volume if not in 'production' env
   become: true
-  shell: bash {{ deploy_script }} vault
+  file:
+    path: "{{ vol_path }}"
+    state: absent
+  when: STACK_ENV != 'production'
+  register: vol_absent_result
+
+- name: Deploy boundary using deploy script
+  become: true
+  shell: VAULT_ADDR={{ vault_addr }} VAULT_TOKEN={{ transit_token }} STACK_DIR={{ stack_dir }} bash {{ deploy_script }} boundary
   ignore_errors: true
-  register: vault_deployment
+  register: boundary_deployment
 
 - name: handle errors if occurred  
   include_tasks: "{{handlers}}/fail_task.yml"
   vars:
-    output: "{{ vault_deployment }}"
+    output: "{{ boundary_deployment }}"

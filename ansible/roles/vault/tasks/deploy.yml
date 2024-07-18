@@ -1,0 +1,39 @@
+- name : create hcp external
+  become: true
+  docker_network:
+    name: "hashicorp"
+
+- name: Remove vault volume if not in 'production' env
+  become: true
+  file:
+    path: "{{ vol_path }}"
+    state: absent
+  when: STACK_ENV != 'production'
+  register: vol_absent_result
+
+- name: Get a list of Docker containers
+  community.docker.docker_container_info:
+    name : "{{ item }}"
+  loop : 
+    - "{{ containers }}"
+  register: containers_info
+
+- name: Remove vault containers if exists
+  community.docker.docker_container: 
+    name : "{{  item.container.Id  }}"
+    state: absent
+    force_kill: yes     
+  loop :
+    - "{{ containers_info.results }}"
+  when : item.exists 
+
+- name: deploy vault using deploy_script
+  become: true
+  shell: bash {{ deploy_script }} vault
+  ignore_errors: true
+  register: vault_deployment
+
+- name: handle errors if occurred  
+  include_tasks: "{{handlers}}/fail_task.yml"
+  vars:
+    output: "{{ vault_deployment }}"
