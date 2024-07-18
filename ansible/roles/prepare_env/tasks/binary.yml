@@ -1,0 +1,6 @@
+- name: Add binaries to .bashrc
+  ansible.builtin.lineinfile:
+    path: ~/.bashrc
+    line: 'export PATH=$PATH:{{ stack_dir }}/boundary/bin/'
+    state: present
+    create: yes
