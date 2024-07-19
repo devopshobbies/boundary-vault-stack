@@ -47,3 +47,5 @@ architecture/
 to-do
 to-research
 **local.yml
+.vagrant
+*VBox*.log
