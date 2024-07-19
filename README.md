@@ -14,13 +14,14 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
 
 ## TO-DO
 - [ ] Add Vagrant or vSphere/AWS/Azure Terraform providers to provision a VM for deploying the stack (`provision` directory).
-- [ ] Install and configure `Docker` on **target (managed) node(s)** (`prepare_env` role).
-- [ ] Install and configure `Terraform` on the **control node** (`prepare_env` role).
 - [ ] Add a sample of the `tfvars` file for boundary and Vault with dummy values.
 - [ ] Add Terraform Remote Backend option for Boundary and Vault. 
 - [ ] Add other Vault auth methods using Terraform.
 - [ ] Implement Policy as Code (PaC) to validate Terraform policies.
 
+- [ ] Install and configure `Terraform` on the **control node** (`prepare_env` role).
+- [ ] Install and configure `Docker` on **target (managed) node(s)** (`prepare_env` role).
+- [ ] Optionally, install boundary and vault on **admins** node(s) Based on `STACK_BIN=true/false` env variable. 
 - [ ] Create a well-organized Ansible template for Vault and boundary configurations.
 - [ ] Update environment variable declaration through Ansible roles to use `environment` attribute instead of inline definition in `shell` module.
 - [ ] Make `display secrets` optional in the `cleanup` role.
