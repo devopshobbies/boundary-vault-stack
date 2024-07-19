@@ -1,4 +1,1 @@
 - include_tasks: "files_and_directories.yml"
-
-- name: prepare binary files and bashrc
-  include_tasks: "binary.yml"
