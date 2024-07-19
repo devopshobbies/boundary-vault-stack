@@ -1,0 +1,6 @@
+- name: pull necessary docker images
+  community.docker.docker_image:
+    name: "{{ item.value.name }}"
+    source: pull
+    tag: "{{ item.value.tag }}"
+  loop: "{{ docker_images | dict2items }}"

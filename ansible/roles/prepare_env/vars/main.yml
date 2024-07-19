@@ -1,1 +1,15 @@
 dest_dir: /home/ubuntu/
+
+docker_images:
+  vault:
+    name: hashicorp/vault
+    tag: 1.13.3
+  postgresql:
+    name: bitnami/postgresql
+    tag: 16
+  boundary:
+    name: hashicorp/boundary
+    tag: 0.14
+  busybox:
+    name: busybox
+    tag: latest

@@ -49,3 +49,5 @@ to-research
 **local.yml
 .vagrant
 *VBox*.log
+**/bin/boundary**
+**test-play**
