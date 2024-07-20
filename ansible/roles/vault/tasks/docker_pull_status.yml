@@ -1,0 +1,8 @@
+- name: Check docker pull status
+  async_status:
+    jid: "{{ docker_pull_job.ansible_job_id }}"
+  register: pull_result
+  until: pull_result.finished
+  retries: 10
+  delay: 60
+

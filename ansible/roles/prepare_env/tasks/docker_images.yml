@@ -4,3 +4,6 @@
     source: pull
     tag: "{{ item.value.tag }}"
   loop: "{{ docker_images | dict2items }}"
+  async: 600
+  poll: 0
+  register: docker_pull_job
