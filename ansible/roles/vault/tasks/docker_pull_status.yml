@@ -1,8 +1,14 @@
 - name: Check docker pull status
-  async_status:
-    jid: "{{ docker_pull_job.ansible_job_id }}"
+  ansible.builtin.async_status:
+    jid: "{{ item }}"
   register: pull_result
   until: pull_result.finished
   retries: 10
   delay: 60
+  loop: "{{job_ids}}"
 
+- name: Clean up async file
+  ansible.builtin.async_status:
+    jid: '{{ item }}'
+    mode: cleanup
+  loop: "{{job_ids}}"

@@ -7,3 +7,7 @@
   async: 600
   poll: 0
   register: docker_pull_job
+
+- name: Extract job IDs
+  set_fact:
+    job_ids: "{{ docker_pull_job.results | map(attribute='ansible_job_id') | list }}"
