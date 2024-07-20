@@ -1,7 +1,7 @@
-- include_tasks: "secrets.yml"
+- include_tasks: "{{ role_path }}/tasks/secrets.yml"
 
-- include_tasks: "cred_store_ssh.yml"
+- include_tasks: "{{ role_path }}/tasks/cred_store_ssh.yml"
 
-- include_tasks: "tfvars_token.yml"
+- include_tasks: "{{ role_path }}/tasks/tfvars_token.yml"
 
-- include_tasks: "vault_iac.yml"
+- include_tasks: "{{ role_path }}/tasks/vault_iac.yml"

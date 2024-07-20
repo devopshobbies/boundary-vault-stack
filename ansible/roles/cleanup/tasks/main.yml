@@ -1,5 +1,5 @@
-- include_tasks: "tokens.yml"
+- include_tasks: "{{ role_path }}/tasks/tokens.yml"
 
 - name: secrets.txt related clean up ops
-  include_tasks: "secrets_file.yml"
+  include_tasks: "{{ role_path }}/tasks/secrets_file.yml"
 
