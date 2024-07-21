@@ -5,6 +5,8 @@ Deploy Self-Hosted HCP Vault and Boundary using End-To-End automation.
 By providing a comprehensive and hands-on experience in Infrastructure as Code (IaC) and Configuration Management along with creating vital deliverables such as documentation and diagrams, this project simulates a real-world infrastructure development that emphasizes End-to-End automation, enabling DevOps Engineers to collaborate and deliver a reliable and production-ready stack to the end-users.
 
 ## How To Use
+**First, make sure you have [READ THE DOCUMENTATION](./artifacts/wiki.md) for instructions on how the stack works.**
+
  To initialize the process run `start.sh` script in your desired environment:
  ```bash
  #run in dev:
