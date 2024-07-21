@@ -1,4 +1,4 @@
-#!/bin/env bash
+# !/bin/env bash
 
 set -e
 
@@ -36,7 +36,9 @@ if [[ $# -eq 0 ]]; then
 fi
 
 # source into linter script
-source "${HOME_DIR}/scritps/linter.sh"
+if [[ $1 != "vault-init" ]]; then 
+    source "${HOME_DIR}/scritps/linter.sh"
+fi
 
 STACK_DIR="${2:-/home/ubuntu/boundary-vault-stack}"
 
