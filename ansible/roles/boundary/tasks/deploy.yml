@@ -10,7 +10,7 @@
     name : "{{  item.container.Id  }}"
     state: absent
     force_kill: yes     
-  loop :
+  with_items :
     - "{{ containers_info.results }}"
   when : item.exists 
 
