@@ -10,7 +10,11 @@ function boundary() {
   export VAULT_ADDR=${VAULT_ADDR}
 
   lint_docker
-  
+
+  if [[ "$STACK_INIT" == "false" ]]; then
+    docker compose -f "${COMPOSE_DIR}/boundary.yml" up -d postgres_db boundary wait
+    return $?
+  fi
   docker compose -f "${COMPOSE_DIR}/boundary.yml" up -d
 
   return 0
@@ -20,7 +24,12 @@ function vault() {
   
   lint_docker
   
-  docker compose -f "${COMPOSE_DIR}/vault.yml" up -d
+  if [[ "$STACK_INIT" == "false" ]]; then
+    docker compose -f "${COMPOSE_DIR}/vault.yml" up -d vault
+    return $?
+  fi
+  
+  docker compose -f "${COMPOSE_DIR}/vault.yml" up 
   
   return 0
 }
