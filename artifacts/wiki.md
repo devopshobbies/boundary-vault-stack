@@ -1,5 +1,31 @@
 # Boundary-Vault-Stack
 
+
+## Configurations 
+
+### Environment Variables
+
+#### STACK_ENV (mandatory)
+**Description**: This variable determies in which mode/environment the stack is deployed. 
+
+**Options**:
+  - development
+  - test
+  - staging
+  - production
+
+**default**: development
+
+#### STACK_INIT (mandatory)
+
+**Description**: When **first** running the stack, `vault-init` and `boundary-init` services are in charge of initiating the basic configurations for `boundary` and `vault`. This variable determines wether this services should be executed or not. So if it's **not** your first time running the stack successfully, set to `false`.
+
+**Options**:
+  - true
+  - false
+
+**default**: true
+
 ## Return/Exit Codes
 
 In this project, several scripts use return/exit codes to indicate the result of operations. Understanding these codes is essential for diagnosing issues and ensuring proper execution of the scripts. Below is a detailed explanation of each return/exit code used in the project.
