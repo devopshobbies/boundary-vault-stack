@@ -27,13 +27,13 @@
     - "{{ containers_info.results }}"
   when : item.exists 
 
-# - name: deploy vault using deploy_script
-#   become: true
-#   shell: bash {{ deploy_script }} vault
-#   ignore_errors: true
-#   register: vault_deployment
+- name: deploy vault using deploy_script
+  become: true
+  shell: STACK_DIR={{ stack_dir }} STACK_INIT="{{ STACK_INIT }}" bash {{ deploy_script }} vault
+  ignore_errors: true
+  register: vault_deployment
 
-# - name: handle errors if occurred  
-#   include_tasks: "{{handlers}}/fail_task.yml"
-#   vars:
-#     output: "{{ vault_deployment }}"
+- name: handle errors if occurred  
+  include_tasks: "{{handlers}}/fail_task.yml"
+  vars:
+    output: "{{ vault_deployment }}"
