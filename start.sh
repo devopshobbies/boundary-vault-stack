@@ -47,7 +47,7 @@ if [ $# -ne 2 ]; then
 fi
 
 ## create ignored dirs in git for confidential data
-mkdir -p logs/ secrets/
+mkdir -p logs/ secrets/ logs/docker
 
 ## install required collections
 ansible-galaxy collection install -r requirements.yml
