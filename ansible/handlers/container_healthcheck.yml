@@ -1,0 +1,29 @@
+- name: wait for the containers to get ready
+  ansible.builtin.wait_for:
+    timeout: 10
+  delegate_to: localhost
+
+- name: check if contianer is healthy  
+  debug:
+    msg: "Container {{ item.container.Name }} is healthy"
+  with_items :
+    - "{{ INFO.results }}"
+  when: item.container.State.Running and item.container.State.Restarting != true
+
+- name: fetch the logfile for the unhealthy container(s)
+  # become: true
+  fetch:
+    src: "{{ item.container.LogPath }}"
+    dest: "{{ log_path }}/docker/{{item.container.Name}}.txt"
+    flat: true
+  with_items :
+    - "{{ INFO.results }}"
+  when: item.container.State.Running != true
+
+- name: handle errors if occurred  
+  include_tasks: "{{handlers}}/fail_task.yml"
+  vars:
+    message: "Container {{ item.container.Name }} is NOT healthy"
+  with_items :
+    - "{{ INFO.results }}"
+  when : item.container.State.Running != true
