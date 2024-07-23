@@ -1,3 +1,5 @@
 - include_tasks: "{{ role_path }}/tasks/docker_pull_status.yml"
 
 - include_tasks: "{{ role_path }}/tasks/deploy.yml"
+
+- include_tasks: "{{ role_path }}/tasks/secrets.yml"
