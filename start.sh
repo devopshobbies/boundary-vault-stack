@@ -13,7 +13,7 @@ Description:
 
 Options:
     --help       Display this help message and exit
-    -e               Define which environment to run the stack in (development/staging/production).
+    -e           Define which environment to run the stack in (development/staging/test/production).
 
 Example:
 
@@ -32,10 +32,19 @@ fi
 while getopts "e:" opt; do
   case $opt in
     e)
-      export STACK_ENV="${OPTARG}"
+      case "$OPTARG" in
+        development | staging | test | production)
+          export STACK_ENV="${OPTARG}"
+          echo $STACK_ENV
+        ;;
+        *)
+          echo "ERROR: Invalid value for -e : ${OPTARG} , For more info use --help or reach out to Documentation." >&2
+          exit 4
+        ;;
+      esac
       ;;
     \?)
-      echo "Invalid option: -${OPTARG}" >&2
+      echo "ERROR: Invalid option: -${OPTARG} For more info use --help or reach out to Documentation" >&2
       exit 4
       ;;
   esac
@@ -46,15 +55,16 @@ if [ $# -ne 2 ]; then
   exit 4
 fi
 
+
 ## create ignored dirs in git for confidential data
-mkdir -p logs/ secrets/ logs/docker
+# mkdir -p logs/ secrets/ logs/docker
 
-## install required collections
-ansible-galaxy collection install -r requirements.yml
+# ## install required collections
+# ansible-galaxy collection install -r requirements.yml
 
-ansible-playbook -i ansible/inventory/inventory.ini ansible/playbook.yml --ask-vault-pass
-## wait 10 seconds for the vault changes to take effect
-sleep 10
-ansible-playbook -i ansible/inventory/inventory.ini ansible/terraform.yml --ask-vault-pass 
-sleep 5
-ansible-playbook -i ansible/inventory/inventory.ini ansible/boundary.yml --ask-vault-pass
+# ansible-playbook -i ansible/inventory/inventory.ini ansible/playbook.yml --ask-vault-pass
+# ## wait 10 seconds for the vault changes to take effect
+# sleep 10
+# ansible-playbook -i ansible/inventory/inventory.ini ansible/terraform.yml --ask-vault-pass 
+# sleep 5
+# ansible-playbook -i ansible/inventory/inventory.ini ansible/boundary.yml --ask-vault-pass
