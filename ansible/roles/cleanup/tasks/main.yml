@@ -2,4 +2,3 @@
 
 - name: secrets.txt related clean up ops
   include_tasks: "{{ role_path }}/tasks/secrets_file.yml"
-
