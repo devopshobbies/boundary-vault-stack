@@ -28,27 +28,42 @@ if [[ $1 == "--help" ]]; then
   exit 0
 fi
 
-# get the STACK_ENV var from user.
-while getopts "e:" opt; do
-  case $opt in
-    e)
-      case "$OPTARG" in
-        development | staging | test | production)
-          export STACK_ENV="${OPTARG}"
-          echo $STACK_ENV
+function check_env(){
+  case "$1" in
+    development | staging | test | production)
+      return 0
+    ;;
+    *)
+      echo "ERROR: Invalid value for -e : ${1} , For more info use --help or reach out to Documentation." >&2  
+      return 4
+    ;;
+  esac  
+}
+
+function get_options(){
+  # get the STACK_ENV var from user.
+  while getopts "e:" opt; do
+    case $opt in
+      e) 
+        check_env "$OPTARG"
+        export STACK_ENV="${OPTARG}"
+        echo "Running Boundary Vault Stack on ${STACK_ENV} Mode."
         ;;
-        *)
-          echo "ERROR: Invalid value for -e : ${OPTARG} , For more info use --help or reach out to Documentation." >&2
-          exit 4
+      \?)
+        echo "ERROR: Invalid option: -${OPTARG} For more info use --help or reach out to Documentation" >&2
+        return 4
         ;;
-      esac
-      ;;
-    \?)
-      echo "ERROR: Invalid option: -${OPTARG} For more info use --help or reach out to Documentation" >&2
-      exit 4
-      ;;
-  esac
-done
+    esac
+  done
+}
+
+if [ -z "$STACK_ENV" ]; then
+  get_options
+elif ! check_env "$STACK_ENV"; then
+  exit 4
+else
+  echo "Running Boundary Vault Stack on ${STACK_ENV} Mode."
+fi
 
 if [ $# -ne 2 ]; then
   usage
