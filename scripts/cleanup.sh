@@ -2,11 +2,11 @@
 set -e -o pipefail
 ### run this script before starting boundary's compose
 
-HOME_DIR="$HOME_DIR"
+export HOME_DIR="$HOME_DIR"
 
 secret_file="${HOME_DIR}/secrets/secrets.txt"
 
-var_file="${HOME_DIR}/ansible/roles/deploy_boundary/defaults/main.yml"
+var_file="${HOME_DIR}/ansible/roles/boundary/vars/main.yml"
 
 token=$(cat $secret_file | grep "transit-token" | awk '{print $2}')
 ssh_token=$(cat $secret_file | grep "vault_cred_store_token" | awk '{print $2}')
