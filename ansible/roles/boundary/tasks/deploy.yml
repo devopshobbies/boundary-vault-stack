@@ -1,8 +1,7 @@
 - name: Get a list of Docker containers
   community.docker.docker_container_info:
     name : "{{ item }}"
-  loop : 
-    - "{{ containers }}"
+  loop : "{{ containers }}"
   register: containers_info
 
 - name: Remove boundary containers if exists.

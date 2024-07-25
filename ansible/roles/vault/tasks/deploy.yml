@@ -14,8 +14,7 @@
 - name: Get a list of Docker containers
   community.docker.docker_container_info:
     name : "{{ item }}"
-  loop : 
-    - "{{ containers }}"
+  loop : "{{ containers }}"
   register: containers_info
 
 - name: Remove vault containers if exists
@@ -32,6 +31,12 @@
   shell: STACK_DIR={{ stack_dir }} STACK_INIT="{{ STACK_INIT }}" bash {{ deploy_script }} vault
   ignore_errors: true
   register: vault_deployment
+
+- name: Get a list of Docker containers
+  community.docker.docker_container_info:
+    name : "{{ item }}"
+  loop : "{{ containers }}"
+  register: containers_info
 
 - name: handle errors if occurred  
   include_tasks: "{{handlers}}/fail_task.yml"
