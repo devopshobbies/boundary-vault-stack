@@ -32,3 +32,7 @@
   include_tasks: "{{handlers}}/fail_task.yml"
   vars:
     output: "{{ boundary_deployment }}"
+
+- include_tasks: "{{handlers}}/container_healthcheck.yml"
+  vars:
+    INFO: "{{ containers_info }}"
