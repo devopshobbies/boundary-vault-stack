@@ -40,8 +40,7 @@ function check_env(){
   esac  
 }
 
-function get_options(){
-  # get the STACK_ENV var from user.
+if [ -z "$STACK_ENV" ]; then
   while getopts "e:" opt; do
     case $opt in
       e) 
@@ -55,10 +54,6 @@ function get_options(){
         ;;
     esac
   done
-}
-
-if [ -z "$STACK_ENV" ]; then
-  get_options
 elif ! check_env "$STACK_ENV"; then
   exit 4
 else
@@ -72,14 +67,14 @@ fi
 
 
 ## create ignored dirs in git for confidential data
-# mkdir -p logs/ secrets/ logs/docker
+mkdir -p logs/ secrets/ logs/docker
 
-# ## install required collections
-# ansible-galaxy collection install -r requirements.yml
+## install required collections
+ansible-galaxy collection install -r requirements.yml
 
-# ansible-playbook -i ansible/inventory/inventory.ini ansible/playbook.yml --ask-vault-pass
-# ## wait 10 seconds for the vault changes to take effect
-# sleep 10
-# ansible-playbook -i ansible/inventory/inventory.ini ansible/terraform.yml --ask-vault-pass 
-# sleep 5
-# ansible-playbook -i ansible/inventory/inventory.ini ansible/boundary.yml --ask-vault-pass
+ansible-playbook -i ansible/inventory/inventory.ini ansible/playbook.yml --ask-vault-pass
+## wait 10 seconds for the vault changes to take effect
+sleep 10
+ansible-playbook -i ansible/inventory/inventory.ini ansible/terraform.yml --ask-vault-pass 
+sleep 5
+ansible-playbook -i ansible/inventory/inventory.ini ansible/boundary.yml --ask-vault-pass
