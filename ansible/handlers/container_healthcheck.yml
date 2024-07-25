@@ -1,6 +1,6 @@
 - name: wait for the containers to get ready
   ansible.builtin.wait_for:
-    timeout: 10
+    timeout: 30
   delegate_to: localhost
 
 - name: check if contianer is healthy  
