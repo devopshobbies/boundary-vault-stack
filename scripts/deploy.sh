@@ -29,7 +29,7 @@ function vault() {
     return $?
   fi
   
-  docker compose -f "${COMPOSE_DIR}/vault.yml" up 
+  docker compose -f "${COMPOSE_DIR}/vault.yml" up -d
   
   return 0
 }
