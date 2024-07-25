@@ -14,6 +14,8 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
  ```
  If you need further assistance on the exit/return code, check out [ wiki ](./artifacts/wiki.md).
 
+**The `ansible-vault-pass` is `BVSTACK`. this is for the sake of simplicity and sample make sure you use a strong password for your ansible vault encrypted files.**
+
 ## TO-DO
 - [ ] Add Vagrant or vSphere/AWS/Azure Terraform providers to provision a VM for deploying the stack (`provision` directory).
 - [ ] Add a sample of the `tfvars` file for boundary and Vault with dummy values.
