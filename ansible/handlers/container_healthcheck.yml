@@ -5,11 +5,11 @@
 
 - name: check if contianer is healthy  
   debug:
-    msg: "{{ item.container.Name }}"
+    msg: "Container {{ item.container.Name }} is healthy"
   with_items :
     - "{{ INFO.results }}"
   loop_control:
-    label: "Container {{ item.container.Name }} is healthy"
+    label: "{{ item.container.Name }}"
   when: item.container.State.Running and item.container.State.Restarting != true
 
 - name: fetch the logfile for the unhealthy container(s)
@@ -21,6 +21,8 @@
     fail_on_missing: true
   with_items :
     - "{{ INFO.results }}"
+  loop_control:
+    label: "{{ item.container.LogPath }}" 
   when: item.container.State.Running != true
 
 - name: handle errors if occurred  
@@ -29,4 +31,6 @@
     message: "Container {{ item.container.Name }} is NOT healthy"
   with_items :
     - "{{ INFO.results }}"
+  loop_control:
+    label: "ID : {{ item.container.Id }} , NAME: {{ item.container.Name }}"
   when : item.container.State.Running != true

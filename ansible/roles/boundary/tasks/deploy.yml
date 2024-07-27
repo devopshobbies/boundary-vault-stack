@@ -11,6 +11,8 @@
     force_kill: yes     
   with_items :
     - "{{ containers_info.results }}"
+  loop_control:
+    label: "{{ item.container.Name }}" 
   when : item.exists 
 
 - name: Remove boundary db volume if not in 'production' env
