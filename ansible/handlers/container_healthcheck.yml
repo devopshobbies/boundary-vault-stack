@@ -1,13 +1,15 @@
 - name: wait for the containers to get ready
   ansible.builtin.wait_for:
-    timeout: 30
+    timeout: 5
   delegate_to: localhost
 
 - name: check if contianer is healthy  
   debug:
-    msg: "Container {{ item.container.Name }} is healthy"
+    msg: "{{ item.container.Name }}"
   with_items :
     - "{{ INFO.results }}"
+  loop_control:
+    label: "Container {{ item.container.Name }} is healthy"
   when: item.container.State.Running and item.container.State.Restarting != true
 
 - name: fetch the logfile for the unhealthy container(s)
@@ -16,6 +18,7 @@
     src: "{{ item.container.LogPath }}"
     dest: "{{ log_path }}/docker/{{item.container.Name}}.txt"
     flat: true
+    fail_on_missing: true
   with_items :
     - "{{ INFO.results }}"
   when: item.container.State.Running != true
