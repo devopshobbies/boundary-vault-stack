@@ -32,16 +32,16 @@
   ignore_errors: true
   register: vault_deployment
 
+- name: handle errors if occurred  
+  include_tasks: "{{handlers}}/fail_task.yml"
+  vars:
+    output: "{{ vault_deployment }}"
+
 - name: Get a list of Docker containers
   community.docker.docker_container_info:
     name : "{{ item }}"
   loop : "{{ containers }}"
   register: containers_info
-
-- name: handle errors if occurred  
-  include_tasks: "{{handlers}}/fail_task.yml"
-  vars:
-    output: "{{ vault_deployment }}"
 
 - include_tasks: "{{handlers}}/container_healthcheck.yml"
   vars:
