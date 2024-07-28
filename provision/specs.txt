@@ -1,0 +1,4 @@
+Name: BVSTACK
+Memory: 4GB
+CPU: 2 cores
+Disk : 50GB
