@@ -17,21 +17,31 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
 **The `ansible-vault-pass` is `BVSTACK`. this is for the sake of simplicity and sample make sure you use a strong password for your ansible vault encrypted files.**
 
 ## TO-DO
-- [ ] Add Vagrant or vSphere/AWS/Azure Terraform providers to provision a VM for deploying the stack (`provision` directory).
+ ==implement all of the provisioners to provision Directory and Ansible Role== 
+- [ ] Add a **Vagrantfile** to provision a VM using the **Vagrant** provider of your choice based on [ specs ](./provision/specs.txt) with `Terraform`.
+
+- [ ] Using `Terraform` **AWS** provider provision an **EC2** instance based on [ specs ](./provision/specs.txt) + additional required configuration.
+
+- [ ] Using `Terraform` **Azure** provider provision an Azure VMs instace based on [ specs ](./provision/specs.txt) + additional required configuration.
+
+- [ ] Using `Terraform` **Vsphere** provider, provision a vm on an ESXI server based on [ specs ](./provision/specs.txt). 
+
+- [ ] When handling Provisions with `Ansible`, Choose which Provider to provision Based on a User-Defined or Environment variable.
+
 - [ ] Add a sample of the `tfvars` file for boundary and Vault with dummy values.
-- [ ] Add Terraform Remote Backend option for Boundary and Vault. 
-- [ ] Add other Vault auth methods using Terraform.
-- [ ] Implement Policy as Code (PaC) to validate Terraform policies.
+- [ ] Add `Terraform` Remote Backend option for Boundary and Vault. 
+- [ ] Add other Vault auth methods using `Terraform`.
+- [ ] Implement `Policy as Code (PaC)` to validate `Terraform` policies.
 
 - [ ] Install and configure `Terraform` on the **control node** (`prepare_env` role).
 - [ ] Install and configure `Docker` on **target (managed) node(s)** (`prepare_env` role).
-- [ ] Optionally, install boundary and vault on **admins** node(s) Based on `STACK_BIN=true/false` env variable. 
-- [ ] Create a well-organized Ansible template for Vault and boundary configurations.
-- [ ] Update environment variable declaration through Ansible roles to use `environment` attribute instead of inline definition in `shell` module.
+- [ ] Optionally, install boundary and vault on **admins** node(s) Based on `STACK_BIN=true/false` Environment variable. 
+- [ ] Create a well-organized `Ansible` template for Vault and boundary configurations.
+- [ ] Update environment variable declaration through `Ansible` roles to use `environment` attribute instead of inline definition in `shell` module.
 - [ ] Make `display secrets` optional in the `cleanup` role.
 - [ ] Add proper configurations to serve the stack as a reverse proxy in the `serve` directory(the tool is optional).
-- [ ] Update `boundary.yml` to use ENV variables instead of hardcoding then handle the export of the env variables with Ansible.
-- [ ] Using ansible `community.docker.docker_container` collection, convert docker-compose files to the corresponding Ansible module as an optional deployment method.
+- [ ] Update `boundary.yml` to use ENV variables instead of hardcoding then handle the export of the env variables with `Ansible`.
+- [ ] Using `Ansible` `community.docker.docker_container` collection, convert docker-compose files to the corresponding `Ansible` module as an optional deployment method.
 - [ ] Output Boundary and Vault `address` at the end of the play.
 
 - [ ] Implement automated testing using GitHub actions for pull requests.
@@ -39,8 +49,8 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
 - [ ] Write a `Custom Logger` function and use it throughout all shell scripts for better error handling and logging (`log` directory).
 - [ ] Use `case` instead of if for argument handling in `init.sh`.
 - [ ] Make `start.sh` ask for the ansible-vault password once and use it for all.
-- [ ] Update the sleep commands in the `start.sh` to use Ansible wait_for modules instead.
-- [ ] remove vault root token in `cleanup`.
+- [ ] Update the sleep commands in the `start.sh` to use `Ansible` wait_for modules instead.
+- [ ] Remove vault root token in `cleanup`.
 
 ## Bear In Mind
 - if you have issues with DockerHub make sure you change the image registry.
