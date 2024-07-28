@@ -1,0 +1,4 @@
+### handle variable for different provisioners seperate by #[Provisioner_Name].
+
+### for instance : # [Vagrant]
+###                some_task:                  
