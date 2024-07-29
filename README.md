@@ -17,7 +17,9 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
 **The `ansible-vault-pass` is `BVSTACK`. this is for the sake of simplicity and sample make sure you use a strong password for your ansible vault encrypted files.**
 
 ## TO-DO
- ==implement all of the provisioners to provision Directory and Ansible Role== 
+> [!NOTE]  
+> Implement all of the provisioners inside provision Directory and Ansible Role 
+
 - [ ] Add a **Vagrantfile** to provision a VM using the **Vagrant** provider of your choice based on [ specs ](./provision/specs.txt) with `Terraform`.
 
 - [ ] Using `Terraform` **AWS** provider provision an **EC2** instance based on [ specs ](./provision/specs.txt) + additional required configuration.
