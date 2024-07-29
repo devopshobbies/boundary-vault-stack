@@ -19,6 +19,7 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
 ## TO-DO
 > [!NOTE]  
 > Terraform ....
+
 > Implement all of the provisioners inside provision Directory and Ansible Role 
 
 - [ ] Add a **Vagrantfile** to provision a VM using the **Vagrant** provider of your choice based on [ specs ](./provision/specs.txt) with `Terraform`.
