@@ -18,6 +18,7 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
 
 ## TO-DO
 > [!NOTE]  
+> Terraform ....
 > Implement all of the provisioners inside provision Directory and Ansible Role 
 
 - [ ] Add a **Vagrantfile** to provision a VM using the **Vagrant** provider of your choice based on [ specs ](./provision/specs.txt) with `Terraform`.
@@ -35,6 +36,9 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
 - [ ] Add other Vault auth methods using `Terraform`.
 - [ ] Implement `Policy as Code (PaC)` to validate `Terraform` policies.
 
+> [!NOTE]  
+> Ansible ... 
+
 - [ ] Install and configure `Terraform` on the **control node** (`prepare_env` role).
 - [ ] Install and configure `Docker` on **target (managed) node(s)** (`prepare_env` role).
 - [ ] Optionally, install boundary and vault on **admins** node(s) Based on `STACK_BIN=true/false` Environment variable. 
@@ -47,6 +51,10 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
 - [ ] Output Boundary and Vault `address` at the end of the play.
 
 - [ ] Implement automated testing using GitHub actions for pull requests.
+
+
+> [!NOTE]  
+> Shell Scripting ... 
 
 - [ ] Write a `Custom Logger` function and use it throughout all shell scripts for better error handling and logging (`log` directory).
 - [ ] Use `case` instead of if for argument handling in `init.sh`.
