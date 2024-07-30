@@ -43,6 +43,7 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
 - [ ] Install and configure `Terraform` on the **control node** (`prepare_env` role).
 - [ ] Install and configure `Docker` on **target (managed) node(s)** (`prepare_env` role).
 - [ ] Optionally, install boundary and vault on **admins** node(s) Based on `STACK_BIN=true/false` Environment variable. 
+- [ ] Template `tfvars` file to handle specific variables for both boundary and vault terraform providers.
 - [ ] Create a well-organized `Ansible` template for Vault and boundary configurations.
 - [ ] Update environment variable declaration through `Ansible` roles to use `environment` attribute instead of inline definition in `shell` module.
 - [ ] Make `display secrets` optional in the `cleanup` role.
@@ -50,6 +51,10 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
 - [ ] Update `boundary.yml` to use ENV variables instead of hardcoding then handle the export of the env variables with `Ansible`.
 - [ ] Using `Ansible` `community.docker.docker_container` collection, convert docker-compose files to the corresponding `Ansible` module as an optional deployment method.
 - [ ] Output Boundary and Vault `address` at the end of the play.
+
+
+> [!NOTE]  
+> CI/CD
 
 - [ ] Implement automated testing using GitHub actions for pull requests.
 
