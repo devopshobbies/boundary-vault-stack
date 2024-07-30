@@ -3,7 +3,7 @@
 variable "ssh_key_path" {
   type        = string
   sensitive   = true
-  description = "path to ssh prive key"
+  description = "path to ssh private key"
 }
 
 variable "ssh_user" {
@@ -18,7 +18,7 @@ variable "ssh_port" {
   description = "ssh port used to connect to main servers"
 }
 
-variable "ssh_private_key_sources" {
+variable "ssh_private_keys" {
   type = set(string)
 }
 
@@ -39,7 +39,7 @@ variable "readonly_users" {
 
 variable "main_server_ips" {
   type        = set(string)
-  description = "main servers (stage and prod) ips"
+  description = "main servers (e.g : stage and prod) ips"
 }
 variable "main_server_names" {
   type        = set(string)
