@@ -160,7 +160,7 @@ resource "boundary_host_set_static" "main_servers_ssh" {
 
 
 ## credential stores
-resource "boundary_credential_store_static" "ssh_private_key_store" {
+resource "boundary_credential_store_static" "main_cred_store" {
   name     = var.main_cred_store_name
   scope_id = boundary_scope.core_infra.id
 }
@@ -185,10 +185,10 @@ resource "boundary_credential_store_static" "ssh_private_key_store" {
 ### end of vault ###
 
 resource "boundary_credential_ssh_private_key" "main_server_keys" {
-  for_each            = var.ssh_private_key_sources
+  for_each            = var.ssh_private_keys
   name                = each.value
   username            = sensitive(var.ssh_user)
-  credential_store_id = boundary_credential_store_static.ssh_private_key_store.id
+  credential_store_id = boundary_credential_store_static.main_cred_store.id
   private_key         = file(var.ssh_key_path)
 }
 
