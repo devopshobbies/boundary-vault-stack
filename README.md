@@ -32,7 +32,6 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
 
 - [ ] When handling Provisions with `Ansible`, Choose which Provider to provision Based on a User-Defined or Environment variable.
 
-- [ ] Add a sample of the `tfvars` file for boundary and Vault with dummy values.
 - [ ] Add `Terraform` Remote Backend option for Boundary and Vault. 
 - [ ] Add other Vault auth methods using `Terraform`.
 - [ ] Implement `Policy as Code (PaC)` to validate `Terraform` policies.
