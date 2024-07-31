@@ -142,11 +142,11 @@ resource "boundary_host_catalog_static" "main_servers" {
 }
 
 resource "boundary_host_static" "main_servers" {
-  for_each        = var.main_server_ips
+  for_each =  { for host in var.hosts_info : host.name => host }
   type            = "static"
-  name            = "main_server_service_${each.value}"
+  name            = each.value.name
   description     = "Main server host"
-  address         = each.key
+  address         = each.value.ip
   host_catalog_id = boundary_host_catalog_static.main_servers.id
 }
 
@@ -185,22 +185,22 @@ resource "boundary_credential_store_static" "main_cred_store" {
 ### end of vault ###
 
 resource "boundary_credential_ssh_private_key" "main_server_keys" {
-  for_each            = var.ssh_private_keys
-  name                = each.value
-  username            = sensitive(var.ssh_user)
+  for_each            = { for host in var.hosts_info : host.name => host }
+  name                = each.value.ssh_key_name
+  username            = sensitive(each.value.ssh_user)
   credential_store_id = boundary_credential_store_static.main_cred_store.id
-  private_key         = file(var.ssh_key_path)
+  private_key         = file(var.each.value.ssh_key_path)
 }
 
 # ssh target for DVH main servers
 resource "boundary_target" "main_servers_ssh" {
   type                           = "tcp"
-  for_each                       = var.main_server_names
-  name                           = "${each.value}_ssh_server"
+  for_each                       = { for host in var.hosts_info : host.name => host }
+  name                           = "${each.value.name}_server"
   description                    = "Main servers SSH target"
   scope_id                       = boundary_scope.core_infra.id
   brokered_credential_source_ids = [for credential in boundary_credential_ssh_private_key.main_server_keys : credential.id]
-  default_port                   = var.ssh_port # change to variable
+  default_port                   = each.value.ssh_port
   
   host_source_ids = [
     boundary_host_set_static.main_servers_ssh.id
