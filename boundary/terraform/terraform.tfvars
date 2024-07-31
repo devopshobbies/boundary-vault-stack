@@ -9,11 +9,11 @@ ssh_private_keys = [
 
 # domain model
 clients = {
-  "tech-lead" : "Some.user",
+  "tech-lead" : "tech.lead",
 }
 
 admins = {
-  "devops" = "shayan.ghani"
+  "devops" = "devops.eng"
 }
 
 readonly_users = {
