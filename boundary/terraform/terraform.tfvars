@@ -1,11 +1,14 @@
 # ssh conf
-ssh_key_path            = "~/.ssh/id_rsa"
-ssh_user                = "ubuntu"
-ssh_port                = "22"
-ssh_private_keys = [
-  "main_servers_ssh_key"
-]
 
+hosts_info = [ {
+ name = "development",
+ ip = "192.168.1.15",
+ ssh_user = "vagrant",
+ ssh_port = "2222"
+  ssh_key_path = "~/.ssh/id_rsa",
+ ssh_key_name = "dev_priv_key"
+  }
+]
 
 # domain model
 clients = {
@@ -21,9 +24,7 @@ readonly_users = {
 }
 
 main_server_ips = [
-  "192.168.1.5",
-  "192.168.1.6",
-  "192.168.1.7"
+  "192.168.1.15"
 ]
 
 main_server_names = [
