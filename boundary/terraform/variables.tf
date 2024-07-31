@@ -1,25 +1,16 @@
 # ssh private key conf
 
-variable "ssh_key_path" {
-  type        = string
-  sensitive   = true
-  description = "path to ssh private key"
-}
 
-variable "ssh_user" {
-  type        = string
-  sensitive   = true
-  description = "ssh user for main servers"
-}
-
-variable "ssh_port" {
-  type        = string
-  sensitive   = true
-  description = "ssh port used to connect to main servers"
-}
-
-variable "ssh_private_keys" {
-  type = set(string)
+variable "hosts_info" {
+  type = list(object({
+    name = string,
+    ip = string,
+    ssh_user = string,
+    ssh_port = string,
+    ssh_key_path = string,
+    ssh_key_name = string
+  }))
+  description = "The required information for your hosts."
 }
 
 variable "clients" {
