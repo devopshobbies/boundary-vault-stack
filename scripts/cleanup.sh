@@ -30,4 +30,7 @@ elif [[ $1 == "ssh" ]];then
     exit 0
 fi
 
+if grep "transit_token" $var_file; then
+  delete_token
+fi
 echo -e "\ntransit_token: $token" >> $var_file
