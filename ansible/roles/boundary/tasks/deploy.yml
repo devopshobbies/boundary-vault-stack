@@ -13,7 +13,7 @@
     - "{{ containers_info.results }}"
   when : item.exists
   loop_control:
-    label: "{{ item.container.Name | default("Unkown Container", true) }}" 
+    label: "{{ item.container.Name | default('Unkown Container', true) }}" 
 
 - name: Remove boundary db volume if not in 'production' env
   become: true
