@@ -37,7 +37,7 @@ fi
 
 # source into linter script
 if [[ $1 != "vault-init" ]]; then 
-    source "${HOME_DIR}/scritps/linter.sh"
+    source "${HOME_DIR}/scripts/linter.sh"
 fi
 
 STACK_DIR="${2:-/home/ubuntu/boundary-vault-stack}"
