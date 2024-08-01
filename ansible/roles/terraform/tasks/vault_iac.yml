@@ -1,5 +1,5 @@
 - name : run vault terraform configuration  
-  shell: HOME_DIR={{home_dir}} bash "{{home_dir}}/scripts/init.sh" vault
+  shell: HOME_DIR={{home_dir}} VAULT_ADDR={{VAULT_ADDRESS}} bash "{{home_dir}}/scripts/init.sh" vault
   delegate_to: localhost
   ignore_errors : true
   register: vault_terraform
