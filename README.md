@@ -69,3 +69,5 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
 
 ## Bear In Mind
 - if you have issues with DockerHub make sure you change the image registry.
+
+Copyright © 2024 Shayan Ghani shayan.ghani.tech@gmail.com
