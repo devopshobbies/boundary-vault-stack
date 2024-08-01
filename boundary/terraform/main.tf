@@ -39,7 +39,7 @@ resource "boundary_auth_method" "password" {
 ## users and passwords
 resource "boundary_account_password" "client_acct" {
   for_each    = var.clients
-  name        = each.keyBOUNDARY_ADDR
+  name        = each.key
   description = "User account for ${each.key}"
   #   type           = "password"
   login_name     = lower(each.key)
@@ -189,7 +189,7 @@ resource "boundary_credential_ssh_private_key" "main_server_keys" {
   name                = each.value.ssh_key_name
   username            = sensitive(each.value.ssh_user)
   credential_store_id = boundary_credential_store_static.main_cred_store.id
-  private_key         = file(var.each.value.ssh_key_path)
+  private_key         = file(each.value.ssh_key_path)
 }
 
 # ssh target for DVH main servers
