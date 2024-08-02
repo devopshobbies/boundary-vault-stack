@@ -1,9 +1,10 @@
-# boundary-recovery
-path "transit/encrypt/boundary-recovery" {
+# boundary recovery key
+
+path "transit/encrypt/recovery-boundary" {
   capabilities = ["update", "create"]
 }
 
-path "transit/decrypt/boundary-recovery" {
+path "transit/decrypt/recovery-boundary" {
   capabilities = ["update", "create"]
 }
 
@@ -16,11 +17,11 @@ path "transit/decrypt/boundary-worker-auth" {
   capabilities = ["update", "create"]
 }
 
-# boundary-root
-path "transit/encrypt/boundary-root" {
+# root-boundary
+path "transit/encrypt/root-boundary" {
   capabilities = ["update", "create"]
 }
 
-path "transit/decrypt/boundary-root" {
+path "transit/decrypt/root-boundary" {
   capabilities = ["update", "create"]
 }
