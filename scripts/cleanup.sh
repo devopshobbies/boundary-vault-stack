@@ -16,21 +16,21 @@ tfvars_file="${HOME_DIR}/boundary/terraform/terraform.tfvars"
 
 function inject_ssh_cred(){
     echo -e "\nvault_cred_store_token = $ssh_token" >> $tfvars_file
+    return 0
 }
 
 function delete_token(){
     sed -i '/^transit_token/d' $var_file
+    return 0
 }
 
 if [[ $1 == "-d" ]]; then
     delete_token
-    exit 0
 elif [[ $1 == "ssh" ]];then
     inject_ssh_cred
-    exit 0
 fi
 
-if grep "transit_token" $var_file; then
+if grep "transit_token" $var_file &> /dev/null; then
   delete_token
 fi
 echo -e "\ntransit_token: $token" >> $var_file
