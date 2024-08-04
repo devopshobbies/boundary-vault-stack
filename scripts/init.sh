@@ -126,7 +126,9 @@ function setup_vault(){
     vault write --format=json ssh-signer/config/ca generate_signing_key=true | grep -o '"public_key":.*' | awk -F'"' '{print $4}' \
      > /home/ca-key.pub
 
-    transit_token=$(vault token create -policy=boundary-transit | grep "hvs" | awk '{print $2}')
+    transit_token=$(vault token create \
+     -policy="boundary-transit" \
+     | grep "hvs" | awk '{print $2}')
     echo -e "\ntransit-token $transit_token \nvault_cred_store_token \"${CRED_STORE_TOKEN}\"" >> $secret_file
 }
 
