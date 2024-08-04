@@ -9,7 +9,7 @@
   with_items :
     - "{{ INFO.results }}"
   loop_control:
-    label: "{{ item.container.Name }}"
+    label: "{{ item.container.Name | default("Unknown Container", true ) }}"
   when: item.container.State.Running and item.container.State.Restarting != true
 
 - name: fetch the logfile for the unhealthy container(s)
@@ -22,7 +22,7 @@
   with_items :
     - "{{ INFO.results }}"
   loop_control:
-    label: "{{ item.container.LogPath }}" 
+    label: "{{ item.container.LogPath | default("Unknown Container", true )  }}" 
   when: item.container.State.Running != true
 
 - name: handle errors if occurred  
@@ -32,5 +32,5 @@
   with_items :
     - "{{ INFO.results }}"
   loop_control:
-    label: "ID : {{ item.container.Id }} , NAME: {{ item.container.Name }}"
+    label: "ID : {{ item.container.Id | default('Unknown Container ID', true ) }} , NAME: {{ item.container.Name | default('Unknown Container ID', true ) }}"
   when : item.container.State.Running != true
