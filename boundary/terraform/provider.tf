@@ -8,11 +8,12 @@ provider "boundary" {
   recovery_kms_hcl = <<EOT
 kms "transit" {
   purpose            = "recovery"
-  address            = "https://vault.dvh.com"
+  address            = "http://${var.vault_address}"
   disable_renewal    = "false"
   // Key configuration
   key_name           = "recovery-boundary"
   mount_path         = "transit/"
+  tls_skip_verify    = "true"
   vault_prefix        = "transit/"
 }
 EOT
