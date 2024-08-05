@@ -56,8 +56,6 @@ if [ -z "$STACK_ENV" ]; then
   done
 elif ! check_env "$STACK_ENV"; then
   exit 4
-else
-  echo "Running Boundary Vault Stack on ${STACK_ENV} Mode."
 fi
 
 if [ $# -ne 2 ]; then
@@ -66,15 +64,19 @@ if [ $# -ne 2 ]; then
 fi
 
 
+echo "***Running Boundary Vault Stack on ${STACK_ENV} Mode.****"
+
+
 ## create ignored dirs in git for confidential data
-mkdir -p logs/ secrets/ logs/docker
+mkdir -p logs/ logs/docker secrets/
 
 ## install required collections
 ansible-galaxy collection install -r requirements.yml
 
-ansible-playbook -i ansible/inventory/inventory.ini ansible/playbook.yml --ask-vault-pass
-## wait 10 seconds for the vault changes to take effect
+ansible-playbook -i ansible/inventory/inventory.ini ansible/playbook.yml
+echo "  Applying Vault changes ....."
 sleep 10
-ansible-playbook -i ansible/inventory/inventory.ini ansible/terraform.yml --ask-vault-pass 
+ansible-playbook -i ansible/inventory/inventory.ini ansible/terraform.yml 
+echo " Applying terraform provisioning ..... "
 sleep 5
-ansible-playbook -i ansible/inventory/inventory.ini ansible/boundary.yml --ask-vault-pass
+ansible-playbook -i ansible/inventory/inventory.ini ansible/boundary.yml
