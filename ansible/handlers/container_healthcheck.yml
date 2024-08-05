@@ -9,8 +9,18 @@
   with_items :
     - "{{ INFO.results }}"
   loop_control:
-    label: "{{ item.container.Name | default("Unknown Container", true ) }}"
+    label: "{{ item.container.Name | default('Unknown Container', true ) }}"
   when: item.container.State.Running and item.container.State.Restarting != true
+
+
+- name: handle errors if container not healthy 
+  include_tasks: "{{handlers}}/service_healthcheck.yml"
+  vars:
+    NAMES: "{{ services }}"
+    PATH: "{{ service_path }}"
+  with_items :
+    - "{{ INFO.results }}"
+  when: item.exists != true and item.container.Name != '/vault'
 
 - name: fetch the logfile for the unhealthy container(s)
   # become: true
@@ -22,7 +32,7 @@
   with_items :
     - "{{ INFO.results }}"
   loop_control:
-    label: "{{ item.container.LogPath | default("Unknown Container", true )  }}" 
+    label: "{{ item.container.LogPath | default('Unknown Container', true )  }}" 
   when: item.container.State.Running != true
 
 - name: handle errors if occurred  
