@@ -1,0 +1,26 @@
+- name: fetch the logs for the service(s)
+  shell: docker compose -f {{ PATH }} logs {{ item }} --no-color
+  with_items :
+    - "{{ NAMES }}"
+  loop_control:
+    label: "{{ item | default("Unknown Service", true )  }}" 
+  register: service_log
+  ignore_errors: true
+
+- name: Save logs to a file
+  copy:
+    content: "{{ service_log.stdout | default(service_log.stderr, true) }}"
+    dest: "{{ log_path }}/docker/{{ item }}.txt"
+  with_items:
+    - "{{ NAMES }}"
+  loop_control:
+    label: "{{ item | default('Unknown Service', true ) }}"
+    
+- name: handle errors if occurred  
+  include_tasks: "{{handlers}}/fail_task.yml"
+  vars:
+    message: "Service {{ item }} is NOT healthy"
+  with_items :
+    - "{{ NAMES }}"
+  loop_control:
+    label: "{{ item | default('Unknown Service', true ) }}"
