@@ -10,7 +10,7 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
  To initialize the process run `start.sh` script in your desired environment:
  ```bash
  #run in dev:
-        ./start.sh -e <env>
+        ./start.sh -e development
  ```
  If you need further assistance on the exit/return code, check out [ wiki ](./artifacts/wiki.md).
 
@@ -53,7 +53,7 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
 
 
 > [!NOTE]  
-> CI/CD
+> CI/CD ....
 
 - [ ] Implement automated testing using GitHub actions for pull requests.
 
