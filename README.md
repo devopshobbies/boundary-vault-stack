@@ -6,7 +6,11 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
 
 ## How To Use
 **First, make sure you have [READ THE DOCUMENTATION](./artifacts/wiki.md) for instructions on how the stack works.**
-**See a thorough [diagram of the automation workflow](https://linktw.in/PloXtt)**
+
+**See a thorough [diagram of the automation workflow](https://linktw.in/PloXtt).**
+
+
+
  To initialize the process run `start.sh` script in your desired environment:
  ```bash
  #run in dev:
@@ -35,6 +39,11 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
 - [ ] Add `Terraform` Remote Backend option for Boundary and Vault. 
 - [ ] Add other Vault auth methods using `Terraform`.
 - [ ] Implement `Policy as Code (PaC)` to validate `Terraform` policies.
+
+> [!NOTE]
+> Packer ...
+
+- [ ] Add Packer custom image template for VMware Vsphere using [ specs ](./provision/specs.txt).
 
 > [!NOTE]  
 > Ansible ... 
