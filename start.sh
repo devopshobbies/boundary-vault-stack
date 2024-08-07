@@ -74,9 +74,12 @@ mkdir -p logs/ logs/docker secrets/
 ansible-galaxy collection install -r requirements.yml
 
 ansible-playbook -i ansible/inventory/inventory.ini ansible/playbook.yml
-echo "  Applying Vault changes ....."
+echo "****** Applying Vault changes ******"
 sleep 10
 ansible-playbook -i ansible/inventory/inventory.ini ansible/terraform.yml 
-echo " Applying terraform provisioning ..... "
+echo "********* Applying terraform provisioning ******* "
 sleep 5
 ansible-playbook -i ansible/inventory/inventory.ini ansible/boundary.yml
+
+echo "***** Performing Stack Cleanup *******"
+ansible-playbook -i ansible/inventory/inventory.ini ansible/cleanup.yml

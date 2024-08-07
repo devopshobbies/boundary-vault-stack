@@ -2,4 +2,4 @@
 
 - hosts: hashicorp
   roles:
-    - boundary
+    - cleanup
