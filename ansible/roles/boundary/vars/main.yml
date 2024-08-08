@@ -3,4 +3,15 @@ containers:
   - "boundary"
   - "boundary_db"
 
+services:
+  - "db-init"
+
+service_path: "{{stack_dir}}/deploy/boundary.yml"
+
 vol_path: "/srv/boundary"
+
+
+
+
+
+transit_token: hvs.CAESIOnX9gZPJqNr314URX6UB6y8n-Z57pFCZlhRkYc44luaGh4KHGh2cy52NXMwQzhaUzhDUlFIVGhKbzRRQ0FyOUI
