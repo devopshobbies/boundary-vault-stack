@@ -77,8 +77,6 @@ function init_vault_iac(){
   export VAULT_TOKEN="$root_token"
   
   terraform apply --auto-approve &> "${HOME_DIR}/logs/vault-logs.txt";
-  
-  echo -e "\n this is the root token $root_token" >> ${HOME_DIR}/logs.txt
 }
 
 ## vault init container to setup vault and get killed right after.
