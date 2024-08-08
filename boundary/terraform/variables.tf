@@ -75,11 +75,11 @@ variable "vault_address" {
   description = "address to vault server"
 }
 
-variable "vault_cred_store_token" {
-  type        = string
-  sensitive   = true
-  description = "vault token for credential store"
-}
+# variable "vault_cred_store_token" {
+#   type        = string
+#   sensitive   = true
+#   description = "vault token for credential store"
+# }
 
 variable "vault_sign_path" {
   type = string

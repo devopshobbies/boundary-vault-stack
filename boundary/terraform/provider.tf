@@ -8,7 +8,7 @@ provider "boundary" {
   recovery_kms_hcl = <<EOT
 kms "transit" {
   purpose            = "recovery"
-  address            = "http://${var.vault_address}"
+  address            = "${var.vault_address}"
   disable_renewal    = "false"
   // Key configuration
   key_name           = "recovery-boundary"
