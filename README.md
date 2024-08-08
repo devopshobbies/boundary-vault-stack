@@ -77,7 +77,8 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
 - [ ] Remove vault root token in `cleanup`.
 
 ## Bear In Mind
-- if you have issues with DockerHub make sure you change the image registry.
+- if you have issues with DockerHub make sure you change the image registry in deployments and `prepare_env` role.
+
 - if the target node(s) get restarted, the `vault` gets sealed and `boundary` container will be in restarting mode.
 
 Copyright © 2024 Shayan Ghani shayan.ghani.tech@gmail.com
