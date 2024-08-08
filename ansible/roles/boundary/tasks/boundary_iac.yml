@@ -1,5 +1,5 @@
 - name : Run terraform configuration
-  shell: HOME_DIR={{ home_dir }} BOUNDARY_ADDR={{ boundary_addr }} bash "{{home_dir}}/scripts/init.sh" boundary
+  shell: HOME_DIR={{ home_dir }} VAULT_TOKEN={{ transit_token }} bash "{{home_dir}}/scripts/init.sh" boundary
   delegate_to: localhost
   ignore_errors: true
   register: terraform_boundary
