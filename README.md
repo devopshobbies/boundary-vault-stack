@@ -78,5 +78,6 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
 
 ## Bear In Mind
 - if you have issues with DockerHub make sure you change the image registry.
+- if the target node(s) get restarted, the `vault` gets sealed and `boundary` container will be in restarting mode.
 
 Copyright © 2024 Shayan Ghani shayan.ghani.tech@gmail.com
