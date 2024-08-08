@@ -82,7 +82,7 @@ function init_vault_iac(){
 }
 
 ## vault init container to setup vault and get killed right after.
-function setup_vault(){
+function init_vault_setup(){
     secret_file="/home/secrets.txt"
     
     export VAULT_ADDR='http://vault:8200'
@@ -148,7 +148,7 @@ if [[ $1 == "boundary" ]]; then
 fi
 
 if [[ $1 == "vault-init" ]]; then 
-    setup_vault
+    init_vault_setup
     exit 0
 fi
 
