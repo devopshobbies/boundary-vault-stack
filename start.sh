@@ -68,7 +68,7 @@ echo "***Running Boundary Vault Stack on ${STACK_ENV} Mode.****"
 
 
 ## create ignored dirs in git for confidential data
-mkdir -p logs/ logs/docker secrets/
+mkdir -p logs/ logs/docker logs/terraform secrets/
 
 ## install required collections
 ansible-galaxy collection install -r requirements.yml
