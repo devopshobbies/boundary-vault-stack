@@ -62,7 +62,7 @@ function init_boundary_iac(){
   export VAULT_TOKEN="$token"
   export BOUNDARY_ADDR="$BOUNDARY_ADDR"
   
-  terraform apply --auto-approve &> "${HOME_DIR}/logs/boundary-logs.txt"
+  terraform apply --auto-approve 2>&1 | sed -r "s/\x1B\[[0-9;]*[mGKH]//g" > "${HOME_DIR}/logs/boundary-logs.txt"
   return 0
 }
 
@@ -76,7 +76,7 @@ function init_vault_iac(){
   root_token="$(cat $secret_file | head -n1 | awk '{print $8}')"
   export VAULT_TOKEN="$root_token"
   
-  terraform apply --auto-approve &> "${HOME_DIR}/logs/vault-logs.txt";
+  terraform apply --auto-approve 2>&1 | sed -r "s/\x1B\[[0-9;]*[mGKH]//g" > "${HOME_DIR}/logs/vault-logs.txt";
 }
 
 ## vault init container to setup vault and get killed right after.
