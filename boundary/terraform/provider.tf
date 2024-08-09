@@ -3,7 +3,7 @@ provider "boundary" {
   # auth_method_id         = var.auth_method_id
   # auth_method_login_name = var.login_name
   # auth_method_password   = var.login_password
-  
+
   ## Address is the VAULT SERVER ADDRESS
   recovery_kms_hcl = <<EOT
 kms "transit" {

@@ -24,12 +24,12 @@ variable "policies" {
 }
 
 variable "cipher_path" {
-  type = string
+  type        = string
   description = "KV Version 2 secret engine mount for TESTAPP access ciphers"
-  default = "store"
+  default     = "store"
 }
 
 variable "cipher_kv_name" {
-  type = string
+  type        = string
   description = "TESTAPP ciphers kv engine name"
 }

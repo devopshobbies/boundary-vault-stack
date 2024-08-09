@@ -9,14 +9,14 @@ resource "vault_mount" "cipher_store" {
 }
 
 resource "vault_kv_secret_v2" "ciphers_secret" {
-  mount                      = vault_mount.cipher_store.path
-  name                       = var.cipher_kv_name
-  cas                        = 1
-  delete_all_versions        = true
-  data_json                  = jsonencode(
-  {
-    test       = "value",
-  }
+  mount               = vault_mount.cipher_store.path
+  name                = var.cipher_kv_name
+  cas                 = 1
+  delete_all_versions = true
+  data_json = jsonencode(
+    {
+      test = "value",
+    }
   )
 }
 

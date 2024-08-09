@@ -142,7 +142,7 @@ resource "boundary_host_catalog_static" "main_servers" {
 }
 
 resource "boundary_host_static" "main_servers" {
-  for_each =  { for host in var.hosts_info : host.name => host }
+  for_each        = { for host in var.hosts_info : host.name => host }
   type            = "static"
   name            = each.value.name
   description     = "Main server host"
@@ -201,7 +201,7 @@ resource "boundary_target" "main_servers_ssh" {
   scope_id                       = boundary_scope.core_infra.id
   brokered_credential_source_ids = [for credential in boundary_credential_ssh_private_key.main_server_keys : credential.id]
   default_port                   = each.value.ssh_port
-  
+
   host_source_ids = [
     boundary_host_set_static.main_servers_ssh.id
   ]

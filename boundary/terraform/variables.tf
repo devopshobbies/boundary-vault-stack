@@ -3,10 +3,10 @@
 
 variable "hosts_info" {
   type = list(object({
-    name = string,
-    ip = string,
-    ssh_user = string,
-    ssh_port = string,
+    name         = string,
+    ip           = string,
+    ssh_user     = string,
+    ssh_port     = string,
     ssh_key_path = string,
     ssh_key_name = string
   }))
@@ -193,6 +193,6 @@ variable "session_recording_read_list" {
 }
 
 variable "test_server_name" {
-  type = string
+  type        = string
   description = "The ssh testing server name!"
 }
