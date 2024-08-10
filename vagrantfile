@@ -1,0 +1,41 @@
+# Vagrantfile for deploying a VM to VirtualBox with specified configurations
+
+Vagrant.configure("2") do |config|
+  # Define the base box
+  config.vm.box = "ubuntu/focal64" # or another box of your choice
+
+  # Set the name of the VM
+  config.vm.define "managed-node01" do |node|
+    node.vm.hostname = "managed-node01"
+
+    # Network configuration: Bridge
+    node.vm.network "public_network", ip: "192.168.1.15"
+
+    # Resources: CPU and RAM
+    node.vm.provider "virtualbox" do |vb|
+      vb.name = "managed-node01"
+      vb.memory = 2048
+      vb.cpus = 1
+    end
+  end
+  
+  config.vm.define "controller" do |node|
+    node.vm.hostname = "controller"
+
+    # Network configuration: Bridge
+    node.vm.network "public_network", ip: "192.168.1.16"
+
+    # Resources: CPU and RAM
+    node.vm.provider "virtualbox" do |vb|
+      vb.name = "controller"
+      vb.memory =  6144
+      vb.cpus = 4
+    end
+    config.vm.provision "file", source: "/home/shayan/Downloads/bindary/kind" , destination:"~/"
+  end
+
+ 
+  config.vm.provision "file", source: "~/.ssh/id_rsa.pub" , destination:"~/.ssh/id_rsa.pub"
+  config.vm.provision "file", source: "./resolv.conf" , destination:"~/resolv.conf"
+  config.vm.provision "shell", path: "./scripts/install_services.sh"
+end
