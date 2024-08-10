@@ -38,6 +38,7 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
 
 - [ ] Add `Terraform` Remote Backend option for Boundary and Vault. 
 - [ ] Add other Vault auth methods using `Terraform`.
+- [ ] Enchance `Terraform Output` values for both Boundary and Vault
 - [ ] Implement `Policy as Code (PaC)` to validate `Terraform` policies.
 
 > [!NOTE]
@@ -59,13 +60,12 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
 - [ ] Update `boundary.yml` to use ENV variables instead of hardcoding then handle the export of the env variables with `Ansible`.
 - [ ] Using `Ansible` `community.docker.docker_container` collection, convert docker-compose files to the corresponding `Ansible` module as an optional deployment method.
 - [ ] Output Boundary and Vault `address` at the end of the play.
-
+- [ ] Implement Ansible `Molecule` case scenarios to test different aspects of your roles.
 
 > [!NOTE]  
 > CI/CD ....
 
-- [ ] Implement automated testing using GitHub actions for pull requests.
-
+- [ ] Implement automated testing using GitHub actions for pull requests. 
 
 > [!NOTE]  
 > Shell Scripting ... 
