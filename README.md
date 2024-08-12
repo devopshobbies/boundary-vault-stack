@@ -76,6 +76,9 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
 - [ ] Update the sleep commands in the `start.sh` to use `Ansible` wait_for modules instead.
 - [ ] Remove vault root token in `cleanup`.
 
+## Contribution
+all types of contributions is welcomed, read `Contribution.md` for more information.
+
 ## Bear In Mind
 - if you have issues with DockerHub make sure you change the image registry in deployments and `prepare_env` role.
 

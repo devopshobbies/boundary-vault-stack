@@ -51,3 +51,4 @@ to-research
 *VBox*.log
 **/bin/boundary**
 **test-play**
+virtualenv
