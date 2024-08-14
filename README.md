@@ -34,7 +34,6 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
 
 - [ ] Using `Terraform` **Vsphere** provider, provision a vm on an ESXI server based on [ specs ](./provision/specs.txt). 
 
-- [ ] When handling Provisions with `Ansible`, Choose which Provider to provision Based on a User-Defined or Environment variable.
 
 - [ ] Add `Terraform` Remote Backend option for Boundary and Vault. 
 - [ ] Add other Vault auth methods using `Terraform`.
@@ -55,12 +54,11 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
 - [ ] Template `tfvars` file to handle specific variables for both boundary and vault terraform providers.
 - [ ] Create a well-organized `Ansible` template for Vault and boundary configurations.
 - [ ] Update environment variable declaration through `Ansible` roles to use `environment` attribute instead of inline definition in `shell` module.
-- [ ] Make `display secrets` optional in the `cleanup` role.
 - [ ] Add proper configurations to serve the stack as a reverse proxy in the `serve` directory(the tool is optional).
 - [ ] Update `boundary.yml` to use ENV variables instead of hardcoding then handle the export of the env variables with `Ansible`.
 - [ ] Using `Ansible` `community.docker.docker_container` collection, convert docker-compose files to the corresponding `Ansible` module as an optional deployment method.
-- [ ] Output Boundary and Vault `address` at the end of the play.
 - [ ] Implement Ansible `Molecule` case scenarios to test different aspects of your roles.
+- [ ] When handling Provisions with `Ansible`, Choose which Provider to provision Based on a User-Defined or Environment variable.
 
 > [!NOTE]  
 > CI/CD ....
