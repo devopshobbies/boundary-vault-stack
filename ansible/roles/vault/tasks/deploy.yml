@@ -1,11 +1,12 @@
-- name : create hcp external
+---
+- name: Create hcp external
   become: true
-  docker_network:
-    name: "hashicorp"
+  community.docker.docker_network:
+    name: hashicorp
 
 - name: Remove vault volume if not in 'production' env
   become: true
-  file:
+  ansible.builtin.file:
     path: "{{ vol_path }}"
     state: absent
   when: STACK_ENV != 'production'
@@ -13,38 +14,38 @@
 
 - name: Get a list of Docker containers
   community.docker.docker_container_info:
-    name : "{{ item }}"
-  loop : "{{ containers }}"
+    name: "{{ item }}"
+  loop: "{{ containers }}"
   register: containers_info
 
 - name: Remove vault containers if exists
-  community.docker.docker_container: 
-    name : "{{  item.container.Id  }}"
+  community.docker.docker_container:
+    name: "{{  item.container.Id }}"
     state: absent
-    force_kill: yes     
-  with_items :
+    force_kill: true
+  with_items:
     - "{{ containers_info.results }}"
   loop_control:
-    label: "ID : {{ item.container.Id | default('Unkown Container', true) }} , NAME: {{ item.container.Name | default('Unkown Container', true)}}" 
-  when : item.exists 
+    label: "ID : {{ item.container.Id | default('Unkown Container', true) }} , NAME: {{ item.container.Name | default('Unkown Container', true) }}"
+  when: item.exists
 
-- name: deploy vault using deploy_script
+- name: Deploy vault using deploy_script
   become: true
-  shell: STACK_DIR={{ stack_dir }} STACK_INIT="{{ STACK_INIT }}" bash {{ deploy_script }} vault
+  ansible.builtin.command: STACK_DIR={{ stack_dir }} STACK_INIT="{{ STACK_INIT }}" bash {{ deploy_script }} vault
   ignore_errors: true
   register: vault_deployment
 
-- name: handle errors if occurred  
-  include_tasks: "{{handlers}}/fail_task.yml"
+- name: Handle errors if occurred
+  ansible.builtin.include_tasks: "{{handlers}}/fail_task.yml"
   vars:
     output: "{{ vault_deployment }}"
 
 - name: Get a list of Docker containers
   community.docker.docker_container_info:
-    name : "{{ item }}"
-  loop : "{{ containers }}"
+    name: "{{ item }}"
+  loop: "{{ containers }}"
   register: containers_info
 
-- include_tasks: "{{handlers}}/container_healthcheck.yml"
+- ansible.builtin.include_tasks: "{{handlers}}/container_healthcheck.yml"
   vars:
     INFO: "{{ containers_info }}"
