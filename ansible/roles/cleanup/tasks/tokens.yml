@@ -1,3 +1,4 @@
-- name : Remove transit token from boundary var file
-  shell : HOME_DIR={{home_dir}} bash "{{home_dir}}/scripts/cleanup.sh" -d
+---
+- name: Remove transit token from boundary var file
+  ansible.builtin.command: HOME_DIR={{home_dir}} bash "{{home_dir}}/scripts/cleanup.sh" -d
   delegate_to: localhost
