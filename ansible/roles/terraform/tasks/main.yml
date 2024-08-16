@@ -1,5 +1,4 @@
-- include_tasks: "{{ role_path }}/tasks/cred_store_ssh.yml"
-
-- include_tasks: "{{ role_path }}/tasks/tfvars_token.yml"
-
-- include_tasks: "{{ role_path }}/tasks/vault_iac.yml"
+---
+- ansible.builtin.include_tasks: "{{ role_path }}/tasks/cred_store_ssh.yml"
+- ansible.builtin.include_tasks: "{{ role_path }}/tasks/tfvars_token.yml"
+- ansible.builtin.include_tasks: "{{ role_path }}/tasks/vault_iac.yml"

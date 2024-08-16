@@ -1,10 +1,11 @@
-- name : add transit token to boundary tfvars file
-  shell: HOME_DIR={{home_dir}} bash "{{home_dir}}/scripts/cleanup.sh"
+---
+- name: Add transit token to boundary tfvars file
+  ansible.builtin.command: HOME_DIR={{home_dir}} bash "{{home_dir}}/scripts/cleanup.sh"
   delegate_to: localhost
   ignore_errors: true
   register: tfvars_token_injection
 
-- name: handle errors if occurred  
-  include_tasks: "{{handlers}}/fail_task.yml"
+- name: Handle errors if occurred
+  ansible.builtin.include_tasks: "{{handlers}}/fail_task.yml"
   vars:
     output: "{{ tfvars_token_injection }}"
