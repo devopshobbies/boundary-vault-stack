@@ -1,10 +1,11 @@
-- name : Run terraform configuration
-  shell: HOME_DIR={{ home_dir }} VAULT_TOKEN={{ transit_token }} bash "{{home_dir}}/scripts/init.sh" boundary
+---
+- name: Run terraform configuration
+  ansible.builtin.command: HOME_DIR={{ home_dir }} VAULT_TOKEN={{ transit_token }} bash "{{home_dir}}/scripts/init.sh" boundary
   delegate_to: localhost
   ignore_errors: true
   register: terraform_boundary
 
-- name: handle errors if occurred  
-  include_tasks: "{{handlers}}/fail_task.yml"
+- name: Handle errors if occurred
+  ansible.builtin.include_tasks: "{{handlers}}/fail_task.yml"
   vars:
     output: "{{ terraform_boundary }}"
