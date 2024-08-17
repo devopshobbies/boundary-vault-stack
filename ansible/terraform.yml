@@ -1,7 +1,5 @@
 ---
-
-- hosts: hashicorp
-  # vars:
-  #   ansible_python_interpreter: /usr/bin/python3
+- name : ensure terraform requirments and apply tf modules
+  hosts: hashicorp
   roles:
     - terraform

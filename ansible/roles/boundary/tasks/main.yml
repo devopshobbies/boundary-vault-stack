@@ -1,4 +1,7 @@
 ---
-- ansible.builtin.include_tasks: "{{ role_path }}/tasks/deploy.yml"
-- ansible.builtin.include_tasks: "{{ role_path }}/tasks/boundary_iac.yml"
-- ansible.builtin.include_tasks: "{{ role_path }}/tasks/init_credentials.yml"
+- name: deploy boundary
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/deploy.yml"
+- name: apply boundary terraform
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/boundary_iac.yml"
+- name: handle boundary db-init credentials
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/init_credentials.yml"

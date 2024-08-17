@@ -1,5 +1,6 @@
 ---
 
-- hosts: hashicorp
+- name: clean up stack secrets and files
+  hosts: hashicorp
   roles:
     - cleanup

@@ -1,4 +1,7 @@
 ---
-- ansible.builtin.include_tasks: "{{ role_path }}/tasks/cred_store_ssh.yml"
-- ansible.builtin.include_tasks: "{{ role_path }}/tasks/tfvars_token.yml"
-- ansible.builtin.include_tasks: "{{ role_path }}/tasks/vault_iac.yml"
+- name: credential store token ssh preparation
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/cred_store_ssh.yml"
+- name: handle vault transit in tfvars
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/tfvars_token.yml"
+- name: apply terraform for vault
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/vault_iac.yml"

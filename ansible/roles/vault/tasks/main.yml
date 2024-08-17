@@ -1,4 +1,9 @@
 ---
-- ansible.builtin.include_tasks: "{{ role_path }}/tasks/docker_pull_status.yml"
-- ansible.builtin.include_tasks: "{{ role_path }}/tasks/deploy.yml"
-- ansible.builtin.include_tasks: "{{ role_path }}/tasks/secrets.yml"
+- name: Check the status of docker images jobs
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/docker_pull_status.yml"
+
+- name: deploy vault 
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/deploy.yml"
+
+- name: retrieve vault secrets
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/secrets.yml"

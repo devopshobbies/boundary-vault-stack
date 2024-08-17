@@ -1,4 +1,5 @@
 ---
-- ansible.builtin.include_tasks: "{{ role_path }}/tasks/tokens.yml"
+- name: cleanup vault tokens
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/tokens.yml"
 - name: Secrets.txt related clean up ops
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/secrets_file.yml"

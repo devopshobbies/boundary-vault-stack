@@ -1,5 +1,5 @@
 ---
-
-- hosts: hashicorp
+- name: deploy and apply boundary tf modules
+  hosts: hashicorp
   roles:
     - boundary

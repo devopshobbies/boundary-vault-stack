@@ -46,6 +46,7 @@
   loop: "{{ containers }}"
   register: containers_info
 
-- ansible.builtin.include_tasks: "{{handlers}}/container_healthcheck.yml"
+- name: run the docker containers healthcheck
+  ansible.builtin.include_tasks: "{{handlers}}/container_healthcheck.yml"
   vars:
     INFO: "{{ containers_info }}"
