@@ -44,3 +44,12 @@ function lint_docker () {
   return 0
 
 }
+
+function lint_ansible () {
+  for play in $@; do
+    if ! ansible-playbook $play --syntax-check &> /dev/null; then
+      echo "Ansible Syntax Error: syntax check failed for $play, check the underlying roles!"    
+      return 3
+    fi
+  done
+}
