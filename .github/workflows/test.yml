@@ -56,7 +56,7 @@ jobs:
         working-directory:  "vault/terraform/"
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3   
+        uses: actions/checkout@v4   
 
       - name: setup terraform cli
         uses: hashicorp/setup-terraform@v3
@@ -85,6 +85,9 @@ jobs:
         working-directory: ./scripts
         shell: bash
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4     
+     
       - name: setup python
         uses: actions/setup-python@v5
         with:
