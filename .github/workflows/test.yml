@@ -41,13 +41,13 @@ jobs:
         run: terraform validate -no-color
 
       - name: validate stdout
-        run: echo ${{ steps.validate.outputs.stdout }}
+        run: echo "${{ steps.validate.outputs.stdout }}"
 
       - name: validate sterr
-        run: echo ${{ steps.validate.outputs.stderr }}
+        run: echo "${{ steps.validate.outputs.stderr }}"
 
       - name: validate exitcode
-        run: echo ${{ steps.validate.outputs.exitcode }}
+        run: echo "${{ steps.validate.outputs.exitcode }}"
 
   lint-vault-terraform:
     runs-on: ubuntu-latest
