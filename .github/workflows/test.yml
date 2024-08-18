@@ -102,4 +102,4 @@ jobs:
       - name: check playbook and role's syntax
         env:
           plays: ${{ vars.PLAYBOOKS }}
-        run: bash scripts/linter.sh ansible "${plays[@]}"
+        run: bash linter.sh ansible "${plays[@]}"
