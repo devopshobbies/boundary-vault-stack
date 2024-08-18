@@ -78,11 +78,25 @@ jobs:
       - run: echo ${{ steps.plan.outputs.stderr }}
       - run: echo ${{ steps.plan.outputs.exitcode }}
   
-  # lint-ansible:
-      # defaults:
-      #   run: 
-      #     working-directory: ./scripts
-      #     shell: bash
-  #   steps:
-  #     - name: check playbook and role's syntax
-  #       run: bash ./scripts/linter.sh ansible
+  lint-ansible:
+    runs-on: ubuntu-latest
+    defaults:
+      run: 
+        working-directory: ./scripts
+        shell: bash
+    steps:
+      - name: setup python
+        uses: actions/setup-python@v5
+        with:
+            python-version: '3.10'
+            cache: 'pip'
+
+      - name: install ansible
+        run: |
+          pip install -U pip
+          pip install ansible wheel
+
+      - name: check playbook and role's syntax
+        env:
+          plays: ${{ vars.PLAYBOOKS }}
+        run: bash scripts/linter.sh ansible "${plays[@]}"
