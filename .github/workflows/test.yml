@@ -9,6 +9,11 @@ on:
     branches:
       - main
 
+env:
+  VAULT_ADDR: ${{ vars.VAULT_ADDR }}
+  VAULT_TOKEN: ${{ vars.VAULT_TOKEN }}
+  BOUNDARY_ADDR: ${{ vars.BOUNDARY_ADDR }}
+
 jobs:
   lint-boundary-terraform:
     runs-on: ubuntu-latest
