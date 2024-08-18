@@ -3,7 +3,8 @@ name: BVSTACK CI Pipeline
 on:
   push:
     branches:
-      - [ main, actions ]
+      - main
+      - actions
   pull_request:
     branches:
       - main
