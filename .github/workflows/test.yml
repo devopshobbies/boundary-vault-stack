@@ -98,8 +98,6 @@ jobs:
         run: |
           pip install -U pip
           pip install ansible wheel
-
+          
       - name: check playbook and role's syntax
-        env:
-          plays: ${{ vars.PLAYBOOKS }}
-        run: bash linter.sh ansible "${plays[@]}"
+        run: bash linter.sh ansible
