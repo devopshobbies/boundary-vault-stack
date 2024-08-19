@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 function lint_terraform(){
 
   if ! command -v terraform &> /dev/null; then
@@ -44,3 +46,22 @@ function lint_docker () {
   return 0
 
 }
+
+function lint_ansible () {
+
+  cd ../ansible || { echo "Failed to change directory to ansible"; return 1; }
+  
+  playbooks=$(find . -maxdepth 1 -name "*.yml" -print)
+  for play in $playbooks; do
+    if ! ansible-playbook $play --syntax-check &> /dev/null; then
+      echo "Ansible Syntax Error: syntax check failed for $play, check the underlying roles!" 
+      return 3
+    fi
+    echo "$play is fine in terms of syntax!"
+  done
+    return 0
+}
+
+if [ $1 == "ansible" ]; then
+  lint_ansible
+fi

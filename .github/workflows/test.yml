@@ -1,0 +1,103 @@
+name: BVSTACK CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - actions
+  pull_request:
+    branches:
+      - main
+
+env:
+  VAULT_ADDR: ${{ vars.VAULT_ADDR }}
+  VAULT_TOKEN: ${{ vars.VAULT_TOKEN }}
+  BOUNDARY_ADDR: ${{ vars.BOUNDARY_ADDR }}
+
+jobs:
+  lint-boundary-terraform:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory:  "boundary/terraform/"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: setup terraform cli
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt -check
+        continue-on-error: true
+
+      - name: Terraform Init
+        id: init
+        run: terraform init
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+
+      - name: validate stdout
+        run: echo "${{ steps.validate.outputs.stdout }}"
+
+      - name: validate sterr
+        run: echo "${{ steps.validate.outputs.stderr }}"
+
+      - name: validate exitcode
+        run: echo "${{ steps.validate.outputs.exitcode }}"
+
+  lint-vault-terraform:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory:  "vault/terraform/"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4   
+
+      - name: setup terraform cli
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt -check
+        continue-on-error: true
+
+      - name: Terraform Init
+        id: init
+        run: terraform init
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+
+      - run: echo ${{ steps.plan.outputs.stdout }}
+      - run: echo ${{ steps.plan.outputs.stderr }}
+      - run: echo ${{ steps.plan.outputs.exitcode }}
+  
+  lint-ansible:
+    runs-on: ubuntu-latest
+    defaults:
+      run: 
+        working-directory: ./scripts
+        shell: bash
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4     
+     
+      - name: setup python
+        uses: actions/setup-python@v5
+        with:
+            python-version: '3.10'
+            cache: 'pip'
+
+      - name: install ansible
+        run: |
+          pip install -U pip
+          pip install ansible wheel
+          
+      - name: check playbook and role's syntax
+        run: bash linter.sh ansible
