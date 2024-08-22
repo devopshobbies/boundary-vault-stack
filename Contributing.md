@@ -40,7 +40,7 @@ If you encounter any bugs, errors, or have suggestions for improvements:
 
 - **Search existing issues**: Before submitting a new issue, please check if it has already been reported.
 - **Create a new issue**: If it’s a new issue, create one and provide detailed information such as steps to reproduce, expected and actual results, and any relevant screenshots or logs.
-- **Link to related tasks**: If your issue is related to any of the [TODOs](#how-to-use), please reference the corresponding task.
+- **Link to related tasks**: If your issue is related to any of the [TODOs](#https://github.com/Shayan-Ghani/boundary-vault-stack/tree/main/#to-do), please reference the corresponding task.
 
 ### Submitting Pull Requests
 
@@ -51,7 +51,7 @@ When submitting pull requests (PRs):
     git checkout -b feature/your-feature-name
     ```
 
-2. **Make atomic commits**: Ensure each commit is focused and addresses a single change.
+2. **Make atomic commits**: Ensure each commit is focused and addresses a single change by Conforming to the Commit Messages section.
 
 3. **Follow the code style guidelines**: Ensure your code adheres to the project's code style and best practices.
 
@@ -74,10 +74,10 @@ When submitting pull requests (PRs):
 - **Use imperative mood**: Write commit messages as if you are commanding the code to do something (e.g., "Add Vagrantfile for VM provisioning").
 - **Be concise but descriptive**: Provide enough detail to understand the change.
 
-### Testing
+#### Conventions
+  - start your commit with `doc:` in case of any change in wiki.
+  - start your commit with `closes #issue_number :` if your commit closes an issue.
 
-- **Implement Ansible Molecule test cases**: For Ansible roles, write Molecule test scenarios to ensure your roles work as expected.
-- **Automated testing**: Contribute to the CI/CD pipeline by writing GitHub Actions workflows that automate testing.
 
 ## Guidelines for Specific Tasks
 
@@ -99,6 +99,11 @@ When submitting pull requests (PRs):
 ### CI/CD
 
 - **GitHub Actions**: Contribute to the existing CI/CD pipeline by implementing automated testing, linting, and security scans for pull requests.
+
+### Testing
+
+- **Implement Ansible Molecule test cases**: For Ansible roles, write Molecule test scenarios to ensure your roles work as expected.
+- **Automated testing**: Contribute to the CI/CD pipeline by writing GitHub Actions workflows that automate testing.
 
 ## Communication
 
