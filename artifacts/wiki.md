@@ -1,5 +1,43 @@
 # Boundary-Vault-Stack
 
+## Table of Contents
+- [Getting Started](#getting-started)
+- [About Hashicorp Vault and Boundary](#about-hashicorp-vault-and-boundary)
+- [Workflows](#workflows)
+  - [Vault](#vault)
+  - [Boundary](#boundary)
+- [Configurations](#configurations)
+  - [Environment Variables](#environment-variables)
+- [Return/Exit Codes](#returnexit-codes)
+- [Bear In Mind](#bear-in-mind)
+
+
+## Getting started
+After the server is properly provision and configured you'll have Vault and Boundary up and running. For the sake of education the stack will be initialized with minimum resources for both services including KV and Transit engine (vault) and a series of auth-method, host catalog, credential stores, etc (Boundary). As the Contributions increase, the resources will be enriched accordingly covering more arbitrary resources and features in the format of IaC. 
+
+To grasp what's going on under the hood, you can reach out to the section you wish to explore in this documentation.
+
+
+## About Hashicorp Vault and Boundary
+
+According to Hashicorp documentation, 
+
+[Boundary](https://developer.hashicorp.com/boundary/docs/overview/what-is-boundary) is an identity-aware proxy that simplifies and secures least-privileged access to cloud infrastructure. It enables SSO, just-in-time access, dynamic credentials, and session management.
+
+[Vault](https://developer.hashicorp.com/vault/docs/what-is-vault) is an identity-based secrets and encryption management system. A secret is anything that you want to tightly control access to, such as API encryption keys, passwords, and certificates. Vault provides encryption services that are gated by authentication and authorization methods. Using Vault’s UI, CLI, or HTTP API, access to secrets and other sensitive data can be securely stored and managed, tightly controlled (restricted), and auditable.
+
+### learn more:
+- [Boundary](https://youtu.be/tUMe7EsXYBQ?si=3IFGbMLGTEy_3X1T)
+- [Vault](https://youtu.be/VYfl-DpZ5wM?si=a3Ign_zoUNS92EAP)
+
+## Workflows
+### Vault
+
+
+
+### Boundary
+
+
 
 ## Configurations 
 
@@ -16,6 +54,8 @@
 
 **default**: development
 
+---
+
 #### STACK_INIT (mandatory)
 
 **Description**: When **first** running the stack, `vault-init` and `boundary-init` services are in charge of initiating the basic configurations for `boundary` and `vault`. This variable determines wether this services should be executed or not. So if it's **not** your first time running the stack successfully, set to `false`.
@@ -25,6 +65,16 @@
   - false
 
 **default**: true
+
+---
+
+#### SSH_INJECTION (optional)
+
+**Description**:
+
+**Options**:
+  - true
+  - false
 
 ## Return/Exit Codes
 
@@ -113,4 +163,17 @@ scripts/init.sh vault
 # Exit code: 4
 ```
 
-For further assistance, please open an issue on the [GitHub Issues page](https://github.com/Shayan-Ghani/boundary-vault-stack/issues).
+## Bear In Mind
+- If you have issues with DockerHub make sure you change the image registry in deployments and `prepare_env` role.
+
+- If the target node(s) get restarted, the `vault` gets sealed and `boundary` container will be in restarting mode.
+
+- In case the `vault` container gets restarted, it will be sealed and you'll have an error on your `boudary` container, There manage to get them working together again.
+
+- You can additionally add session recording and other paid plan features.
+
+- Vault is initialized with 1 shared-key to simplify the process, consider increasing the number of keys and threshold for better security.
+
+## Still Having Issues?
+
+For further assistance, feel free to open up a new issue on the [GitHub Issues page](https://github.com/Shayan-Ghani/boundary-vault-stack/issues).
