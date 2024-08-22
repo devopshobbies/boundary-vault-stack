@@ -7,7 +7,7 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
 ## How To Use
 **First, make sure you have [READ THE DOCUMENTATION](./artifacts/wiki.md) for instructions on how the stack works.**
 
-**See a thorough [diagram of the automation workflow](https://linktw.in/PloXtt).**
+**See a thorough [diagram of the automation workflow big picture](https://drive.google.com/file/d/1KvGx40JSYgn5W4BF5MnnGHXqBkb8ukkY/view?usp=sharing).**
 
 
 
