@@ -5,20 +5,23 @@ Deploy Self-Hosted HCP Vault and Boundary using End-To-End automation.
 By providing a comprehensive and hands-on experience in Infrastructure as Code (IaC) and Configuration Management along with creating vital deliverables such as documentation and diagrams, this project simulates a real-world infrastructure development that emphasizes End-to-End automation, enabling DevOps Engineers to collaborate and deliver a reliable and production-ready stack to the end-users.
 
 ## How To Use
-**First, make sure you have [READ THE DOCUMENTATION](./artifacts/wiki.md) for instructions on how the stack works.**
+**First, make sure you have [READ THE DOCUMENTATION](./artifacts/wiki.md) for instructions on how the stack and Hashicorp Boundary/Vault work.**
 
-**See a thorough [diagram of the automation workflow big picture](https://drive.google.com/file/d/1KvGx40JSYgn5W4BF5MnnGHXqBkb8ukkY/view?usp=sharing).**
+**See a thorough [diagram of the automation workflow big picture](https://linktw.in/nWgoiO).**
 
 
 
- To initialize the process run `start.sh` script in your desired environment:
+1. To initialize the process run `start.sh` script in your desired environment:
  ```bash
  #run in dev:
         ./start.sh -e development
  ```
- If you need further assistance on the exit/return code, check out [ wiki ](./artifacts/wiki.md).
 
-**The `ansible-vault-pass` is `BVSTACK`. this is for the sake of simplicity and sample make sure you use a strong password for your ansible vault encrypted files.**
+*If you need further assistance on the exit/return code and configurations, check out [ wiki ](./artifacts/wiki.md).*
+
+2. You'll be prompted to Enter the vault-password to decrypt ansible-vault encrypted files (e.g inventory.ini).
+
+**The `ansible-vault-pass` is `BVSTACK`. This is for the sake of simplicity and sample, make sure you use a strong password for your ansible vault encrypted files.**
 
 ## TO-DO
 > [!NOTE]  
@@ -75,11 +78,6 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
 - [ ] Remove vault root token in `cleanup`.
 
 ## Contribution
-all types of contributions is welcomed, read `Contribution.md` for more information.
-
-## Bear In Mind
-- if you have issues with DockerHub make sure you change the image registry in deployments and `prepare_env` role.
-
-- if the target node(s) get restarted, the `vault` gets sealed and `boundary` container will be in restarting mode.
+all types of contribution is welcomed, read [`Contribution.md`](./Contributing.md) for more information.
 
 Copyright © 2024 Shayan Ghani shayan.ghani.tech@gmail.com
