@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boundary-Vault-Stack Documentation</title>
+
+
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+        as="style" />
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        as="style" />
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <header>
+        Boundary-Vault-Stack Documentation
+    </header>
+
+    <div class="container">
+        <nav>
+            <ul>
+                <li><a href="#getting-started">Getting Started</a></li>
+                <li><a href="#about-hashicorp-vault-and-boundary">About Hashicorp Vault and Boundary</a></li>
+                <li><a href="#workflows">Workflows</a>
+                    <ul>
+                        <li><a href="#vault">Vault</a></li>
+                        <li><a href="#boundary">Boundary</a></li>
+                    </ul>
+                </li>
+                <li><a href="#configurations">Configurations</a>
+                    <ul>
+                        <li><a href="#environment-variables">Environment Variables</a></li>
+                    </ul>
+                </li>
+                <li><a href="#returnexit-codes">Return/Exit Codes</a></li>
+                <li><a href="#bear-in-mind">Bear In Mind</a></li>
+                <li><a href="#still-having-issues">Still Having Issues</a></li>
+            </ul>
+        </nav>
+
+        <div class="content">
+            <div class="intro section">
+                <h2 id="getting-started" class="section-header">Getting Started</h2>
+                <p>After the server is properly provisioned and configured, you'll have Vault and Boundary up and
+                    running.
+                    For the sake of education, the stack will be initialized with minimum resources for both services,
+                    including KV and Transit engine <span class="bold">Vault</span> and a series of auth-methods, host
+                    catalog, credential
+                    stores, etc. <span class="bold">Boundary</span>. As the contributions increase, the resources will
+                    be enriched accordingly, covering
+                    more arbitrary resources and features in the format of Infrastructure as Code (IaC).</p>
+                <p>To grasp what's going on under the hood, you can reach out to the section you wish to explore in this
+                    documentation.</p>
+
+                <h2 id="about-hashicorp-vault-and-boundary" class="section-header">About Hashicorp Vault and Boundary
+                </h2>
+                <p>According to Hashicorp documentation:</p>
+                <p><a href="https://developer.hashicorp.com/boundary/docs/overview/what-is-boundary">Boundary</a> is an
+                    identity-aware proxy that simplifies and secures least-privileged access to cloud infrastructure. It
+                    enables SSO, just-in-time access, dynamic credentials, and session management.</p>
+                <p><a href="https://developer.hashicorp.com/vault/docs/what-is-vault">Vault</a> is an identity-based
+                    secrets
+                    and encryption management system. A secret is anything that you want to tightly control access to,
+                    such
+                    as API encryption keys, passwords, and certificates. Vault provides encryption services that are
+                    gated
+                    by authentication and authorization methods. Using Vault’s UI, CLI, or HTTP API, access to secrets
+                    and
+                    other sensitive data can be securely stored, managed, tightly controlled (restricted), and audited.
+                </p>
+                <p>Learn more:</p>
+                <ul>
+                    <li><a href="https://youtu.be/tUMe7EsXYBQ?si=3IFGbMLGTEy_3X1T">Boundary</a></li>
+                    <li><a href="https://youtu.be/VYfl-DpZ5wM?si=a3Ign_zoUNS92EAP">Vault</a></li>
+                </ul>
+            </div>
+
+            <div class="workflows section">
+                <h2 id="workflows" class="section-header">Workflows</h2>
+                <h3 id="vault" class="section-header">Vault</h3>
+                <p>Vault workflow involves setting up authentication methods, secret engines, and policies. The key
+                    components include:</p>
+                <ul>
+                    <li><span class="bold">Auth Methods</span>: How users and applications authenticate to Vault.</li>
+                    <li><span class="bold">Secret Engines</span>: Where secrets are stored, such as key-value pairs,
+                        database credentials, or
+                        encryption keys.</li>
+                    <li><span class="bold">Policies</span>: Rules that define what actions an authenticated user or
+                        service can perform within
+                        Vault.</li>
+                </ul>
+
+                <h3 id="boundary" class="section-header">Boundary</h3>
+                <p>Boundary workflow involves managing sessions, targets, and credentials. The key components include:
+                </p>
+                <ul>
+                    <li><span class="bold">Sessions</span>: Establish secure, just-in-time access to resources.</li>
+                    <li><span class="bold">Targets</span>: The infrastructure resources that users need access to, such
+                        as servers or
+                        databases.
+                    </li>
+                    <li><span class="bold">Credential Stores</span>: Where dynamic or static credentials are retrieved
+                        for access to targets.
+                    </li>
+                </ul>
+            </div>
+
+
+            <div class="configurations section">
+                <h2 id="configurations" class="section-header">Configurations</h2>
+                <h3 class="env-var section-header" id="environment-variables">Environment Variables</h3>
+                <p>Environment variables need to be configured for both Vault and Boundary. Here's an example:</p>
+                <h4>STACK_ENV (mandatory)</h4>
+                <p>This variable determines in which mode/environment the stack is deployed.</p>
+                <ul class="options">
+                    <li>development</li>
+                    <li>test</li>
+                    <li>staging</li>
+                    <li>production</li>
+                </ul>
+                <p class="default">default : development</p>
+                <hr>
+                <h4>STACK_INIT (mandatory)</h4>
+                <p>When <span class="bold">first</span> running the stack, <span class="bold">vault-init</span> and
+                    <span class="bold">boundary-init</span> services are in charge of initiating the basic
+                    configurations for <span class="bold">Boundary</span> and
+                    `vault`. This variable determines whether these services should be executed or not. So if it's <span
+                        class="bold">not</span> your first time running the stack successfully, set to <span
+                        class="bold">false</span>.
+                </p>
+                <ul class="options">
+                    <li>true</li>
+                    <li>false</li>
+                </ul>
+                <p class="default">default : true</p>
+                <hr>
+                <h4>SSH_INJECTION (optional)</h4>
+                <p>SSH injection variable enables Boundary vault credential store. <span class="bold">only works on paid
+                        plan!!</span></p>
+                <ul class="options">
+                    <li>true</li>
+                    <li>false</li>
+                </ul>
+                <p class="default">default : false</p>
+
+            </div>
+
+            <div class="rc section">
+                <h2 id="returnexit-codes" class="section-header">Return/Exit Codes</h2>
+                <p>In this project, several scripts use return/exit codes to indicate the result of operations.
+                    Understanding these codes is essential for diagnosing issues and ensuring proper execution of the
+                    scripts. Below is a detailed explanation of each return/exit code used in the project.</p>
+
+                <h3>Exit Code 1: Service Not Installed</h3>
+                <p><span class="bold">Description:</span> This exit code indicates that the required service is not
+                    installed on the system.</p>
+                <p class="default">Possible Causes:</p>
+                <ul>
+                    <li>The service was not installed during the setup process.</li>
+                    <li>The installation process was interrupted or failed.</li>
+                </ul>
+                <p class="default">Resolution: </p>
+                <ul>
+                    <li>Verify and ensure that the installation was successful by running the <span
+                            class="bold">prepare_env</span> role.</li>
+                </ul>
+
+                <p class="default">Resolution: </p>
+                <div class="code-container">
+                    <button class="copy-btn" onclick="copyToClipboard()">
+                        <i class="fa fa-clipboard"></i>
+                    </button>
+                    <pre class="code">$ scripts/init.sh vault
+<span>
+# Output: Terraform not installed
+# Exit code: 1
+</span>
+                    </pre>
+                </div>
+                <div id="copy-notification">Copied!</div>
+
+                <h3>Exit Code 2: Terraform Init Failed</h3>
+                <p><span class="bold">Description:</span> This exit code indicates that the `terraform init` command
+                    failed.</p>
+                <p class="default">Possible Causes:</p>
+                <ul>
+                    <li>The Terraform configuration files are missing or
+
+                        corrupted.</li>
+                    <li>There is a network issue preventing Terraform from accessing necessary modules or providers.
+                    </li>
+                    <li>Incorrect permissions to the directory where Terraform is being initialized.</li>
+                    <li>Wrong terraform directory path.</li>
+                </ul>
+                <p class="default">Resolution: </p>
+                <ul>
+                    <li>Ensure that all required Terraform configuration files are present and correctly configured.
+                    </li>
+                    <li>Refer to the <a href="https://www.terraform.io/docs/commands/init.html"
+                            target="_blank">Terraform Documentation</a> for more details.</li>
+                    <li>Check network connectivity and permissions.</li>
+                </ul>
+
+                <p class="default">Resolution: </p>
+                <div class="code-container">
+                    <button class="copy-btn" onclick="copyToClipboard()">
+                        <i class="fa fa-clipboard"></i>
+                    </button>
+                    <pre class="code">
+$ scripts/init.sh vault
+<span>
+# Output: Terraform init failed
+# Exit code: 2
+</span>
+</pre>
+                </div>
+                <h3>Exit Code 3: Configuration is Invalid</h3>
+                <p><span class="bold">Description:</span> This exit code indicates that `terraform validate` was not
+                    successfully executed.</p>
+                <p class="default">Possible Causes:</p>
+                <ul>
+                    <li>The configuration file has syntax errors.</li>
+                    <li>Required configuration parameters are missing or incorrect.</li>
+                </ul>
+                <p class="default">Resolution: </p>
+                <ul>
+                    <li>Validate the configuration file against the expected schema.</li>
+                    <li>Ensure all required parameters are correctly specified.</li>
+                </ul>
+
+                <p class="default">Resolution: </p>
+                <div class="code-container">
+                    <button class="copy-btn" onclick="copyToClipboard()">
+                        <i class="fa fa-clipboard"></i>
+                    </button>
+                    <pre class="code">
+$ scripts/init.sh vault
+<span>
+# Output: Configuration is invalid
+# Exit code: 3
+</span>
+</pre>
+                </div>
+                <h3>Exit Code 4: Arguments and Options are Invalid.</h3>
+                <p><span class="bold">Description:</span> This exit code indicates that the arguments or options passed
+                    to the script are invalid.</p>
+                <p class="default">Possible Causes:</p>
+                <ul>
+                    <li>Incorrect or missing arguments/options.</li>
+                    <li>The script was invoked with unsupported options.</li>
+                </ul>
+                <p class="default">Resolution: </p>
+                <ul>
+                    <li>Refer to the script usage documentation to ensure all required arguments and options are
+                        correctly specified.</li>
+                    <li>Use the `--help` option with the script to view the correct usage.</li>
+                </ul>
+
+                <p class="default">Resolution: </p>
+                <div class="code-container">
+                    <button class="copy-btn" onclick="copyToClipboard()">
+                        <i class="fa fa-clipboard"></i>
+                    </button>
+                    <pre class="code">
+$ ./start.sh --environment development
+<span>
+# Output: Invalid option: --environment
+# Exit code: 4
+</span>
+</pre>
+                </div>
+            </div>
+
+            <div class="bear-in-mind section">
+                <h2 id="bear-in-mind">Bear In Mind</h2>
+                <p>Keep the following in mind when working with the Boundary-Vault stack:</p>
+                <ul>
+                    <li>If you have issues with DockerHub make sure you change the image registry in deployments and
+                        `prepare_env` role.</li>
+                    <li>If the target node(s) get restarted, the <span class="bold">vault</span> gets sealed and <span
+                            class="bold">boundary</span> container will be in
+                        restarting mode.</li>
+                    <li>In case the <span class="bold">vault</span> container gets restarted, it will be sealed and
+                        you'll have an error on your
+                        <span class="bold">boundary</span> container, there manage to get them working together again.
+                    </li>
+                    <li>You can additionally add session recording and other paid plan features.</li>
+                    <li>Vault is initialized with 1 shared-key to simplify the process, consider increasing the number
+                        of keys and threshold for better security.</li>
+                </ul>
+            </div>
+
+            <div class="issues section">
+                <h2 id="still-having-issues" class="section-header">Still Having Issues</h2>
+                <p>For further assistance, feel free to open up a new issue on the <a
+                        href="https://github.com/Shayan-Ghani/boundary-vault-stack/issues">GitHub Issues page.</a></p>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="./app.js"></script>
+
+</body>
+
+</html>

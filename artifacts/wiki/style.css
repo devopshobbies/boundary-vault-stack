@@ -1,0 +1,231 @@
+:root {
+    --bold-default: 800;
+    --bold-text: 500;
+    --bg-primary: #f9f9f9;
+    --clr-text: #262626;
+    --clr-primary: #2b3e50;
+    --clr-secondary: #007acc;
+    --clr-header: #fff;
+    --code-primary-clr: #33333344;
+    --clr-code-light: #ffffffba;
+    --font-primary: 'Roboto', sans-serif;
+    --font-code: 'Fira Code', monospace;
+    --font-size-large: 1.6rem;
+    --font-size-mid: 1.4rem;
+    --font-size-small: 1rem;
+    --margin-small: 1.6rem;
+    --margin-mid: 3rem;
+    --margin-large: 5rem;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-primary);
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-primary);
+    color: var(--clr-text);
+    line-height: 2rem;
+}
+
+header {
+    background-color: var(--clr-primary);
+    color: var(--clr-header);
+    padding: 1rem;
+    text-align: center;
+    font-size: var(--font-size-mid);
+    font-weight: 700;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    font-size: var(--font-size-mid);
+}
+
+nav {
+    flex: 1;
+    align-self: self-start;
+    position: sticky;
+    top: 20px;
+    max-width: 200px;
+    font-size: var(--font-size-small);
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--clr-primary);
+    padding: 8px 0;
+    display: block;
+    font-weight: var(--bold-text);
+}
+
+nav ul li a:hover {
+    color: var(--clr-secondary);
+}
+
+.content {
+    flex: 3;
+    padding: 0 20px;
+}
+
+h2 {
+    color: var(--clr-primary);
+    font-size: 1.75rem;
+    margin-top: 1rem;
+}
+
+h3 {
+    color: var(--clr-primary);
+    font-size: 1.5rem;
+    margin-top: 1rem;
+}
+
+
+a {
+    color: var(--clr-secondary);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* text style */
+.bold {
+    font-weight: var(--bold-text);
+}
+
+.i {
+    background-color: var(--code-primary-clr);
+    padding: 2px 7px;
+    /* border-radius: 5px; */
+}
+
+.default {
+    font-weight: var(--bold-default);
+}
+
+
+
+/* code style */
+
+.code {
+    margin: 0;
+}
+
+.code-container {
+    position: relative;
+    background-color: var(--clr-primary);
+    color: var(--clr-header);
+    padding: 15px 20px;
+    border-radius: 10px;
+    font-family: var(--font-code);
+    font-size: var(--font-size-small);
+    /* overflow-x: auto; */
+    cursor: pointer;
+    max-width: 768px;
+    height: 160px;
+}
+
+.copy-btn {
+    background-color: transparent;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: var(--font-size-mid);
+    transition: color 0.3s;
+    color: var(--clr-header);
+}
+
+.copy-btn:hover {
+    /* Change to your desired hover color */
+    color: var(--clr-secondary);
+    /* Change to your desired text color on hover */
+}
+
+#copy-notification {
+    position: fixed;
+    bottom: -50px;
+    /* Start off-screen */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--clr-secondary);
+    color: var(--bg-primary);
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    opacity: 0;
+    transition: bottom 0.5s ease, opacity 0.5s ease;
+    z-index: 1000;
+}
+
+#copy-notification.show {
+    bottom: 30px;
+    opacity: 1;
+}
+
+.code span {
+    color: var(--clr-code-light);
+}
+
+/* end of code styling */
+
+
+/* scroll animation */
+.section-header {
+    padding-top: 20px;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    color: var(--clr-primary);
+}
+
+.section-header.active {
+    color: var(--clr-secondary);
+}
+
+/* end of scroll animation */
+
+.rc .code-container {
+    margin-bottom: var(--margin-small);
+}
+
+
+
+
+/* responsive */
+
+@media only screen and (max-width: 768px) {
+    nav {
+        display: none;
+    }
+
+    header {
+        font-size: var(--font-size-mid);
+
+    }
+
+    .code {
+        padding: 10px 10px;
+        font-size: var(--font-size-small);
+        overflow-x: auto;
+        width: 300px;
+    }
+
+    .content {
+        padding: 30px 0;
+    }
+}
