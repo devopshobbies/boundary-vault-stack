@@ -13,6 +13,7 @@
     --font-size-large: 1.6rem;
     --font-size-mid: 1.4rem;
     --font-size-small: 1rem;
+    --font-size-phone: 1.2rem;
     --margin-small: 1.6rem;
     --margin-mid: 3rem;
     --margin-large: 5rem;
@@ -28,7 +29,7 @@ body {
     padding: 0;
     background-color: var(--bg-primary);
     color: var(--clr-text);
-    line-height: 2rem;
+    line-height: 2.5rem;
 }
 
 header {
@@ -209,6 +210,11 @@ a:hover {
 /* responsive */
 
 @media only screen and (max-width: 768px) {
+    .container {
+        line-height: 3rem;
+        font-size: var(--font-size-phone);
+    }
+    
     nav {
         display: none;
     }
@@ -223,6 +229,7 @@ a:hover {
         font-size: var(--font-size-small);
         overflow-x: auto;
         width: 300px;
+        line-height: var(--font-size-large);
     }
 
     .content {
