@@ -1,4 +1,5 @@
-- name: pull necessary docker images
+---
+- name: Pull necessary docker images
   community.docker.docker_image:
     name: "{{ item.value.name }}"
     source: pull
@@ -9,5 +10,5 @@
   register: docker_pull_job
 
 - name: Extract job IDs
-  set_fact:
+  ansible.builtin.set_fact:
     job_ids: "{{ docker_pull_job.results | map(attribute='ansible_job_id') | list }}"

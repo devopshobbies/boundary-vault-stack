@@ -1,8 +1,6 @@
 ---
-
-- hosts: hashicorp
-  # vars:
-  #   ansible_python_interpreter: /usr/bin/python3
+- name: prepare the stack environment and deploy vault
+  hosts: hashicorp
   roles:
     - prepare_env
     - vault

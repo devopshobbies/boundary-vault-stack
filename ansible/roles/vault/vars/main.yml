@@ -1,5 +1,6 @@
-deploy_script: "{{ stack_dir }}/scripts/deploy.sh" 
+---
+deploy_script: "{{ stack_dir }}/scripts/deploy.sh"
 containers:
   - vault
-  
-vol_path: "/srv/vault"
+
+vol_path: /srv/vault

@@ -1,2 +1,4 @@
+---
 STACK_INIT: true
 STACK_ENV: development
+secret_file: secrets.txt

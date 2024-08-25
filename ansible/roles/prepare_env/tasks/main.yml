@@ -1,3 +1,6 @@
-- include_tasks: "{{ role_path }}/tasks/docker_images.yml"
+---
+- name: pull required docker images 
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/docker_images.yml"
 
-- include_tasks: "{{ role_path }}/tasks/files_and_directories.yml"
+- name: copy and sync files and directories
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/files_and_directories.yml"

@@ -1,3 +1,4 @@
+---
 - name: Check docker pull status
   ansible.builtin.async_status:
     jid: "{{ item }}"
@@ -9,6 +10,6 @@
 
 - name: Clean up async file
   ansible.builtin.async_status:
-    jid: '{{ item }}'
+    jid: "{{ item }}"
     mode: cleanup
   loop: "{{job_ids}}"
