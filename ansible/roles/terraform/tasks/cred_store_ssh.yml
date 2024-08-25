@@ -7,6 +7,6 @@
   when: ssh_injection == True
 
 - name: Add ssh cred store token to variables
-  ansible.builtin.command: bash "{{home_dir}}/scripts/cleanup.sh" ssh
+  ansible.builtin.shell: bash "{{home_dir}}/scripts/cleanup.sh" ssh
   delegate_to: localhost
   when: ssh_injection == True

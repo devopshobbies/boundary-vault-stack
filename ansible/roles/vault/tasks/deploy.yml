@@ -31,7 +31,7 @@
 
 - name: Deploy vault using deploy_script
   become: true
-  ansible.builtin.command: STACK_DIR={{ stack_dir }} STACK_INIT="{{ STACK_INIT }}" bash {{ deploy_script }} vault
+  ansible.builtin.shell: STACK_DIR={{ stack_dir }} STACK_INIT={{ STACK_INIT }} bash {{ deploy_script }} vault
   ignore_errors: true
   register: vault_deployment
 
