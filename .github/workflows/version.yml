@@ -1,0 +1,101 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - release
+  pull_request:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      -
+        name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          push: false
+          tags: devopsteen/discord-notifier:latest
+
+  changelog:
+    name: Changelog
+    needs:
+      - build
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+
+    outputs:
+      skipped: ${{ steps.changelog.outputs.skipped }}
+      version: ${{ steps.changelog.outputs.version }}
+      tag: "v${{ steps.changelog.outputs.version }}"
+
+    env:
+      PR_BRANCH: release-ci-${{ github.sha }}
+
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+      - name: Create Branch
+        run: |
+          git checkout -b ${{ env.PR_BRANCH }}
+
+      - name: Create Changelog
+        uses: TriPSs/conventional-changelog-action@dd734f74fce61a6e02f821ee1b5930bc79a23534 # v5
+        id: changelog
+        with:
+          github-token: ${{ github.token }}
+          git-user-name: "github-actions[bot]"
+          git-user-email: "github-actions[bot]@users.noreply.github.com"
+          git-branch: ${{ env.PR_BRANCH }}
+          skip-git-pull: true
+          output-file: false
+          version-file: .github/package.yml
+          create-summary: true
+          
+
+      - name: Create Changelog PR
+        if: steps.changelog.outputs.skipped == 'false'
+        run: |
+          git add .
+          git commit -m "chore(release): v${{ steps.changelog.outputs.version }} [skip-ci]"
+          git push --set-upstream origin ${{ env.PR_BRANCH }}
+          gh pr create --base master --head ${{ env.PR_BRANCH }} --title 'chore(release): v${{ steps.changelog.outputs.version }} [skip-ci]' --body 'created new release from ${{ env.PR_BRANCH }}'
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Merge Changelog PR
+        if: steps.changelog.outputs.skipped == 'false'
+        run: |
+          gh pr merge --auto --delete-branch ${{ env.PR_BRANCH }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+  release:
+    name: Release
+    needs: changelog
+    if: github.event_name != 'pull_request' && needs.changelog.outputs.skipped == 'false'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+
+      - name: run tests and lint
+        uses: ./.github/workflows/test.yml
+####### include test.yml
+
+      - name: Create Release
+        uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844 # v1
+        with:
+          token: ${{ github.token }}
+          tag_name: ${{ needs.changelog.outputs.tag }}
+          prerelease: false
+          draft: false
+          generate_release_notes: true
+          name: ${{ needs.changelog.outputs.tag }}
