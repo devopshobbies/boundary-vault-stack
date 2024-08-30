@@ -1,13 +1,8 @@
-name: BVSTACK CI Pipeline
+name: BVSTACK Test Pipeline
 
 on:
   push:
-    branches:
-      - main
-      - actions
   pull_request:
-    branches:
-      - main
 
 env:
   VAULT_ADDR: ${{ vars.VAULT_ADDR }}
