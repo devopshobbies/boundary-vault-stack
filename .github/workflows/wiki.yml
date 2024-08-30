@@ -45,8 +45,8 @@ jobs:
         run: |
           pip install -U pip
           pip install diagrams
-          apt update
-          apt install graphviz
+          sudo apt update
+          sudo apt install graphviz
 
       - name: generate diagrams
         run: |
@@ -55,6 +55,7 @@ jobs:
           mv *.png ${{github.workspace}}/artifacts/wiki/
 
   deploy-wiki:
+    needs: generate_diagrams
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
