@@ -7,7 +7,7 @@ on:
     branches:
       - main
     paths:
-      - 'wiki/**'
+      - 'artifacts/**'
 
 
   # Allows you to run this workflow manually from the Actions tab
