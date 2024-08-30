@@ -1,0 +1,39 @@
+name: BVSTACK CI 
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    
+permissions:
+  contents: write
+  pull-requests: write
+  
+jobs:
+  ## build to be implemented
+
+  release:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Bump version and push tag
+        id: bump
+        uses: mathieudutour/github-tag-action@a22cf08638b34d5badda920f9daf6e72c477b07b
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          default_bump: minor
+          
+      - name: Build Changelog
+        id: github_release
+        uses: mikepenz/release-changelog-builder-action@f3fc77b47b74e78971fffecb2102ae6eac9a44d6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}          
+          fromTag: ${{ steps.bump.outputs.previous_tag }} 
+          toTag: ${{ steps.bump.outputs.new_tag }}
+
+      - name: Create Release
+        uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844
+        with:
+          body: ${{ steps.github_release.outputs.changelog }}
+          tag_name: ${{ steps.bump.outputs.new_tag }}
