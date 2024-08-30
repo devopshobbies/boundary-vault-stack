@@ -53,6 +53,11 @@ jobs:
           python vault.py
           python boundary.py
           mv *.png ../wiki/
+      
+      - uses: actions/upload-artifact@v4
+        with:
+          name: diagrams
+          path: ../wiki/
 
   deploy-wiki:
     needs: generate_diagrams
@@ -63,6 +68,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      
+      - name : download diagram artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: diagrams      
+      
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
