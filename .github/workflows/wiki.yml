@@ -45,14 +45,17 @@ jobs:
         run: |
           pip install -U pip
           pip install diagrams
+          sudo apt update
+          sudo apt install graphviz
 
       - name: generate diagrams
         run: |
           python vault.py
           python boundary.py
-          mv *.png ${{github.workspace}}/artifacts/wiki/
+          mv *.png ../wiki/
 
   deploy-wiki:
+    needs: generate_diagrams
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
