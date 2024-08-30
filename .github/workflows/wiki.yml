@@ -45,6 +45,8 @@ jobs:
         run: |
           pip install -U pip
           pip install diagrams
+          apt update
+          apt install graphviz
 
       - name: generate diagrams
         run: |
