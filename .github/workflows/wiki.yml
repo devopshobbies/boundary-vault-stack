@@ -73,7 +73,9 @@ jobs:
       - name : download diagram artifacts
         uses: actions/download-artifact@v4
         with:
-          name: diagrams      
+          name: diagrams
+          path: ${{github.workspace}}/artifacts/wiki   
+          merge-multiple: true   
       
       - name: Setup Pages
         uses: actions/configure-pages@v5
