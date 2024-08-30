@@ -204,6 +204,24 @@ a:hover {
     margin-bottom: var(--margin-small);
 }
 
+/* workflows */
+.workflows {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+}
+.workflows img {
+    width: 100%;
+    max-width: 700px;
+    height: auto;
+    margin-bottom: 20px;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    align-self: center;
+}
 
 
 
