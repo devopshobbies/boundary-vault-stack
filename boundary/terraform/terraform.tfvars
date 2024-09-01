@@ -34,6 +34,7 @@ main_server_names = [
   ]
 
 test_server_name = "testing"
+test_ssh_port = 22
 
 # provider variables
 boundary_address = "https://boundary.dvh.tech"
