@@ -165,25 +165,6 @@ resource "boundary_credential_store_static" "main_cred_store" {
   scope_id = boundary_scope.core_infra.id
 }
 
-## Uncomment the following lines if you have vault paid plan
-# resource "boundary_credential_store_vault" "vault_cert_store" {
-#   name = "vault-cred-store"
-#   address  = var.vault_address
-#   token    = var.vault_cred_store_token
-#   scope_id = boundary_scope.core_infra.id
-# }
-
-# resource "boundary_credential_library_vault_ssh_certificate" "vault_cred_lib_ssh" {
-#   name                = "certificates-library"
-#   credential_store_id = boundary_credential_store_vault.vault_cert_store.id
-#   path                = var.vault_sign_path
-#   username            = var.vault_username
-#   key_type            = "ecdsa"
-#   key_bits            = 521
-# }
-
-### end of vault ###
-
 resource "boundary_credential_ssh_private_key" "main_server_keys" {
   for_each            = { for host in var.hosts_info : host.name => host }
   name                = each.value.ssh_key_name
@@ -207,21 +188,39 @@ resource "boundary_target" "main_servers_ssh" {
   ]
 }
 
+#### Start of Vault ssh credential store
+# The following resources are only applied if SSH_INJECTION is set to True.
 
-#### uncomment the following block if you have pain boundary plan to use cred injection
-# resource "boundary_target" "test_server_ssh" {
-#   type                           = "tcp"
-#   name                           = "${var.test_server_name}_ssh_server"
-#   description                    = "test servers SSH target"
-#   scope_id                       = boundary_scope.core_infra.id
-#   default_port                   = var.ssh_port
+resource "boundary_credential_store_vault" "vault_cert_store" {
+  count = var.SSH_INJECTION ? 1 : 0
+  name = "vault-cred-store"
+  address  = var.vault_address
+  token    = var.vault_cred_store_token
+  scope_id = boundary_scope.core_infra.id
+}
 
-#   injected_application_credential_source_ids = [boundary_credential_library_vault_ssh_certificate.vault_cred_lib_ssh.id]
+resource "boundary_credential_library_vault_ssh_certificate" "vault_cred_lib_ssh" {
+  count = var.SSH_INJECTION ? 1 : 0
+  name                = "certificates-library"
+  credential_store_id = boundary_credential_store_vault.vault_cert_store.id
+  path                = var.vault_sign_path
+  username            = var.vault_username
+  key_type            = "ecdsa"
+  key_bits            = 521
+}
 
-#   host_source_ids = [
-#     boundary_host_set_static.main_servers_ssh.id
-#   ]
-# }
+resource "boundary_target" "test_server_ssh" {
+  count = var.SSH_INJECTION ? 1 : 0
+  type                           = "tcp"
+  name                           = "${var.test_server_name}_ssh_server"
+  description                    = "test servers SSH target"
+  scope_id                       = boundary_scope.core_infra.id
+  default_port                   = var.test_ssh_port
+  injected_application_credential_source_ids = [boundary_credential_library_vault_ssh_certificate.vault_cred_lib_ssh.id]
+  host_source_ids = [
+    boundary_host_set_static.main_servers_ssh.id
+  ]
+}
 ### End of cred injection
 
 # TODO: break resources into seperate tf files
