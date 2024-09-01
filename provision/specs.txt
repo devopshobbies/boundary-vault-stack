@@ -2,3 +2,10 @@ Name: BVSTACK
 Memory: 4GB
 CPU: 2 cores
 Disk : 50GB
+
+## Client
+name: client
+Memory: 2GB
+CPU: 1 core
+Disk: 30GB (optional)
+IP: 192.168.1.16 (optional, based on your subnet)
