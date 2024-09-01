@@ -26,9 +26,9 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
 **The `ansible-vault-pass` is `BVSTACK`. This is for the sake of simplicity and sample, make sure you use a strong password for your ansible vault encrypted files.**
 
 ## TO-DO
-> [!NOTE]  
 > Terraform ....
 
+> NOTE
 > Implement all of the provisioners inside provision Directory and Ansible Role 
 
 - [ ] Add a **Vagrantfile** to provision a VM using the **Vagrant** provider of your choice based on [ specs ](./provision/specs.txt) with `Terraform`.
@@ -45,12 +45,10 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
 - [ ] Enchance `Terraform Output` values for both Boundary and Vault
 - [ ] Implement `Policy as Code (PaC)` to validate `Terraform` policies.
 
-> [!NOTE]
 > Packer ...
 
 - [ ] Add Packer custom image template for VMware Vsphere using [ specs ](./provision/specs.txt).
 
-> [!NOTE]  
 > Ansible ... 
 
 - [ ] Install and configure `Terraform` on the **control node** (`prepare_env` role).
@@ -65,12 +63,10 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
 - [ ] Implement Ansible `Molecule` case scenarios to test different aspects of your roles.
 - [ ] When handling Provisions with `Ansible`, Choose which Provider to provision Based on a User-Defined or Environment variable.
 
-> [!NOTE]  
 > CI/CD ....
 
 - [ ] Implement automated testing using GitHub actions for pull requests. 
 
-> [!NOTE]  
 > Shell Scripting ... 
 
 - [ ] Write a `Custom Logger` function and use it throughout all shell scripts for better error handling and logging (`log` directory).
@@ -82,4 +78,5 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
 ## Contribution
 all types of contribution is welcomed, read [`Contribution.md`](./Contributing.md) for more information.
 
-Copyright © 2024 Shayan Ghani shayan.ghani.tech@gmail.com
+## Credit and Maintainance
+**Copyright © 2024 [Shayan Ghani](https://github.com/Shayan-Ghani) shayan.ghani.tech@gmail.com**
