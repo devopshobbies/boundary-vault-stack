@@ -61,7 +61,7 @@ function init_boundary_iac(){
   token=$(cat $secret_file | grep "transit-token" | awk '{print $2}')
   export VAULT_TOKEN="$token"
   export BOUNDARY_ADDR="$BOUNDARY_ADDR"
-  
+  export TF_VAR_SSH_INJECTION=$SSH_INJECTION
   terraform apply --auto-approve 2>&1 | sed -r "s/\x1B\[[0-9;]*[mGKH]//g" > "${HOME_DIR}/logs/terraform/boundary-logs.txt"
   return 0
 }

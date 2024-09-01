@@ -69,24 +69,41 @@ variable "main_cred_store_name" {
   description = "main servers credential store name"
 }
 
+## start of SSH_INJECTION
+variable "SSH_INJECTION" {
+  type = bool
+  default = false
+  description = "wehter to use ssh credential library"
+}
+
+variable "test_ssh_port" {
+  type = string
+  description = "ssh port for the test target"
+}
 variable "vault_address" {
   type        = string
   sensitive   = true
   description = "address to vault server"
 }
 
-# variable "vault_cred_store_token" {
-#   type        = string
-#   sensitive   = true
-#   description = "vault token for credential store"
-# }
+variable "vault_cred_store_token" {
+  type        = string
+  sensitive   = true
+  default = "hvs.test"
+  description = "vault token for credential store"
+}
 
 variable "vault_sign_path" {
   type = string
+  description = "Path to the Vault key to sign boundary client"
 }
 variable "vault_username" {
   type = string
 }
+
+## end of SSH_INJECTION
+
+
 # permissions and roles
 
 ## all grants
