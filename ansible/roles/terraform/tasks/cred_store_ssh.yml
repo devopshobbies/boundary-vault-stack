@@ -4,9 +4,9 @@
   ansible.builtin.shell: cp {{stack_dir}}/secrets/ca-key.pub /etc/ssh/ca-key.pub && chown 1000:1000 /etc/ssh/ca-key.pub && chmod 644 /etc/ssh/ca-key.pub && echo "TrustedUserCAKeys
     /etc/ssh/ca-key.pub" >> /etc/ssh/sshd_config
   notify: restart_ssh
-  when: ssh_injection == True
+  when: SSH_INJECTION == True
 
 - name: Add ssh cred store token to variables
   ansible.builtin.shell: bash "{{home_dir}}/scripts/cleanup.sh" ssh
   delegate_to: localhost
-  when: ssh_injection == True
+  when: SSH_INJECTION == True
