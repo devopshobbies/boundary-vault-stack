@@ -20,7 +20,6 @@ if ! command -v docker &> /dev/null; then
 
   newgrp docker
 
-  # cp ${PWD}/resolv.conf /etc/resolv.conf
 fi
 
 if ! command -v terraform &> /dev/null; then
