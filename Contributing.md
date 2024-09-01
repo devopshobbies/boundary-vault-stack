@@ -1,15 +1,14 @@
-### Contributing Guidelines for Hashicorp Boundary and Vault Stack
+# Contributing Guidelines for HashiCorp Boundary and Vault Stack
 
-Thank you for considering contributing to the Hashicorp Boundary and Vault Stack project! Contributions help improve the project and are highly appreciated. To ensure smooth collaboration, please follow the guidelines below.
+Thank you for considering contributing to the HashiCorp Boundary and Vault Stack project! Your contributions are invaluable to the project's improvement. To ensure smooth collaboration, please follow the guidelines outlined below.
 
 ## Table of Contents
 - [Getting Started](#getting-started)
 - [Types of Contributions](#types-of-contributions)
   - [Reporting Issues](#reporting-issues)
+  - [Commit Messages](#commit-messages)
   - [Submitting Pull Requests](#submitting-pull-requests)
   - [Code Style and Best Practices](#code-style-and-best-practices)
-  - [Commit Messages](#commit-messages)
-  - [Testing](#testing)
 - [Guidelines for Specific Tasks](#guidelines-for-specific-tasks)
   - [Terraform](#terraform)
   - [Ansible](#ansible)
@@ -20,17 +19,17 @@ Thank you for considering contributing to the Hashicorp Boundary and Vault Stack
 
 ## Getting Started
 
-1. **Fork the repository**: Start by forking the repository to your GitHub account.
+1. **Fork the Repository**: Begin by forking the repository to your GitHub account.
 
-2. **Clone the repository**: Clone your forked repository to your local machine:
+2. **Clone the Repository**: Clone your forked repository to your local machine:
     ```bash
     git clone https://github.com/your-username/boundary-vault-stack.git
     cd boundary-vault-stack
     ```
 
-3. **Set up your environment**: Ensure you have the necessary dependencies installed as outlined in the [documentation](./artifacts/wiki.md).
+3. **Set Up Your Environment**: Ensure you have the necessary dependencies installed as outlined in the [documentation](./artifacts/wiki.md).
 
-4. **Read the documentation**: Familiarize yourself with the project by thoroughly reading the [documentation](./artifacts/wiki.md) and reviewing the [diagram of the automation workflow](https://linktw.in/PloXtt).
+4. **Review the Documentation**: Familiarize yourself with the project by thoroughly reading the [documentation](./artifacts/wiki.md) and reviewing the [automation workflow diagram](https://linktw.in/PloXtt).
 
 ## Types of Contributions
 
@@ -38,77 +37,71 @@ Thank you for considering contributing to the Hashicorp Boundary and Vault Stack
 
 If you encounter any bugs, errors, or have suggestions for improvements:
 
-- **Search existing issues**: Before submitting a new issue, please check if it has already been reported.
-- **Create a new issue**: If it’s a new issue, create one and provide detailed information such as steps to reproduce, expected and actual results, and any relevant screenshots or logs.
-- **Link to related tasks**: If your issue is related to any of the [TODOs](#https://github.com/Shayan-Ghani/boundary-vault-stack/tree/main/#to-do), please reference the corresponding task.
+- **Search Existing Issues**: Before submitting a new issue, check if it has already been reported.
+- **Create a New Issue**: If it’s a new issue, provide detailed information such as steps to reproduce, expected vs. actual results, and any relevant screenshots or logs.
+- **Link to Related Tasks**: If your issue relates to any of the [TODOs](https://github.com/Shayan-Ghani/boundary-vault-stack/tree/main/#to-do), reference the corresponding task.
+
+### Commit Messages
+
+**Use Conventional Commits**: The project follows [semantic versioning](https://semver.org/) to ensure proper releases. Start your commits with a prefix such as `fix:`, `feat:`, `chore:`, or `doc:`.
+
+- **Imperative Mood**: Write commit messages as commands (e.g., "Add Vagrantfile for VM provisioning").
+- **Be Concise but Descriptive**: Provide enough detail to understand the change.
+- **Commit Message Conventions**: Use `doc:` for any changes related to documentation.
 
 ### Submitting Pull Requests
 
 When submitting pull requests (PRs):
 
-1. **Create a branch**: Create a new branch for your feature or bug fix. Avoid working directly on the `main` branch.
+1. **Create a Branch**: Create a new branch for your feature or bug fix. Avoid working directly on the `main` branch.
     ```bash
     git checkout -b feature/your-feature-name
     ```
 
-2. **Make atomic commits**: Ensure each commit is focused and addresses a single change by Conforming to the Commit Messages section.
+2. **Make Atomic Commits**: Ensure each commit is focused and addresses a single change, following the Commit Messages section.
 
-3. **Follow the code style guidelines**: Ensure your code adheres to the project's code style and best practices.
+3. **Follow Best Practices**: Ensure your code adheres to the project's best practices.
 
-4. **Test your changes**: Run tests and ensure your changes do not break the existing code.
+4. **Test Your Changes**: Run tests and ensure your changes do not break existing code.
 
-5. **Update documentation**: If your change requires documentation updates, ensure these are included in your PR.
+5. **Update Documentation**: If your change requires documentation updates, include them in your PR. Use the `documentation` label and provide additional context in the PR description.
 
 6. **Submit the PR**: Push your branch to GitHub and open a pull request against the `main` branch. Link the PR to the corresponding issue(s).
 
 ### Code Style and Best Practices
 
-- **Use meaningful variable and function names**.
-- **Keep functions small and focused**: Each function should perform a single task.
-- **DRY (Don’t Repeat Yourself)**: Reuse code where possible.
-- **Comment your code**: Provide comments where the code is not self-explanatory.
-- **Follow best practices**: For Terraform, Ansible, and Shell Scripting, refer to the [Guidelines for Specific Tasks](#guidelines-for-specific-tasks).
-
-### Commit Messages
-
-- **Use imperative mood**: Write commit messages as if you are commanding the code to do something (e.g., "Add Vagrantfile for VM provisioning").
-- **Be concise but descriptive**: Provide enough detail to understand the change.
-
-#### Conventions
-  - start your commit with `doc:` in case of any change in wiki.
-  - start your commit with `closes #issue_number :` if your commit closes an issue.
-
+- **Use Meaningful Names**: Choose descriptive names for variables and tasks.
+- **Keep Tasks Small and Focused**: Each function should perform a single task.
+- **DRY (Don’t Repeat Yourself)**: Reuse code wherever possible.
+- **Comment Your Code**: Add comments where the code is not self-explanatory.
+- **Adhere to Best Practices**: Refer to the [Guidelines for Specific Tasks](#guidelines-for-specific-tasks) for Terraform, Ansible, and Shell Scripting.
 
 ## Guidelines for Specific Tasks
 
 ### Terraform
 
-- **State management**: Ensure you properly configure remote state management, especially when working on the tasks related to the remote backend.
-- **Output values**: Enhance output values to make them more informative and useful.
+- **State Management**: Configure remote state management properly, especially when working with remote backends.
+- **Output Values**: Make output values informative and useful.
+- **Avoid Unnecessary Loops**: Minimize the use of `foreach` and loops for variables, and avoid hardcoding values.
 
 ### Ansible
 
-- **Environment variables**: Use the `environment` attribute for declaring environment variables in roles.
-- **Role organization**: Keep roles modular and reusable.
+- **Role Organization**: Keep roles modular and reusable.
+- **Handlers and Utilities**: Use [handlers](./ansible/handlers/) and [utilities](./ansible/utils/) for frequently repeated tasks.
 
 ### Shell Scripting
 
-- **Logging**: Implement a consistent logging mechanism across all shell scripts. Use a custom logger function as outlined in the TODOs.
-- **Error handling**: Ensure scripts handle errors gracefully and provide informative messages.
+- **Logging**: Implement consistent logging across all shell scripts. Use a custom logger function as outlined in the TODOs.
+- **Error Handling**: Ensure scripts handle errors gracefully and provide informative messages.
 
 ### CI/CD
 
 - **GitHub Actions**: Contribute to the existing CI/CD pipeline by implementing automated testing, linting, and security scans for pull requests.
 
-### Testing
-
-- **Implement Ansible Molecule test cases**: For Ansible roles, write Molecule test scenarios to ensure your roles work as expected.
-- **Automated testing**: Contribute to the CI/CD pipeline by writing GitHub Actions workflows that automate testing.
-
 ## Communication
 
-- **Stay updated**: Regularly check for updates on the project and communicate with the maintainers for any significant contributions.
-- **Respectful collaboration**: Follow a code of conduct that fosters a respectful and inclusive environment.
+- **Stay Updated**: Regularly check for project updates and communicate with maintainers about significant contributions.
+- **Respectful Collaboration**: Follow the code of conduct to maintain a respectful and inclusive environment.
 
 ## License
 
@@ -116,4 +109,4 @@ By contributing to this project, you agree that your contributions will be licen
 
 ---
 
-Thank you for your interest in contributing to the Hashicorp Boundary and Vault Stack! We look forward to your contributions.
+Thank you for your interest in contributing to the HashiCorp Boundary and Vault Stack! We look forward to your contributions.

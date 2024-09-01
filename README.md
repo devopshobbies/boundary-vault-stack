@@ -1,82 +1,75 @@
-# Hashicorp Boundary and Vault Stack
-Deploy Self-Hosted HCP Vault and Boundary using End-To-End automation.
+# HashiCorp Boundary and Vault Stack
+
+Deploy a Self-Hosted HCP Vault and Boundary stack using end-to-end automation.
 
 ## What This Project Offers
-By providing a comprehensive and hands-on experience in Infrastructure as Code (IaC) and Configuration Management along with creating vital deliverables such as documentation and diagrams, this project simulates a real-world infrastructure development that emphasizes End-to-End automation, enabling DevOps Engineers to collaborate and deliver a reliable and production-ready stack to the end-users.
 
-## How To Use
-**First, make sure you have [READ THE DOCUMENTATION](./artifacts/wiki.md) for instructions on how the stack and Hashicorp Boundary/Vault work.**
+This project provides a comprehensive, hands-on experience in Infrastructure as Code (IaC) and Configuration Management. It simulates a real-world infrastructure environment with a focus on end-to-end automation, enabling DevOps engineers to collaboratively deliver a reliable, production-ready stack. Key deliverables include detailed documentation and diagrams.
 
-**See a thorough [diagram of the automation workflow big picture](https://linktw.in/nWgoiO).**
+## How to Use
 
+1. **Read the Documentation**: Before getting started, ensure you have thoroughly reviewed the [project documentation](./artifacts/wiki.md) and the [automation workflow diagram](https://linktw.in/nWgoiO).
 
+2. **Configure Variables**: Create your own `tfvars` file based on the samples provided in the [Boundary](./boundary/terraform/terraform.tfvars.sample) and [Vault](./vault/terraform/terraform.tfvars.sample) directories. Alternatively, you can remove the `.sample` extension from the provided sample files to use the default values.
 
-1. To begin with, create your own `tfvars` based on the sample provided in [boundary](./boundary/terraform/terraform.tfvars.sample) and [vault](./vault/terraform/terraform.tfvars.sample) or simply remove the leading .sample extension to apply the sample values.
+3. **Run the Start Script**: Begin the setup by running the `start.sh` script in your desired environment:
+    ```bash
+    # Run in development:
+    ./start.sh -e development
+    ```
 
-2. Initialize the process by running `start.sh` script in your desired environment:
- ```bash
- #run in dev:
-        ./start.sh -e development
- ```
+    For further assistance on exit/return codes and configurations, refer to the [documentation](./artifacts/wiki.md).
 
-*If you need further assistance on the exit/return code and configurations, check out [ wiki ](./artifacts/wiki.md).*
+4. **Enter Vault Password**: You will be prompted to enter the Vault password to decrypt Ansible Vault-encrypted files (e.g., `inventory.ini`).
 
-3. You'll be prompted to Enter the vault-password to decrypt ansible-vault encrypted files (e.g inventory.ini).
+    **Note**: The default `ansible-vault-pass` is `BVSTACK`. This is provided for simplicity in the sample; ensure you use a strong password for your Ansible Vault-encrypted files.
 
-**The `ansible-vault-pass` is `BVSTACK`. This is for the sake of simplicity and sample, make sure you use a strong password for your ansible vault encrypted files.**
+## To-Do List
 
-## TO-DO
-> Terraform ....
+### Terraform
 
-> NOTE
-> Implement all of the provisioners inside provision Directory and Ansible Role 
+- [ ] Add a **Vagrantfile** to provision a VM using the **Vagrant** provider of your choice, based on the [specifications](./provision/specs.txt).
+- [ ] Provision an **EC2** instance using the **AWS** provider based on the [specifications](./provision/specs.txt) and additional required configurations.
+- [ ] Provision an **Azure** VM using the **Azure** provider based on the [specifications](./provision/specs.txt) and additional required configurations.
+- [ ] Provision a VM on an ESXi server using the **vSphere** provider based on the [specifications](./provision/specs.txt).
+- [ ] Add a remote backend option for Boundary and Vault.
+- [ ] Implement additional Vault authentication methods.
+- [ ] Enhance Terraform output values for both Boundary and Vault.
+- [ ] Implement Policy as Code (PaC) to validate Terraform policies.
 
-- [ ] Add a **Vagrantfile** to provision a VM using the **Vagrant** provider of your choice based on [ specs ](./provision/specs.txt) with `Terraform`.
+### Packer
 
-- [ ] Using `Terraform` **AWS** provider provision an **EC2** instance based on [ specs ](./provision/specs.txt) + additional required configuration.
+- [ ] Add a Packer custom image template for VMware vSphere using the [specifications](./provision/specs.txt).
 
-- [ ] Using `Terraform` **Azure** provider provision an Azure VMs instace based on [ specs ](./provision/specs.txt) + additional required configuration.
+### Ansible
 
-- [ ] Using `Terraform` **Vsphere** provider, provision a vm on an ESXI server based on [ specs ](./provision/specs.txt). 
+- [ ] Install and configure Terraform on the **control node** using the `prepare_env` role.
+- [ ] Install and configure Docker on **target (managed) nodes** using the `prepare_env` role.
+- [ ] Template `tfvars` files to handle specific variables for both Boundary and Vault Terraform providers.
+- [ ] Create a well-organized Ansible template for Vault and Boundary configurations.
+- [ ] Update environment variable declarations in Ansible roles to use the `environment` attribute instead of inline definitions in the `shell` module.
+- [ ] Add proper configurations to serve the stack as a reverse proxy in the `serve` directory (tool optional).
+- [ ] Update `boundary.yml` to use environment variables instead of hardcoding, then manage the export of these variables with Ansible.
+- [ ] Convert Docker Compose files to corresponding Ansible modules using the `community.docker.docker_container` collection as an optional deployment method.
+- [ ] Implement Ansible Molecule scenarios to test different aspects of your roles.
+- [ ] Choose which provider to provision based on a user-defined or environment variable when handling provisions with Ansible.
 
+### CI/CD
 
-- [ ] Add `Terraform` Remote Backend option for Boundary and Vault. 
-- [ ] Add other Vault auth methods using `Terraform`.
-- [ ] Enchance `Terraform Output` values for both Boundary and Vault
-- [ ] Implement `Policy as Code (PaC)` to validate `Terraform` policies.
+- [ ] Implement automated testing using GitHub Actions for pull requests.
 
-> Packer ...
+### Shell Scripting
 
-- [ ] Add Packer custom image template for VMware Vsphere using [ specs ](./provision/specs.txt).
-
-> Ansible ... 
-
-- [ ] Install and configure `Terraform` on the **control node** (`prepare_env` role).
-- [ ] Install and configure `Docker` on **target (managed) node(s)** (`prepare_env` role).
-- [ ] Optionally, install boundary and vault on **admins** node(s) Based on `STACK_BIN=true/false` Environment variable. 
-- [ ] Template `tfvars` file to handle specific variables for both boundary and vault terraform providers.
-- [ ] Create a well-organized `Ansible` template for Vault and boundary configurations.
-- [ ] Update environment variable declaration through `Ansible` roles to use `environment` attribute instead of inline definition in `shell` module.
-- [ ] Add proper configurations to serve the stack as a reverse proxy in the `serve` directory(the tool is optional).
-- [ ] Update `boundary.yml` to use ENV variables instead of hardcoding then handle the export of the env variables with `Ansible`.
-- [ ] Using `Ansible` `community.docker.docker_container` collection, convert docker-compose files to the corresponding `Ansible` module as an optional deployment method.
-- [ ] Implement Ansible `Molecule` case scenarios to test different aspects of your roles.
-- [ ] When handling Provisions with `Ansible`, Choose which Provider to provision Based on a User-Defined or Environment variable.
-
-> CI/CD ....
-
-- [ ] Implement automated testing using GitHub actions for pull requests. 
-
-> Shell Scripting ... 
-
-- [ ] Write a `Custom Logger` function and use it throughout all shell scripts for better error handling and logging (`log` directory).
-- [ ] Use `case` instead of if for argument handling in `init.sh`.
-- [ ] Make `start.sh` ask for the ansible-vault password once and use it for all.
-- [ ] Update the sleep commands in the `start.sh` to use `Ansible` wait_for modules instead.
-- [ ] Remove vault root token in `cleanup`.
+- [ ] Write a custom logger function and implement it throughout all shell scripts for better error handling and logging (in the `log` directory).
+- [ ] Use `case` statements instead of `if` for argument handling in `init.sh`.
+- [ ] Update `start.sh` to prompt for the Ansible Vault password once and use it for all operations.
+- [ ] Replace sleep commands in `start.sh` with the appropriate Ansible `wait_for` modules.
+- [ ] Remove the Vault root token in the `cleanup` script.
 
 ## Contribution
-all types of contribution is welcomed, read [`Contribution.md`](./Contributing.md) for more information.
 
-## Credit and Maintainance
-**Copyright © 2024 [Shayan Ghani](https://github.com/Shayan-Ghani) shayan.ghani.tech@gmail.com**
+All contributions are welcome! Please read the [Contributing Guidelines](./CONTRIBUTING.md) for more information.
+
+## Credit and Maintenance
+
+**Copyright © 2024 [Shayan Ghani](https://github.com/Shayan-Ghani) - shayan.ghani.tech@gmail.com**
