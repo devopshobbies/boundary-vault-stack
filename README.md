@@ -11,7 +11,9 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
 
 
 
-1. To initialize the process run `start.sh` script in your desired environment:
+1. To begin with, create your own `tfvars` based on the sample provided in [boundary](./boundary/terraform/terraform.tfvars.sample) and [vault](./vault/terraform/terraform.tfvars.sample) or simply remove the leading .sample extension to apply the sample values.
+
+2. Initialize the process by running `start.sh` script in your desired environment:
  ```bash
  #run in dev:
         ./start.sh -e development
@@ -19,7 +21,7 @@ By providing a comprehensive and hands-on experience in Infrastructure as Code (
 
 *If you need further assistance on the exit/return code and configurations, check out [ wiki ](./artifacts/wiki.md).*
 
-2. You'll be prompted to Enter the vault-password to decrypt ansible-vault encrypted files (e.g inventory.ini).
+3. You'll be prompted to Enter the vault-password to decrypt ansible-vault encrypted files (e.g inventory.ini).
 
 **The `ansible-vault-pass` is `BVSTACK`. This is for the sake of simplicity and sample, make sure you use a strong password for your ansible vault encrypted files.**
 
