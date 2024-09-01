@@ -2,6 +2,8 @@ name: BVSTACK Test Pipeline
 
 on:
   push:
+    branches-ignore:
+      - 'main'
   pull_request:
 
 env:
