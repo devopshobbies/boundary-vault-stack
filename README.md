@@ -8,7 +8,7 @@ This project provides a comprehensive, hands-on experience in Infrastructure as 
 
 ## How to Use
 
-1. **Read the Documentation**: Before getting started, ensure you have thoroughly reviewed the [project documentation](./artifacts/wiki.md) and the [automation workflow diagram](https://linktw.in/nWgoiO).
+1. **Read the Documentation**: Before getting started, ensure you have thoroughly reviewed the [project documentation](https://devopshobbies.github.io/boundary-vault-stack/) and the [automation workflow diagram](https://linktw.in/nWgoiO).
 
 2. **Configure Variables**: Create your own `tfvars` file based on the samples provided in the [Boundary](./boundary/terraform/terraform.tfvars.sample) and [Vault](./vault/terraform/terraform.tfvars.sample) directories. Alternatively, you can remove the `.sample` extension from the provided sample files to use the default values.
 
@@ -18,7 +18,7 @@ This project provides a comprehensive, hands-on experience in Infrastructure as 
     ./start.sh -e development
     ```
 
-    For further assistance on exit/return codes and configurations, refer to the [documentation](./artifacts/wiki.md).
+    For further assistance on exit/return codes and configurations, refer to the [documentation](https://devopshobbies.github.io/boundary-vault-stack/).
 
 4. **Enter Vault Password**: You will be prompted to enter the Vault password to decrypt Ansible Vault-encrypted files (e.g., `inventory.ini`).
 

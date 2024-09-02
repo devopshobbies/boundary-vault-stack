@@ -27,9 +27,9 @@ Thank you for considering contributing to the HashiCorp Boundary and Vault Stack
     cd boundary-vault-stack
     ```
 
-3. **Set Up Your Environment**: Ensure you have the necessary dependencies installed as outlined in the [documentation](./artifacts/wiki.md).
+3. **Set Up Your Environment**: Ensure you have the necessary dependencies installed as outlined in the [documentation](https://devopshobbies.github.io/boundary-vault-stack/).
 
-4. **Review the Documentation**: Familiarize yourself with the project by thoroughly reading the [documentation](./artifacts/wiki.md) and reviewing the [automation workflow diagram](https://linktw.in/PloXtt).
+4. **Review the Documentation**: Familiarize yourself with the project by thoroughly reading the [documentation](https://devopshobbies.github.io/boundary-vault-stack/) and reviewing the [automation workflow diagram](https://linktw.in/PloXtt).
 
 ## Types of Contributions
 
@@ -39,7 +39,7 @@ If you encounter any bugs, errors, or have suggestions for improvements:
 
 - **Search Existing Issues**: Before submitting a new issue, check if it has already been reported.
 - **Create a New Issue**: If it’s a new issue, provide detailed information such as steps to reproduce, expected vs. actual results, and any relevant screenshots or logs.
-- **Link to Related Tasks**: If your issue relates to any of the [TODOs](https://github.com/Shayan-Ghani/boundary-vault-stack/tree/main/#to-do), reference the corresponding task.
+- **Link to Related Tasks**: If your issue relates to any of the [TODOs](https://github.com/devopshobbies/boundary-vault-stack/tree/main/#to-do), reference the corresponding task.
 
 ### Commit Messages
 
