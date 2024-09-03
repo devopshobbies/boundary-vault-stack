@@ -176,4 +176,4 @@ scripts/init.sh vault
 
 ## Still Having Issues?
 
-For further assistance, feel free to open up a new issue on the [GitHub Issues page](https://github.com/Shayan-Ghani/boundary-vault-stack/issues).
+For further assistance, feel free to open up a new issue on the [GitHub Issues page](https://github.com/devopshobbies/boundary-vault-stack/issues).

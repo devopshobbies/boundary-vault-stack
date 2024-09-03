@@ -64,22 +64,42 @@ if [ $# -ne 2 ]; then
 fi
 
 
-echo "***Running Boundary Vault Stack on ${STACK_ENV} Mode.****"
+echo -e "***Running Boundary Vault Stack on ${STACK_ENV} Mode.****\n"
 
 
 ## create ignored dirs in git for confidential data
 mkdir -p logs/ logs/docker logs/terraform secrets/
 
+source ./scripts/linter.sh
+if [[ ! -d "venv/" ]]; then
+  echo -e "\nInstalling Virtual Env and dependencies."
+
+  py_cmd=$(lint_py)
+  $py_cmd -m venv venv
+  source venv/bin/activate
+  pip install -U pip 
+  pip install -r ./requirements.txt
+else 
+  source venv/bin/activate
+  pip install -r ./requirements.txt
+fi
+
 ## install required collections
 ansible-galaxy collection install -r requirements.yml
 
-ansible-playbook -i ansible/inventory/inventory.ini ansible/playbook.yml
+## provision the server
+if [ -z "$STACK_SERVER"]; then
+  lint_vagrant
+  vagrant up
+fi
+
+ansible-playbook -i ansible/inventory/inventory.ini ansible/playbook.yml --ask-vault-pass
 echo "****** Applying Vault changes ******"
 sleep 10
-ansible-playbook -i ansible/inventory/inventory.ini ansible/terraform.yml 
+ansible-playbook -i ansible/inventory/inventory.ini ansible/terraform.yml --ask-vault-pass
 echo "********* Applying terraform provisioning ******* "
 sleep 5
-ansible-playbook -i ansible/inventory/inventory.ini ansible/boundary.yml
+ansible-playbook -i ansible/inventory/inventory.ini ansible/boundary.yml --ask-vault-pass
 
 echo "***** Performing Stack Cleanup *******"
-ansible-playbook -i ansible/inventory/inventory.ini ansible/cleanup.yml
+ansible-playbook -i ansible/inventory/inventory.ini ansible/cleanup.yml --ask-vault-pass

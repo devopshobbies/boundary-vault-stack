@@ -136,6 +136,14 @@
                 </ul>
                 <p class="default">default : false</p>
 
+                <h4>STACK_SERVER (optional)</h4>
+                <p>If set to false, vagrant and virtualbox won't be used to spin up BVSTACK. Instead you must create both Controller, BVSTACK and Client machines <span class="bold">manually</span> using your prefered method; ensure to address them in the inventory file accordingly.</p>
+                <ul class="options">
+                    <li>true</li>
+                    <li>false</li>
+                </ul>
+                <p class="default">default : true</p>
+
             </div>
 
             <div class="rc section">
@@ -286,7 +294,7 @@ $ ./start.sh --environment development
             <div class="issues section">
                 <h2 id="still-having-issues" class="section-header">Still Having Issues</h2>
                 <p>For further assistance, feel free to open up a new issue on the <a
-                        href="https://github.com/Shayan-Ghani/boundary-vault-stack/issues">GitHub Issues page.</a></p>
+                        href="https://github.com/devopshobbies/boundary-vault-stack/issues">GitHub Issues page.</a></p>
             </div>
 
         </div>
