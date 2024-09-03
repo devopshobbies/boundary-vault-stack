@@ -19,11 +19,11 @@ with Diagram("\nVault Server Workflow",  show=False, direction="RL", graph_attr=
         users = Users("\nUsers")
 
     # Vault connections
-    vault_listener - Edge(label="0.0.0.0:8200\nTLS Disabled") >> [storage_raft, vault_ui]
+    vault_listener - Edge(label="0.0.0.0:8200\nTLS Disabled") >> vault_ui
     vault_listener >> Edge(label="Max Entry Size\n1MB") >> storage_raft
 
     # User Management connections
-    users >> Edge(label="Lockout Threshold: 3\nLockout Duration: 10m") >> userpass_lockout
+    users - Edge(label="Lockout Threshold: 3\nLockout Duration: 10m") - userpass_lockout
 
     # External connections
     api_addr = Vault("API Address\nhttp://localhost:8200")
