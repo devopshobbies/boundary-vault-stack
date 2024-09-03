@@ -47,6 +47,29 @@ function lint_docker () {
 
 }
 
+function lint_vagrant(){
+  if ! command -v vagrant &> /dev/null; then
+    echo -e "ERROR: Vagrant is not installed!" >&2
+    echo -e "Please install Vagrant from https://developer.hashicorp.com/vagrant/downloads" >&2
+    return 1
+  fi
+
+  if ! command -v VBoxManage &> /dev/null; then
+    echo -e "ERROR: VirtualBox is not installed \nVagrant uses Virtualbox to provision vms." >&2
+    echo -e "Please install VirtualBox from https://virtualbox.org/wiki/Linux_Downloads" >&2
+    return 1
+  fi
+  return 0
+}
+
+function lint_py(){
+  if ! command -v python3 && ! command -v python ; then
+    echo "Error: Python Is Not Installed." >&2
+    return 1
+  fi
+  return 0
+}
+
 function lint_ansible () {
 
   cd ../ansible || { echo "Failed to change directory to ansible"; return 1; }
@@ -62,6 +85,6 @@ function lint_ansible () {
     return 0
 }
 
-if [ $1 == "ansible" ]; then
+if [[ $1 == "ansible" ]]; then
   lint_ansible
 fi
