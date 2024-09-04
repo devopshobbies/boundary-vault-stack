@@ -35,5 +35,5 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844
         with:
-          body: ${{ steps.github_release.outputs.changelog }}
+          body: ${{ steps.bump.outputs.changelog }}
           tag_name: ${{ steps.bump.outputs.new_tag }}

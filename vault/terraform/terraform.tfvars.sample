@@ -3,11 +3,19 @@ transit_keynames = ["root-boundary", "worker-auth-boundary", "recovery-boundary"
 login_creds = {
   "admin" = "administrator"
 }
+
+transit_admins = {
+  "admin" = "administrator"
+}
+
 policies = {
   "admins"              = "policies/admin-policy.hcl",
-  "boundary-transit"         = "policies/boundary-transit.hcl",
-  "transit-admin" = "policies/transit-admin.hcl"
+  "boundary-transit"    = "policies/boundary-transit.hcl",
+  "transit-admin"       = "policies/transit-admin.hcl"
   "ssh"                 = "policies/ssh.hcl",
   "boundary-controller" = "policies/boundary-controller.hcl",
-  "testapp" = "policies/testapp.hcl"
+  "testapp"             = "policies/testapp.hcl"
 }
+
+cipher_path    = "/kv/apps"
+cipher_kv_name = "testapp"

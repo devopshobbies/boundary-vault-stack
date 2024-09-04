@@ -1,3 +1,4 @@
 ---
 STACK_INIT: true
 STACK_ENV: development
+SSH_INJECTION: false

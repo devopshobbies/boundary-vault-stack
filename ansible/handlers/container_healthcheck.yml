@@ -10,8 +10,21 @@
     - "{{ INFO.results }}"
   loop_control:
     label: "{{ item.container.Name | default('Unknown Container', true ) }}"
-  when: item.container.State.Running and item.container.State.Restarting != true
+  when: 
+    - item is defined
+    - item.container.State.Running | bool 
+    - item.container.State.Restarting != true
 
+- name: handle errors if occurred  
+  include_tasks: "{{handlers}}/fail_task.yml"
+  vars:
+    message: "Container {{ item.container.Name }} is NOT healthy"
+  with_items :
+    - "{{ INFO.results }}"
+  loop_control:
+    label: "ID : {{ item.container.Id | default('Unknown Container ID', true ) }} , NAME: {{ item.container.Name | default('Unknown Container ID', true ) }}"
+  when : 
+    - item is not defined or item.container.State.Running != true
 
 - name: handle errors if container not healthy 
   include_tasks: "{{handlers}}/service_healthcheck.yml"
@@ -20,7 +33,10 @@
     PATH: "{{ service_path }}"
   with_items :
     - "{{ INFO.results }}"
-  when: item.exists != true and item.container.Name != '/vault'
+  when: 
+   - item is defined
+   - item.exists != true
+   - item.container.Name != '/vault'
 
 - name: fetch the logfile for the unhealthy container(s)
   # become: true
@@ -35,12 +51,3 @@
     label: "{{ item.container.LogPath | default('Unknown Container', true )  }}" 
   when: item.container.State.Running != true
 
-- name: handle errors if occurred  
-  include_tasks: "{{handlers}}/fail_task.yml"
-  vars:
-    message: "Container {{ item.container.Name }} is NOT healthy"
-  with_items :
-    - "{{ INFO.results }}"
-  loop_control:
-    label: "ID : {{ item.container.Id | default('Unknown Container ID', true ) }} , NAME: {{ item.container.Name | default('Unknown Container ID', true ) }}"
-  when : item.container.State.Running != true

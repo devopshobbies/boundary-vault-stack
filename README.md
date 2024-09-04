@@ -37,7 +37,7 @@ This project provides a comprehensive, hands-on experience in Infrastructure as 
     # Run in development:
     ./start.sh -e development
     ```
-
+> you'll be prompted to choose which NIC you want to bridge to by Vagrant.
 
 4. **Enter Vault Password**: You will be prompted to enter the Vault password four times to decrypt Ansible Vault-encrypted files (e.g., `inventory.ini`) unless the related [issue](https://github.com/devopshobbies/boundary-vault-stack/issues/24) is resolved.
 

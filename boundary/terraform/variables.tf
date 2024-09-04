@@ -73,7 +73,7 @@ variable "main_cred_store_name" {
 variable "SSH_INJECTION" {
   type = bool
   default = false
-  description = "wehter to use ssh credential library"
+  description = "whehter to use ssh credential library"
 }
 
 variable "test_ssh_port" {

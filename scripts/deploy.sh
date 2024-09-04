@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source "${STACK_DIR}/linter.sh"
+source "${STACK_DIR}/scripts/linter.sh"
 
 export COMPOSE_DIR="${STACK_DIR}/deploy"
 

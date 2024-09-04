@@ -6,6 +6,7 @@ vault_addr: "127.0.0.1:8200"
 boundary_addr: "127.0.0.1:9200"
 handlers: "{{ playbook_dir }}/handlers"
 log_dir: "{{ playbook_dir | dirname }}/logs"
+secret_dir : "{{stack_dir}}/secrets"
 
 # environment variables
 STACK_ENV: "{{ lookup('env', 'STACK_ENV') }}"

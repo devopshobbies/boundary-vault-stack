@@ -20,7 +20,7 @@ worker {
     type   = ["prod", "servers"]
   }
 
-  public_addr = "127.0.0.1"
+  public_addr = "192.168.1.15"
 }
 
 listener "tcp" {

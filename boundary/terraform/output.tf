@@ -14,7 +14,7 @@ output "target_id" {
 }
 
 output "scope_id" {
-  value       = "the scope id for admins: ${boundary_scope.global.scope_id}"
+  value       = "the scope id for admins: ${boundary_scope.corp.scope_id}"
   description = "show the id of ssh private key"
 }
 
