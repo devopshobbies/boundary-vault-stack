@@ -4,7 +4,7 @@ hosts_info = [ {
  name = "development",
  ip = "192.168.1.15",
  ssh_user = "vagrant",
- ssh_port = "2222"
+ ssh_port = "22"
   ssh_key_path = "~/.ssh/id_rsa",
  ssh_key_name = "dev_priv_key"
   }
@@ -37,7 +37,7 @@ test_server_name = "testing"
 test_ssh_port = 22
 
 # provider variables
-boundary_address = "https://boundary.dvh.tech"
+boundary_address = "http://192.168.1.15:9200"
 
 auth_method_id = "auth_method_id"
 login_name     = "userpassName"
@@ -81,4 +81,4 @@ session_recording_read_list = "id=*;type=session-recording;actions=list,read"
 # vault cred store
 vault_sign_path = "ssh-signer/issue/boundary-client"
 vault_username  = "admin"
-vault_address   = "http://vault:8200"
+vault_address   = "http://192.168.1.15:8200"

@@ -5,7 +5,7 @@
 
 terraform {
   required_providers {
-    vault = {
+    boundary = {
       source  = "hashicorp/boundary"
       version = "1.1.15"
     }
