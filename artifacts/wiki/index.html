@@ -29,7 +29,7 @@
             <ul>
                 <li><a href="#getting-started">Getting Started</a></li>
                 <li><a href="#about-hashicorp-vault-and-boundary">About Hashicorp Vault and Boundary</a></li>
-                <li><a href="#workflows">Workflows</a>
+                <li><a href="#workflow">Workflow</a>
                     <ul>
                         <li><a href="#vault">Vault</a></li>
                         <li><a href="#boundary">Boundary</a></li>
@@ -84,12 +84,37 @@
             </div>
 
             <div class="workflows section">
-                <h2 id="workflows" class="section-header">Workflows</h2>
+                <h2 id="workflow" class="section-header">Workflow</h2>
+                <p>After the environment is prepared, Ansible deploys Vault using Docker Compose. The Vault server is
+                    first initialized by the <span class="bold">vault-init</span> service, which runs the `init.sh`
+                    script and calls the `init_vault_setup` function. This process unseals Vault, creates the necessary
+                    secret engines, policies, tokens, and other basic configurations. Once the deployment is complete, the
+                    <span class="bold">Transit-token</span> and <span class="bold">secrets.txt</span> file, containing
+                    all the essential tokens and keys, are generated and stored in the `secrets/secrets.txt` file on the
+                    controller machine.
+
+                    Next, the Terraform role is applied to configure Vault, utilizing the generated tokens and
+                    variables. Following this, the deployment shifts focus to Boundary. To enable Boundary to use
+                    Vault's Transit Engine for Encryption as a Service (EaaS), the Transit token (already stored in
+                    `secrets.txt`) is passed to the Boundary role. Once the Boundary database (PostgreSQL) is up and
+                    running, it is initialized using the <span class="bold">db-init</span> service. Finally, Boundary is
+                    deployed with the initial credentials saved in <span
+                        class="bold">secrets/boundary-init-creds.txt</span>. Terraform resources are then applied using
+                    the <span class="bold">Vault Transit recovery key</span> and <span class="bold">Transit
+                        token</span>.
+
+                    To use the stack, you need to install the Boundary and Vault clients (ensure the server and client
+                    versions match). Once installed, you can start using BVSTACK.
+
+                    You can checkout the boundary UI at <span class="bold"><a href="http://192.168.1.15:9200">http://192.168.1.15:9200</a> </span> and Vault at  <span class="bold"><a href="http://192.168.1.15:8200">http://192.168.1.15:8200</a> .</span>
+
+                </p>
+
                 <h3 id="vault" class="section-header">Vault</h3>
                 <p>Vault workflow involves setting up authentication methods, secret engines, and policies. The key
                     components of Vault server setup include:</p>
                 <img src="./vault.png" alt="vault diagram">
-          
+
                 <h3 id="boundary" class="section-header">Boundary</h3>
                 <p>Boundary workflow involves managing sessions, targets, and credentials. The key
                     components of Boundary server setup include:
@@ -137,7 +162,9 @@
                 <p class="default">default : false</p>
 
                 <h4>STACK_SERVER (optional)</h4>
-                <p>If set to false, vagrant and virtualbox won't be used to spin up BVSTACK. Instead you must create both Controller, BVSTACK and Client machines <span class="bold">manually</span> using your prefered method; ensure to address them in the inventory file accordingly.</p>
+                <p>If set to false, vagrant and virtualbox won't be used to spin up BVSTACK. Instead you must create
+                    both Controller, BVSTACK and Client machines <span class="bold">manually</span> using your prefered
+                    method; ensure to address them in the inventory file accordingly.</p>
                 <ul class="options">
                     <li>true</li>
                     <li>false</li>
@@ -276,6 +303,11 @@ $ ./start.sh --environment development
                 <h2 id="bear-in-mind">Bear In Mind</h2>
                 <p>Keep the following in mind when working with the Boundary-Vault stack:</p>
                 <ul>
+                    <li>Since Boundary Terraform uses Vault recovery transit key you must export the transit-token as
+                        VAULT_TOKEN
+                        <span class="bold">(secrets/secrets.txt)</span> before planning/applying the code. Otherwise,
+                        you should use auth-method credentials to communicate with the boundary api.
+                    </li>
                     <li>If you have issues with DockerHub make sure you change the image registry in deployments and
                         `prepare_env` role.</li>
                     <li>If the target node(s) get restarted, the <span class="bold">vault</span> gets sealed and <span
