@@ -25,7 +25,6 @@ services:
     command: ["database", "init", "-config", "/boundary/boundary.hcl"]
     volumes:
       - "../boundary/config/:/boundary"
-      # - "/etc/letsencrypt/live/${BOUNDARY_DOMAIN}/:/etc/boundary.d/tls"
     environment:
       - BOUNDARY_PG_URL=postgresql://postgres:RP5YgRtK7WQEIdR@boundary_db/boundary?sslmode=disable
       - WHOST=127.0.0.1
@@ -47,10 +46,11 @@ services:
     restart: always
     volumes:
       - "../boundary/config/:/boundary/"
+      - "/srv/boundary/logs/:/var/log/boundary/"
     ports:
       - "9200:9200"
+      - "9202:9202" # worker
     #   - "9201:9201"
-    #   - "9202:9202"
     environment:
       - BOUNDARY_PG_URL=postgresql://postgres:RP5YgRtK7WQEIdR@boundary_db/boundary?sslmode=disable
       - HOSTNAME=boundary
