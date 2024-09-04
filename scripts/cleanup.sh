@@ -21,7 +21,6 @@ function inject_ssh_cred(){
 
 function delete_token(){
     sed -i '/^transit_token/d' $var_file
-    return 0
 }
 
 if [[ $1 == "-d" ]]; then

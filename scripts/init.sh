@@ -1,6 +1,6 @@
 # !/bin/env bash
 
-set -e
+set -e -o pipefail
 
 function usage() {
     cat <<EOF
@@ -61,9 +61,14 @@ function init_boundary_iac(){
   token=$(cat $secret_file | grep "transit-token" | awk '{print $2}')
   export VAULT_TOKEN="$token"
   export BOUNDARY_ADDR="$BOUNDARY_ADDR"
-  export TF_VAR_SSH_INJECTION=$SSH_INJECTION
-  terraform apply --auto-approve 2>&1 | sed -r "s/\x1B\[[0-9;]*[mGKH]//g" > "${HOME_DIR}/logs/terraform/boundary-logs.txt"
-  return 0
+  # ssh_injection=$(echo "$SSH_INJECTION" | tr '[:upper:]' '[:lower:]')
+  # export TF_VAR_SSH_INJECTION=$ssh_injection
+
+  log_path="${HOME_DIR}/logs/terraform/boundary-logs.txt"
+  if ! terraform plan 2>&1 | sed -r "s/\x1B\[[0-9;]*[mGKH]//g" > $log_path; then
+    echo -e "Terraform Plan failed for Vault, check the logs at $log_path \n\n" >&2
+  fi
+  terraform apply --auto-approve
 }
 
 function init_vault_iac(){
@@ -76,7 +81,11 @@ function init_vault_iac(){
   root_token="$(cat $secret_file | head -n1 | awk '{print $8}')"
   export VAULT_TOKEN="$root_token"
   
-  terraform apply --auto-approve 2>&1 | sed -r "s/\x1B\[[0-9;]*[mGKH]//g" > "${HOME_DIR}/logs/terraform/vault-logs.txt";
+  log_path="${HOME_DIR}/logs/terraform/vault-logs.txt"
+  if ! terraform plan 2>&1 | sed -r "s/\x1B\[[0-9;]*[mGKH]//g" > $log_path ;then
+    echo -e "Terraform Plan failed for Vault, check the logs at $log_path \n\n" >&2
+  fi
+  terraform apply --auto-approve
 }
 
 ## vault init container to setup vault and get killed right after.
