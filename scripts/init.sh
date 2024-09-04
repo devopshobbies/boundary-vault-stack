@@ -65,10 +65,10 @@ function init_boundary_iac(){
   # export TF_VAR_SSH_INJECTION=$ssh_injection
 
   log_path="${HOME_DIR}/logs/terraform/boundary-logs.txt"
-  if ! terraform plan 2>&1 | sed -r "s/\x1B\[[0-9;]*[mGKH]//g" > $log_path; then
+  if ! terraform plan &> /dev/null; then
     echo -e "Terraform Plan failed for Vault, check the logs at $log_path \n\n" >&2
   fi
-  terraform apply --auto-approve
+  terraform apply --auto-approve 2>&1 | sed -r "s/\x1B\[[0-9;]*[mGKH]//g" > $log_path
 }
 
 function init_vault_iac(){
@@ -82,10 +82,10 @@ function init_vault_iac(){
   export VAULT_TOKEN="$root_token"
   
   log_path="${HOME_DIR}/logs/terraform/vault-logs.txt"
-  if ! terraform plan 2>&1 | sed -r "s/\x1B\[[0-9;]*[mGKH]//g" > $log_path ;then
+  if ! terraform plan &> /dev/null ;then
     echo -e "Terraform Plan failed for Vault, check the logs at $log_path \n\n" >&2
   fi
-  terraform apply --auto-approve
+  terraform apply --auto-approve 2>&1 | sed -r "s/\x1B\[[0-9;]*[mGKH]//g" > $log_path
 }
 
 ## vault init container to setup vault and get killed right after.
