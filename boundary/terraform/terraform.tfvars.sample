@@ -2,7 +2,7 @@
 
 hosts_info = [ {
  name = "development",
- ip = "192.168.1.15",
+ ip = "192.168.1.16",
  ssh_user = "vagrant",
  ssh_port = "22"
   ssh_key_path = "~/.ssh/id_rsa",

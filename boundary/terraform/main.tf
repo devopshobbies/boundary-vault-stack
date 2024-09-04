@@ -9,6 +9,7 @@ data "boundary_user" "global_scope_admin" {
 #----------
 
 resource "boundary_scope" "global" {
+  name = "Global"
   global_scope = true
   description  = "highest-level Scope for administrators"
   scope_id     = "global"
