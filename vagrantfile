@@ -5,17 +5,17 @@ Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/focal64" # or another box of your choice
 
   # Set the name of the VM
-  config.vm.define "BVSTACK" do |node|
-    node.vm.hostname = "BVSTACK"
+  config.vm.define "bvstack" do |node|
+    node.vm.host_name = "bvstack"
 
     # Network configuration: Bridge
     node.vm.network "public_network", ip: "192.168.1.15"
 
     # Resources: CPU and RAM
     node.vm.provider "virtualbox" do |vb|
-      vb.name = "BVSTACK"
-      vb.memory = 2048
-      vb.cpus = 1
+      vb.name = "bvstack"
+      vb.memory = 4096
+      vb.cpus = 2
     end
   end
   
