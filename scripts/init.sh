@@ -141,27 +141,26 @@ function init_vault_setup(){
 
 export VAULT_ADDR="$VAULT_ADDR"
 
-if [[ $1 == "vault" ]]; then
-
-   init_vault_iac
-
+case $1 in
+  vault)
+    init_vault_iac
     exit 0
-fi
-
-if [[ $1 == "boundary" ]]; then 
-
-    init_boundary_iac
-    exit 0
-fi
-
-if [[ $1 == "vault-init" ]]; then 
+  ;;
+  vault-init)
     init_vault_setup
     exit 0
-fi
-
-if [[ "$1" == "-h" || $1 == "--help" ]]; then
+  ;;
+  boundray)
+    init_boundary_iac
+    exit 0
+  ;;
+  -h | --help)
     usage
     exit 0
-fi
+  ;;
+  *)
+  echo "Not Found"
+  ;;
+esac
 
 
