@@ -4,3 +4,6 @@
 
 - name: copy and sync files and directories
   ansible.builtin.include_tasks: "{{ role_path }}/tasks/files_and_directories.yml"
+
+- name: Check Docker installation on server
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/DockerInstallation.yml
