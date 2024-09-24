@@ -128,6 +128,58 @@
                 <h2 id="configurations" class="section-header">Configurations</h2>
                 <h3 class="env-var section-header" id="environment-variables">Environment Variables</h3>
                 <p>Environment variables need to be configured for both Vault and Boundary. Here's an example:</p>
+                
+                <p>The following environment variables can be used to customize the behavior of the DockerInstallation playbook:</p>
+
+                <ul>
+                    <li>
+                        <strong>START_ON_BOOT</strong>
+                        <ul>
+                            <li><strong>Type:</strong> Optional</li>
+                            <li><strong>Default:</strong> yes</li>
+                            <li><strong>Description:</strong> Controls whether the Docker service is enabled to start on boot. 
+                                If set to <code>yes</code>, Docker will start automatically on boot. If not provided, 
+                                it defaults to <code>yes</code>, meaning Docker will be enabled to start on boot by default. 
+                                To prevent this, set the value to <code>no</code>.
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>DOCKER_USER</strong>
+                        <ul>
+                            <li><strong>Type:</strong> Optional</li>
+                            <li><strong>Default:</strong> ansible_user</li>
+                            <li><strong>Description:</strong> Specifies which user should be added to the Docker group, 
+                                granting that user permission to run Docker commands without requiring <code>sudo</code>. 
+                                If this variable is not set, the user running the Ansible playbook (referred to as 
+                                <code>ansible_user</code>) will be added to the Docker group. If a specific user is 
+                                provided in this environment variable, that user will be added instead.
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>DOCKER_COMPOSE_VERSION</strong>
+                        <ul>
+                            <li><strong>Type:</strong> Optional</li>
+                            <li><strong>Default:</strong> 2.0.0</li>
+                            <li><strong>Description:</strong> Specifies the version of Docker Compose to install. If 
+                                omitted, it defaults to version 2.0.0.
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="return-codes section">
+                <h2 id="returnexit-codes" class="section-header">Return/Exit Codes</h2>
+                <p>The return/exit codes of the various tasks within DockerInstallation playbook are as follows:</p>
+                <ul>
+                    <li><code>0</code>: Success - The task completed successfully without any errors.</li>
+                    <li><code>1</code>: Failure - The task failed to complete successfully, indicating an error occurred.</li>
+                    <li><code>2</code>: Skipped - The task was skipped, usually due to a condition that was not met.</li>
+                </ul>
+            </div>
+                
                 <h4>STACK_ENV (mandatory)</h4>
                 <p>This variable determines in which mode/environment the stack is deployed.</p>
                 <ul class="options">
