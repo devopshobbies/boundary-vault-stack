@@ -1,0 +1,93 @@
+---
+- name: Install required packages (Debian/Ubuntu)
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  loop:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - software-properties-common
+  when: ansible_os_family == "Debian"
+
+- name: Install required packages (RedHat/CentOS)
+  yum:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - yum-utils
+    - device-mapper-persistent-data
+    - lvm2
+  when: ansible_os_family == "RedHat"
+
+- name: Add Docker GPG key (Debian/Ubuntu)
+  apt_key:
+    url: https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Add Docker repository (Debian/Ubuntu)
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable"
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Install Docker (Debian/Ubuntu)
+  apt:
+    name: docker-ce
+    state: present
+    update_cache: yes
+  when: ansible_os_family == "Debian"
+
+- name: Add Docker repository (RedHat/CentOS)
+  yum_repository:
+    name: docker
+    description: Docker Repository
+    baseurl: https://download.docker.com/linux/centos/7/x86_64/stable
+    gpgcheck: yes
+    gpgkey: https://download.docker.com/linux/centos/gpg
+    state: present
+  when: ansible_os_family == "RedHat"
+
+- name: Install Docker (RedHat/CentOS)
+  yum:
+    name: docker-ce
+    state: present
+  when: ansible_os_family == "RedHat"
+
+- name: Start and enable Docker service
+  service:
+    name: docker
+    state: started
+    enabled: "{{ lookup('env', 'START_ON_BOOT') | default('yes') == 'yes' }}"
+
+- name: Add user to Docker group
+  user:
+    name: "{{ lookup('env', 'DOCKER_USER') | default('ansible_user') }}"
+    groups: docker
+    append: yes
+  when: docker_user != ''
+
+- name: Install Docker Compose v2
+  shell: |
+    curl -L "https://github.com/docker/compose/releases/download/{{ lookup('env', 'DOCKER_COMPOSE_VERSION') | default('2.19.0') }}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    chmod +x /usr/local/bin/docker-compose
+  args:
+    creates: /usr/local/bin/docker-compose
+
+- name: Verify Docker installation
+  command: docker --version
+  register: docker_version_output
+
+- name: Verify Docker Compose installation
+  command: docker-compose --version
+  register: docker_compose_version_output
+
+- name: Print Docker version
+  debug:
+    msg: "Docker version installed: {{ docker_version_output.stdout }}"
+
+- name: Print Docker Compose version
+  debug:
+    msg: "Docker Compose version installed: {{ docker_compose_version_output.stdout }}"
