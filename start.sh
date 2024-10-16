@@ -95,8 +95,9 @@ then
 else
     sh scripts/install_vagrant.sh
 fi
-
+#install virtualbox
 sh scripts/install_virtual_box.sh
+
 ansible-galaxy collection install -r requirements.yml
 
 # provision the server
