@@ -4,7 +4,7 @@ set -e
 
 function usage(){
 
- cat <<EOF
+  cat <<EOF
 
 Usage: $(basename "$0") [options] <argument>
 
@@ -85,9 +85,22 @@ else
 fi
 
 ## install required collections
+#!/bin/bash
+
+# Check if Vagrant is installed
+if command -v vagrant &> /dev/null
+then
+    echo "Vagrant is installed"
+    vagrant --version
+else
+    sh scripts/install_vagrant.sh
+fi
+#install virtualbox
+sh scripts/install_virtual_box.sh
+
 ansible-galaxy collection install -r requirements.yml
 
-## provision the server
+# provision the server
 if [ -z "$STACK_SERVER"]; then
   lint_vagrant
   vagrant up
